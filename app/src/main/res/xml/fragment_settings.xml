@@ -1,0 +1,48 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/tracking_category">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="autoFinish"
+            android:title="@string/auto_finish_title"
+            android:summary="@string/auto_finish_summary"/>
+        <EditTextPreference
+            android:defaultValue="2000"
+            android:key="@string/max_samples_limit_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/max_samples_limit_title"
+            android:summary="@string/max_samples_limit_summary"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Preference category">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="check_box_preference_1"
+            android:title="Check box preference" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="edit_text_preference_1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Edit text preference" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="switch_preference_1"
+            android:title="Switch preference" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@android:array/emailAddressTypes"
+            android:entryValues="@android:array/emailAddressTypes"
+            android:key="list_preference_1"
+            android:title="List preference" />
+        <MultiSelectListPreference
+            android:defaultValue="@android:array/emailAddressTypes"
+            android:entries="@android:array/emailAddressTypes"
+            android:entryValues="@android:array/emailAddressTypes"
+            android:key="multi_select_list_preference_1"
+            android:title="Multi select list preference" />
+    </PreferenceCategory>
+</PreferenceScreen>

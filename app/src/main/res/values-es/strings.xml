@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Invictus</string>
+    <string name="app_motto">Amo de mi destino</string>
+
+    <string name="title_home">Inicio</string>
+    <string name="title_historical">Historial</string>
+    <string name="title_profile">Perfil</string>
+    <string name="title_settings">Configuración</string>
+
+    <!-- Settings -->
+    <string name="tracking_category">Parámetros de seguimiento</string>
+    <string name="auto_finish_title">Finalizar automáticamente</string>
+    <string name="auto_finish_summary">El seguimiento se detendrá automáticamente, cuando se alcance el límite máximo de muestras</string>
+
+    <string name="max_samples_limit_title">Límite máximo de muestras</string>
+    <string name="max_samples_limit_summary">Número máximo de muestras a adquirir. El sistema toma una muestra cada 20ms.</string>
+</resources>
