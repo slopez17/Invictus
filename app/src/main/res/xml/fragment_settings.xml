@@ -10,39 +10,52 @@
             android:summary="@string/auto_finish_summary"/>
         <EditTextPreference
             android:defaultValue="2000"
-            android:key="@string/max_samples_limit_key"
+            android:key="samplesLimit"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="@string/max_samples_limit_title"
-            android:summary="@string/max_samples_limit_summary"/>
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="Preference category">
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="check_box_preference_1"
-            android:title="Check box preference" />
+            android:title="@string/limit_of_samples_title"
+            android:summary="@string/limit_of_samples_summary"/>
         <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="edit_text_preference_1"
+            android:defaultValue="200"
+            android:key="samplesOnMemory"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="Edit text preference" />
+            android:title="@string/samples_on_memory_title"
+            android:summary="@string/samples_on_memory_summary"/>
         <SwitchPreference
             android:defaultValue="false"
-            android:key="switch_preference_1"
-            android:title="Switch preference" />
+            android:key="saveOnSD"
+            android:title="@string/save_on_sd_title"
+            android:summary="@string/save_on_sd_summary"/>
+        <EditTextPreference
+            android:defaultValue="Invictus"
+            android:dependency="saveOnSD"
+            android:key="fileName"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/fileName_title"
+            android:summary="@string/filename_summary"/>
+        <SwitchPreference
+            android:defaultValue="false"
+            app:dependency="saveOnSD"
+            android:key="multipleFiles"
+            android:title="@string/multiple_files_title"
+            android:summary="@string/multiple_files_summary"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/visualization_category">
+        <EditTextPreference
+            android:defaultValue="5"
+            android:key="refreshTime"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/refresh_title"
+            android:summary="@string/refresh_summary"/>
         <ListPreference
-            android:defaultValue="1"
-            android:entries="@android:array/emailAddressTypes"
-            android:entryValues="@android:array/emailAddressTypes"
-            android:key="list_preference_1"
-            android:title="List preference" />
-        <MultiSelectListPreference
-            android:defaultValue="@android:array/emailAddressTypes"
-            android:entries="@android:array/emailAddressTypes"
-            android:entryValues="@android:array/emailAddressTypes"
-            android:key="multi_select_list_preference_1"
-            android:title="Multi select list preference" />
+            android:defaultValue="0"
+            android:entries="@array/unit_system_entries"
+            android:entryValues="@array/unit_system_values"
+            android:key="unitSystem"
+            android:title="@string/unit_system_title" />
     </PreferenceCategory>
 </PreferenceScreen>

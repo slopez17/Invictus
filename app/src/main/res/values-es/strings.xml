@@ -1,18 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Invictus</string>
-    <string name="app_motto">Amo de mi destino</string>
 
-    <string name="title_home">Inicio</string>
-    <string name="title_historical">Historial</string>
-    <string name="title_profile">Perfil</string>
-    <string name="title_settings">Configuración</string>
+    <string name="app_name">
+        Invictus
+    </string>
+    <string name="app_motto">
+        Amo de mi destino
+    </string>
+
+    <!-- Navigation -->
+    <string name="title_home">
+        Inicio
+    </string>
+    <string name="title_historical">
+        Historial
+    </string>
+    <string name="title_profile">
+        Perfil
+    </string>
+    <string name="title_settings">
+        Configuración
+    </string>
 
     <!-- Settings -->
-    <string name="tracking_category">Parámetros de seguimiento</string>
-    <string name="auto_finish_title">Finalizar automáticamente</string>
-    <string name="auto_finish_summary">El seguimiento se detendrá automáticamente, cuando se alcance el límite máximo de muestras</string>
+    <string name="tracking_category">
+        Parámetros de seguimiento
+    </string>
+    <string name="auto_finish_title">
+        Finalizar automáticamente
+    </string>
+    <string name="auto_finish_summary">
+        El seguimiento se detendrá automáticamente, cuando se alcance el límite de muestras
+    </string>
+    <string name="limit_of_samples_title">
+        Límite de muestras
+    </string>
+    <string name="limit_of_samples_summary">
+        Número máximo de muestras a adquirir. El sistema toma una muestra cada 20ms.
+    </string>
+    <string name="samples_on_memory_title">
+        Muestras en memoria
+    </string>
+    <string name="samples_on_memory_summary">
+        Número máximo de muestras en la memoria de trabajo. Caídas, pasos, distancia y demás datos,
+        se calcularán y almacenarán cuando se alcance este valor.
+    </string>
+    <string name="save_on_sd_title">
+        Guardar muestras
+    </string>
+    <string name="save_on_sd_summary">
+        Guarda las muestras adquiridas por el sensor en un archivo de texto en la carpeta Descargas.
+        Cada muestra contiene aceleración triaxial (X, Y, Z) y fecha.
+    </string>
+    <string name="fileName_title">
+        Nombre del archivo
+    </string>
+    <string name="filename_summary">
+        Nombre del archivo donde se almacenan los datos del sensor.
+    </string>
+    <string name="multiple_files_title">
+        Multiples archivos
+    </string>
+    <string name="multiple_files_summary">
+        Crea un archivo nuevo por cada seguimiento. Al final del nombre del archivo se agrega un
+        consecutivo. Ejemplo: sporting1, sporting2,…,sporting100.
+    </string>
 
-    <string name="max_samples_limit_title">Límite máximo de muestras</string>
-    <string name="max_samples_limit_summary">Número máximo de muestras a adquirir. El sistema toma una muestra cada 20ms.</string>
+    <string name="visualization_category">
+        Parámetros de visualización
+    </string>
+    <string name="refresh_title">
+        Tiempo de refresco
+    </string>
+    <string name="refresh_summary">
+        Tiempo en segundos para renovar la información en pantalla.
+    </string>
+    <string name="unit_system_title">
+        Unidades
+    </string>
+    <string-array name="unit_system_entries">
+        <item>Sistema Internacional</item>
+        <item>Sistema Imperial/Británico</item>
+    </string-array>
+
 </resources>
