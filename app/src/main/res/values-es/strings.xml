@@ -22,6 +22,29 @@
         Configuración
     </string>
 
+    <!-- Profile -->
+    <string name="basic_category">Tú</string>
+    <string name="gender">Género</string>
+    <string-array name="gender_array">
+        <item>Prefiero no responder</item>
+        <item>Femenino</item>
+        <item>Masculino</item>
+    </string-array>
+    <string name="birthdate">Fecha de nacimiento</string>
+    <string name="date_format">DD/MM/AAAA</string>
+    <string name="age">Edad</string>
+    <string name="age_und">años</string>
+
+    <string name="body_category">Tu cuerpo</string>
+    <string name="weight">Peso</string>
+    <string name="weight_hint">56.7</string>
+    <string name="height">Estatura</string>
+    <string name="height_hint">1.70</string>
+    <string name="bmi">IMC</string>
+
+    <string name="update_date">Última actualización</string>
+    <string name="save">Guardar</string>
+
     <!-- Settings -->
     <string name="tracking_category">
         Parámetros de seguimiento
