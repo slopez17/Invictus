@@ -31,7 +31,7 @@
         <item>Masculino</item>
     </string-array>
     <string name="birthdate">Fecha de nacimiento</string>
-    <string name="date_format">DD/MM/AAAA</string>
+    <string name="date_format">YYYY-MM-DD</string>
     <string name="age">Edad</string>
     <string name="age_und">años</string>
 

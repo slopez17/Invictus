@@ -30,7 +30,7 @@
         <item>Male</item>
     </string-array>
     <string name="birthdate">Birthdate</string>
-    <string name="date_format">DD/MM/YYYY</string>
+    <string name="date_format">YYYY-MM-DD</string>
     <string name="age">Age</string>
     <string name="age_und">years old</string>
 
