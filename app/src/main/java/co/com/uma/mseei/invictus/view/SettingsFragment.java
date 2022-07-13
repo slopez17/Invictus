@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.ui.settings;
+package co.com.uma.mseei.invictus.view;
 
 import static co.com.uma.mseei.invictus.R.xml.fragment_settings;
 

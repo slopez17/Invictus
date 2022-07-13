@@ -1,10 +1,16 @@
-package co.com.uma.mseei.invictus.ui.profile;
+package co.com.uma.mseei.invictus.view;
 
+import static java.lang.System.currentTimeMillis;
 import static co.com.uma.mseei.invictus.R.id.birthdateEditText;
+import static co.com.uma.mseei.invictus.R.id.bmiTextView;
 import static co.com.uma.mseei.invictus.R.id.genderSpinner;
 import static co.com.uma.mseei.invictus.R.id.heightEditText;
 import static co.com.uma.mseei.invictus.R.id.saveButton;
+import static co.com.uma.mseei.invictus.R.id.weightEditText;
 import static co.com.uma.mseei.invictus.R.layout.item_spinner;
+import static co.com.uma.mseei.invictus.util.ViewOperations.changeEditor;
+import static co.com.uma.mseei.invictus.util.ViewOperations.getFloatFrom;
+import static co.com.uma.mseei.invictus.util.ViewOperations.setTextView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -32,8 +38,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.time.LocalDate;
 
-import co.com.uma.mseei.invictus.R;
 import co.com.uma.mseei.invictus.databinding.FragmentProfileBinding;
+import co.com.uma.mseei.invictus.viewmodel.ProfileViewModel;
 
 public class ProfileFragment
         extends Fragment
@@ -59,6 +65,10 @@ public class ProfileFragment
         initializeGenderSpinner();
         initializeBirthdateEditText();
         initializeAgeTextView();
+        initializeWeightEditText();
+        initializeHeightEditText();
+        initializeBmiTextView();
+        initializeBmiClassificationTextView();
 
         Button saveButton = binding.saveButton;
         saveButton.setOnClickListener(this);
@@ -99,16 +109,31 @@ public class ProfileFragment
 
     private void initializeAgeTextView() {
         TextView ageTextView = binding.ageTextView;
-        profileViewModel.getAge().observe(getViewLifecycleOwner(), x -> {
-            String age = x.toString();
-            ageTextView.setText(age);
-        });
+        profileViewModel.getAge().observe(getViewLifecycleOwner(), x -> setTextView(ageTextView, x));
     }
 
     private void initializeWeightEditText(){
         EditText weightEditText = binding.weightEditText;
         weightEditText.setOnEditorActionListener(this);
+        profileViewModel.getWeight().observe(getViewLifecycleOwner(), x -> setTextView(weightEditText, x));
     }
+
+    private void initializeHeightEditText(){
+        EditText heightEditText = binding.heightEditText;
+        heightEditText.setOnEditorActionListener(this);
+        profileViewModel.getHeight().observe(getViewLifecycleOwner(), x -> setTextView(heightEditText, x));
+    }
+
+    private  void  initializeBmiTextView(){
+        TextView bmiTextView = binding.bmiTextView;
+        profileViewModel.getBmi().observe(getViewLifecycleOwner(), x -> setTextView(bmiTextView, x));
+    }
+
+    private  void  initializeBmiClassificationTextView(){
+        TextView bmiClassificationTextView = binding.bmiClassificationTextView;
+        profileViewModel.getBmiClassification().observe(getViewLifecycleOwner(), bmiClassificationTextView::setText);
+    }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -124,8 +149,8 @@ public class ProfileFragment
 
     @SuppressLint("NonConstantResourceId")
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
+    public void onClick(View view) {
+        switch (view.getId()) {
             case birthdateEditText:
                 int year =  birthdate.getYear();
                 int month = birthdate.getMonthValue()-1;
@@ -133,6 +158,7 @@ public class ProfileFragment
                 DatePickerDialog datePickerDialog =
                         new DatePickerDialog(activity, this, year, month, day);
                 datePickerDialog.show();
+                datePickerDialog.getDatePicker().setMaxDate(currentTimeMillis());
                 break;
 
             case saveButton:
@@ -147,14 +173,19 @@ public class ProfileFragment
 
     @SuppressLint("NonConstantResourceId")
     @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        switch (v.getId()){
-            case heightEditText:
-
-                return true;
+    public boolean onEditorAction(TextView textView, int actionId, KeyEvent event) {
+        float value = getFloatFrom(textView);
+        switch (textView.getId()){
             case weightEditText:
-                return true;
+                profileViewModel.setWeight(value);
+                break;
+            case heightEditText:
+                profileViewModel.setHeight(value);
+                break;
+            default:
+                return false;
         }
-        return false;
+        changeEditor(actionId, textView);
+        return true;
     }
 }

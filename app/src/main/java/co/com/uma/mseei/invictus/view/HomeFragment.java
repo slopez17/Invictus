@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.ui.dashboard;
+package co.com.uma.mseei.invictus.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,23 +11,24 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import co.com.uma.mseei.invictus.databinding.FragmentDashboardBinding;
+import co.com.uma.mseei.invictus.databinding.FragmentHomeBinding;
+import co.com.uma.mseei.invictus.viewmodel.HomeViewModel;
 
-public class DashboardFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
-    private FragmentDashboardBinding binding;
+    private HomeViewModel homeViewModel;
+    private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(DashboardViewModel.class);
+        homeViewModel =
+                new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(HomeViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = binding.textHome;
+        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

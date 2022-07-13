@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.profile.ProfileFragment"
+    tools:context=".view.ProfileFragment"
     android:background="@drawable/bg_degrade_lightrasberry">
 
     <ScrollView
@@ -147,7 +147,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_margin="@dimen/activity_general_margin"
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:ems="3"
                             android:textAlignment="center"
                             android:textSize="@dimen/activity_text_level2_size" />
@@ -225,6 +225,8 @@
                             android:minHeight="48dp"
                             android:textAlignment="center"
                             android:textSize="@dimen/activity_text_level2_size"
+                            android:focusable="true"
+                            android:windowSoftInputMode="stateAlwaysHidden"
                             tools:ignore="TextContrastCheck" />
 
                         <TextView
@@ -283,6 +285,8 @@
                             android:minHeight="48dp"
                             android:textAlignment="center"
                             android:textSize="@dimen/activity_text_level2_size"
+                            android:focusable="true"
+                            android:windowSoftInputMode="stateAlwaysHidden"
                             tools:ignore="TextContrastCheck" />
 
                         <TextView

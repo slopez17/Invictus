@@ -41,7 +41,16 @@
     <string name="height">Estatura</string>
     <string name="height_hint">1.70</string>
     <string name="bmi">IMC</string>
-
+    <string-array name="bmi_clasification_array">
+        <item>Peso insuficiente</item>
+        <item>Normopeso</item>
+        <item>Sobrepeso grado I</item>
+        <item>Sobrepeso grado II (preobesidad)</item>
+        <item>Obesidad de tipo I</item>
+        <item>Obesidad de tipo II</item>
+        <item>Obesidad de tipo III (mórbida)</item>
+        <item>Obesidad de tipo IV (extrema)</item>
+    </string-array>
     <string name="update_date">Última actualización</string>
     <string name="save">Guardar</string>
 

@@ -40,7 +40,16 @@
     <string name="height">Height</string>
     <string name="height_hint">1.70</string>
     <string name="bmi">BMI</string>
-
+    <string-array name="bmi_clasification_array">
+        <item>Insufficient weight</item>
+        <item>Normal weight</item>
+        <item>Overweight Level I</item>
+        <item>Overweight Level II (pre-obesity)</item>
+        <item>Obesity Level I</item>
+        <item>Obesity Level II</item>
+        <item>Obesity Level III (morbid)</item>
+        <item>Obesity Level IV (extreme)</item>
+    </string-array>
     <string name="update_date">Last update</string>
     <string name="save">Save</string>
 
