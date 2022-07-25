@@ -4,6 +4,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.view.View.FOCUS_DOWN;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_NEXT;
+import static co.com.uma.mseei.invictus.util.GeneralConstants.twoDigits;
 
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -23,7 +24,11 @@ public class ViewOperations {
     }
 
     public static void setTextView(TextView textView, float value) {
-        textView.setText(String.valueOf(value));
+        textView.setText(twoDigits.format(value));
+    }
+
+    public static void setHintTextView(TextView textView, float value) {
+        textView.setHint(String.valueOf(value));
     }
 
     public static void changeEditor(int actionId, TextView textView) {

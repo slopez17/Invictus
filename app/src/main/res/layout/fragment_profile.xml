@@ -158,7 +158,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_margin="@dimen/activity_general_margin"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:text="@string/age_und"
                             android:textAlignment="center"
                             android:textSize="@dimen/activity_text_level2_size" />
@@ -219,7 +219,6 @@
                             android:layout_weight="1"
                             android:autofillHints="5"
                             android:ems="5"
-                            android:hint="@string/weight_hint"
                             android:inputType="numberDecimal"
                             android:maxLength="5"
                             android:minHeight="48dp"
@@ -235,7 +234,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_margin="@dimen/activity_general_margin"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:textAlignment="center"
                             android:textSize="@dimen/activity_text_level2_size" />
 
@@ -279,7 +278,6 @@
                             android:layout_weight="1"
                             android:autofillHints="5"
                             android:ems="5"
-                            android:hint="@string/height_hint"
                             android:inputType="numberDecimal"
                             android:maxLength="5"
                             android:minHeight="48dp"
@@ -295,7 +293,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_margin="@dimen/activity_general_margin"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:textAlignment="center"
                             android:textSize="@dimen/activity_text_level2_size" />
 
@@ -330,6 +328,15 @@
                             android:contentDescription="@string/bmi"
                             android:src="@drawable/ic_fitness_black_24dp" />
 
+                        <TextView
+                            android:id="@+id/bmiClassificationTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="@dimen/activity_general_margin"
+                            android:layout_weight="1"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/activity_text_level2_size" />
 
                         <TextView
                             android:id="@+id/bmiTextView"
@@ -341,15 +348,7 @@
                             android:textAlignment="center"
                             android:textSize="@dimen/activity_text_level2_size" />
 
-                        <TextView
-                            android:id="@+id/bmiClassificationTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/activity_general_margin"
-                            android:layout_weight="1"
-                            android:textAlignment="center"
-                            android:textSize="@dimen/activity_text_level2_size" />
+
 
                     </LinearLayout>
 

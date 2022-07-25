@@ -2,7 +2,7 @@
 
     <!-- Settings -->
     <string-array name="unit_system_values">
-        <item>0</item>
-        <item>1</item>
+        <item>false</item>
+        <item>true</item>
     </string-array>
 </resources>

@@ -1,5 +1,7 @@
 package co.com.uma.mseei.invictus.model;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 import static java.time.LocalDate.now;
 import static co.com.uma.mseei.invictus.R.array.bmi_clasification_array;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.CLEAN_TEXT;
@@ -12,18 +14,22 @@ import java.time.Period;
 
 public class Profile {
 
-    /** Gender constants**/
+    /** Gender constants **/
     public static final int NO_ANSWER = 0;
     public static final int FEMALE = 1;
     public static final int MALE = 2;
 
-    /** Weigh constants **/
-    public static final float MIN_WEIGHT = 0.f;
-    public static final float MAX_WEIGHT = 451.f;
+    /** Weight constants **/
+    public static final float MIN_WEIGHT_KG = 0.f;
+    public static final float MAX_WEIGHT_KG = 451.f;
+    public static final float MIN_WEIGHT_LBS = 0.f;
+    public static final float MAX_WEIGHT_LBS = 994.28f;
 
-    /** Heigh constants **/
-    public static final float MIN_HEIGHT = 0.29f;
-    public static final float MAX_HEIGHT = 2.81f;
+    /** Height constants **/
+    public static final float MIN_HEIGHT_M = 0.29f;
+    public static final float MAX_HEIGHT_M = 2.81f;
+    public static final float MIN_HEIGHT_IN = 11.41f;
+    public static final float MAX_HEIGHT_IN = 110.62f;
 
     /** Bmi constants **/
     public static final float NORMAL_WEIGHT = 18.5f;
@@ -67,5 +73,18 @@ public class Profile {
         } else {
             return CLEAN_TEXT;
         }
+
+    }
+
+    public static float fixWeightToLimits(float weight) {
+        weight = min(weight, MAX_WEIGHT_KG);
+        weight = max(weight, MIN_WEIGHT_KG);
+        return weight;
+    }
+
+    public static float fixHeightToLimits(float height) {
+        height = min(height, MAX_HEIGHT_M);
+        height = max(height, MIN_HEIGHT_M);
+        return height;
     }
 }

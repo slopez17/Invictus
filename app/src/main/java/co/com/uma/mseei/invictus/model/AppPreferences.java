@@ -3,9 +3,13 @@ package co.com.uma.mseei.invictus.model;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static java.lang.Boolean.*;
+import static java.lang.Integer.parseInt;
 import static java.time.LocalDate.now;
 
 import static co.com.uma.mseei.invictus.model.Profile.NO_ANSWER;
+import static co.com.uma.mseei.invictus.util.MathOperations.kg2lbs;
+import static co.com.uma.mseei.invictus.util.MathOperations.m2in;
 
 import android.app.Application;
 import android.content.SharedPreferences;
@@ -35,7 +39,7 @@ public class AppPreferences {
     private static final String DEFAULT_FILE_NAME = "Invictus";
     private static final boolean DEFAULT_MULTIPLE_FILES = false;
     private static final String DEFAULT_REFRESH_TIME = "5";
-    public static final String DEFAULT_UNIT_SYSTEM = "0";
+    public static final String DEFAULT_UNIT_SYSTEM = "false";
 
     /**
      * Profile constants
@@ -110,5 +114,41 @@ public class AppPreferences {
     public LocalDate getProfileUpdateDate() {
         String profileUpdateDate = preferences.getString(PREF_PROFILE_UPDATE_DATE, now().toString());
         return LocalDate.parse(profileUpdateDate);
+    }
+
+    public boolean isAutoFinishOn() {
+        return preferences.getBoolean(PREF_AUTO_FINISH, DEFAULT_AUTO_FINISH);
+    }
+
+    public int getSamplesLimit() {
+        String samplesLimit = preferences.getString(PREF_SAMPLES_LIMIT, DEFAULT_SAMPLES_LIMIT);
+        return parseInt(samplesLimit);
+    }
+
+    public int getSamplesOnMemory() {
+        String samplesOnMemory = preferences.getString(PREF_SAMPLES_ON_MEMORY, DEFAULT_SAMPLES_ON_MEMORY);
+        return parseInt(samplesOnMemory);
+    }
+
+    public boolean isSaveOnSdOn() {
+        return preferences.getBoolean(PREF_SAVE_ON_SD, DEFAULT_SAVE_ON_SD);
+    }
+
+    public String getFileName() {
+        return preferences.getString(PREF_FILE_NAME, DEFAULT_FILE_NAME);
+    }
+
+    public boolean isMultipleFilesOn() {
+        return preferences.getBoolean(PREF_MULTIPLE_FILES, DEFAULT_MULTIPLE_FILES);
+    }
+
+    public int getRefreshTime() {
+        String refreshTime = preferences.getString(PREF_REFRESH_TIME, DEFAULT_REFRESH_TIME);
+        return parseInt(refreshTime);
+    }
+
+    public boolean isUnitSystemImperial() {
+        String unitSystem = preferences.getString(PREF_UNIT_SYSTEM, DEFAULT_UNIT_SYSTEM);
+        return parseBoolean(unitSystem);
     }
 }

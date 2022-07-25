@@ -2,14 +2,16 @@ package co.com.uma.mseei.invictus.view;
 
 import static java.lang.System.currentTimeMillis;
 import static co.com.uma.mseei.invictus.R.id.birthdateEditText;
-import static co.com.uma.mseei.invictus.R.id.bmiTextView;
 import static co.com.uma.mseei.invictus.R.id.genderSpinner;
 import static co.com.uma.mseei.invictus.R.id.heightEditText;
 import static co.com.uma.mseei.invictus.R.id.saveButton;
 import static co.com.uma.mseei.invictus.R.id.weightEditText;
 import static co.com.uma.mseei.invictus.R.layout.item_spinner;
+import static co.com.uma.mseei.invictus.model.AppPreferences.DEFAULT_HEIGHT;
+import static co.com.uma.mseei.invictus.model.AppPreferences.DEFAULT_WEIGHT;
 import static co.com.uma.mseei.invictus.util.ViewOperations.changeEditor;
 import static co.com.uma.mseei.invictus.util.ViewOperations.getFloatFrom;
+import static co.com.uma.mseei.invictus.util.ViewOperations.setHintTextView;
 import static co.com.uma.mseei.invictus.util.ViewOperations.setTextView;
 
 import android.annotation.SuppressLint;
@@ -66,12 +68,12 @@ public class ProfileFragment
         initializeBirthdateEditText();
         initializeAgeTextView();
         initializeWeightEditText();
+        initializeWeightUndTextView();
         initializeHeightEditText();
+        initializeHeightUndTextView();
         initializeBmiTextView();
         initializeBmiClassificationTextView();
-
-        Button saveButton = binding.saveButton;
-        saveButton.setOnClickListener(this);
+        initializesaveButton();
 
         return root;
     }
@@ -114,14 +116,26 @@ public class ProfileFragment
 
     private void initializeWeightEditText(){
         EditText weightEditText = binding.weightEditText;
+        setHintTextView(weightEditText, DEFAULT_WEIGHT);
         weightEditText.setOnEditorActionListener(this);
-        profileViewModel.getWeight().observe(getViewLifecycleOwner(), x -> setTextView(weightEditText, x));
+        profileViewModel.getWeightOnScreen().observe(getViewLifecycleOwner(), x -> setTextView(weightEditText, x));
+    }
+
+    private void initializeWeightUndTextView(){
+        TextView weightUndTextView = binding.weightUndTextView;
+        profileViewModel.getWeightUnd().observe(getViewLifecycleOwner(), weightUndTextView::setText);
     }
 
     private void initializeHeightEditText(){
         EditText heightEditText = binding.heightEditText;
+        setHintTextView(heightEditText, DEFAULT_HEIGHT);
         heightEditText.setOnEditorActionListener(this);
-        profileViewModel.getHeight().observe(getViewLifecycleOwner(), x -> setTextView(heightEditText, x));
+        profileViewModel.getHeightOnScreen().observe(getViewLifecycleOwner(), x -> setTextView(heightEditText, x));
+    }
+
+    private void initializeHeightUndTextView(){
+        TextView heightUndTextView = binding.heightUndTextView;
+        profileViewModel.getHeightUnd().observe(getViewLifecycleOwner(), heightUndTextView::setText);
     }
 
     private  void  initializeBmiTextView(){
@@ -132,6 +146,21 @@ public class ProfileFragment
     private  void  initializeBmiClassificationTextView(){
         TextView bmiClassificationTextView = binding.bmiClassificationTextView;
         profileViewModel.getBmiClassification().observe(getViewLifecycleOwner(), bmiClassificationTextView::setText);
+    }
+
+    private void initializesaveButton() {
+        Button saveButton = binding.saveButton;
+        saveButton.setOnClickListener(this);
+    }
+
+    private void initializeCalendar() {
+        int year =  birthdate.getYear();
+        int month = birthdate.getMonthValue()-1;
+        int day = birthdate.getDayOfMonth();
+        DatePickerDialog datePickerDialog =
+                new DatePickerDialog(activity, this, year, month, day);
+        datePickerDialog.show();
+        datePickerDialog.getDatePicker().setMaxDate(currentTimeMillis());
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -152,15 +181,8 @@ public class ProfileFragment
     public void onClick(View view) {
         switch (view.getId()) {
             case birthdateEditText:
-                int year =  birthdate.getYear();
-                int month = birthdate.getMonthValue()-1;
-                int day = birthdate.getDayOfMonth();
-                DatePickerDialog datePickerDialog =
-                        new DatePickerDialog(activity, this, year, month, day);
-                datePickerDialog.show();
-                datePickerDialog.getDatePicker().setMaxDate(currentTimeMillis());
+                initializeCalendar();
                 break;
-
             case saveButton:
                 break;
         }
@@ -169,6 +191,7 @@ public class ProfileFragment
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         profileViewModel.setBirthdate(year, month+1, dayOfMonth);
+        profileViewModel.setAge();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -178,9 +201,11 @@ public class ProfileFragment
         switch (textView.getId()){
             case weightEditText:
                 profileViewModel.setWeight(value);
+                profileViewModel.setBmiValues();
                 break;
             case heightEditText:
                 profileViewModel.setHeight(value);
+                profileViewModel.setBmiValues();
                 break;
             default:
                 return false;

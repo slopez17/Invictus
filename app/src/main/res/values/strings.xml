@@ -36,9 +36,7 @@
 
     <string name="body_category">About your body</string>
     <string name="weight">Weight</string>
-    <string name="weight_hint">56.7</string>
     <string name="height">Height</string>
-    <string name="height_hint">1.70</string>
     <string name="bmi">BMI</string>
     <string-array name="bmi_clasification_array">
         <item>Insufficient weight</item>
