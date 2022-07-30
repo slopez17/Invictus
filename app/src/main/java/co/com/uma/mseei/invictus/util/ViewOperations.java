@@ -28,7 +28,7 @@ public class ViewOperations {
     }
 
     public static void setHintTextView(TextView textView, float value) {
-        textView.setHint(String.valueOf(value));
+        textView.setHint(twoDigits.format(value));
     }
 
     public static void changeEditor(int actionId, TextView textView) {

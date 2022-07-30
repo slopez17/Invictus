@@ -1,6 +1,8 @@
 package co.com.uma.mseei.invictus.viewmodel;
 
 import static co.com.uma.mseei.invictus.R.array.gender_array;
+import static co.com.uma.mseei.invictus.model.AppPreferences.DEFAULT_HEIGHT_M;
+import static co.com.uma.mseei.invictus.model.AppPreferences.DEFAULT_WEIGHT_KG;
 import static co.com.uma.mseei.invictus.model.Profile.calculateAge;
 import static co.com.uma.mseei.invictus.model.Profile.calculateBmi;
 import static co.com.uma.mseei.invictus.model.Profile.calculateBmiClassification;
@@ -36,45 +38,43 @@ public class ProfileViewModel extends AndroidViewModel {
     private final MutableLiveData<LocalDate> birthdate;
     private final MutableLiveData<Integer> age;
     private final MutableLiveData<Float> weight;
+    private final MutableLiveData<Float> weightHint;
     private final MutableLiveData<Float> weightOnScreen;
     private final MutableLiveData<String> weightUnd;
     private final MutableLiveData<Float> height;
+    private final MutableLiveData<Float> heightHint;
     private final MutableLiveData<Float> heightOnScreen;
     private final MutableLiveData<String> heightUnd;
     private final MutableLiveData<Float> bmi;
     private final MutableLiveData<String> bmiClassification;
+    private final MutableLiveData<String> updateDate;
 
 
     public ProfileViewModel(@NonNull Application application) {
         super(application);
         appPreferences = new AppPreferences(application);
         genderOptions = getStringArrayById(application, gender_array);
-
         gender = new MutableLiveData<>();
         birthdate = new MutableLiveData<>();
         age = new MutableLiveData<>();
         weight = new MutableLiveData<>();
-        weightOnScreen = new MutableLiveData<>();
         weightUnd = new MutableLiveData<>();
+        weightHint = new MutableLiveData<>();
+        weightOnScreen = new MutableLiveData<>();
         height = new MutableLiveData<>();
-        heightOnScreen = new MutableLiveData<>();
         heightUnd = new MutableLiveData<>();
+        heightHint = new MutableLiveData<>();
+        heightOnScreen = new MutableLiveData<>();
         bmi = new MutableLiveData<>();
         bmiClassification = new MutableLiveData<>();
+        updateDate = new MutableLiveData<>();
     }
 
     public void initializeValues(){
-        this.isUnitSystemImperial = appPreferences.isUnitSystemImperial();
-        this.gender.setValue(appPreferences.getGender());
-        this.birthdate.setValue(appPreferences.getBirthDate());
-        setAge();
-        this.weight.setValue(fixWeightToLimits(appPreferences.getWeight()));
-        setWeightOnScreen();
-        setWeightUnd();
-        this.height.setValue(fixHeightToLimits(appPreferences.getHeight()));
-        setHeightOnScreen();
-        setHeightUnd();
-        setBmiValues();
+        unitSystem();
+        userBasic();
+        userBody();
+        lastUpdate();
     }
 
     public String[] getGenderOptions() {
@@ -107,18 +107,20 @@ public class ProfileViewModel extends AndroidViewModel {
         this.age.setValue(age);
     }
 
-    public LiveData<Float> getWeightOnScreen(){
+    public LiveData<Float> getWeight(){
         return weightOnScreen;
-    }
-
-    public void setWeightOnScreen() {
-        assert weight.getValue() != null: "setWeight";
-        float weight = this.weight.getValue();
-        this.weightOnScreen.setValue(isUnitSystemImperial ? kg2lbs(weight) : weight);
     }
 
     public void setWeight(float weightOnScreen) {
         this.weight.setValue(isUnitSystemImperial ? lbs2kg(weightOnScreen) : weightOnScreen);
+    }
+
+    public LiveData<Float> getWeightHint() {
+        return weightHint;
+    }
+
+    public void setWeightHint() {
+        this.weightHint.setValue(isUnitSystemImperial ? kg2lbs(DEFAULT_WEIGHT_KG) : DEFAULT_WEIGHT_KG);
     }
 
     public LiveData<String> getWeightUnd(){
@@ -130,18 +132,20 @@ public class ProfileViewModel extends AndroidViewModel {
         this.weightUnd.setValue(und);
     }
 
-    public LiveData<Float> getHeightOnScreen(){
+    public LiveData<Float> getHeight(){
         return heightOnScreen;
-    }
-
-    public void setHeightOnScreen() {
-        assert height.getValue() != null: "setHeight";
-        float height = this.height.getValue();
-        this.heightOnScreen.setValue(isUnitSystemImperial ? m2in(height) : height);
     }
 
     public void setHeight(float heightOnScreen) {
         this.height.setValue(isUnitSystemImperial ? in2m(heightOnScreen) : heightOnScreen);
+    }
+
+    public LiveData<Float> getHeightHint() {
+        return heightHint;
+    }
+
+    public void setHeightHint() {
+        this.heightHint.setValue(isUnitSystemImperial ? m2in(DEFAULT_HEIGHT_M) : DEFAULT_HEIGHT_M);
     }
 
     public LiveData<String> getHeightUnd(){
@@ -168,4 +172,47 @@ public class ProfileViewModel extends AndroidViewModel {
         String bmiClassification = calculateBmiClassification(getApplication(), bmi);
         this.bmiClassification.setValue(bmiClassification);
     }
+
+    public LiveData<String> getUpdateDate() {
+        return updateDate;
+    }
+
+    private void unitSystem() {
+        this.isUnitSystemImperial = appPreferences.isUnitSystemImperial();
+    }
+
+    private void userBasic() {
+        this.gender.setValue(appPreferences.getGender());
+        this.birthdate.setValue(appPreferences.getBirthDate());
+        setAge();
+    }
+
+    private void userBody() {
+        this.weight.setValue(fixWeightToLimits(appPreferences.getWeight()));
+        setWeight();
+        setWeightUnd();
+        setWeightHint();
+        this.height.setValue(fixHeightToLimits(appPreferences.getHeight()));
+        setHeight();
+        setHeightUnd();
+        setHeightHint();
+        setBmiValues();
+    }
+
+    private void lastUpdate() {
+        this.updateDate.setValue(appPreferences.getProfileUpdateDate());
+    }
+
+    private void setWeight() {
+        assert weight.getValue() != null: "setWeight";
+        float weight = this.weight.getValue();
+        this.weightOnScreen.setValue(isUnitSystemImperial ? kg2lbs(weight) : weight);
+    }
+
+    private void setHeight() {
+        assert height.getValue() != null: "setHeight";
+        float height = this.height.getValue();
+        this.heightOnScreen.setValue(isUnitSystemImperial ? m2in(height) : height);
+    }
+
 }

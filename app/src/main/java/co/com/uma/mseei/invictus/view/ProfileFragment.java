@@ -7,8 +7,6 @@ import static co.com.uma.mseei.invictus.R.id.heightEditText;
 import static co.com.uma.mseei.invictus.R.id.saveButton;
 import static co.com.uma.mseei.invictus.R.id.weightEditText;
 import static co.com.uma.mseei.invictus.R.layout.item_spinner;
-import static co.com.uma.mseei.invictus.model.AppPreferences.DEFAULT_HEIGHT;
-import static co.com.uma.mseei.invictus.model.AppPreferences.DEFAULT_WEIGHT;
 import static co.com.uma.mseei.invictus.util.ViewOperations.changeEditor;
 import static co.com.uma.mseei.invictus.util.ViewOperations.getFloatFrom;
 import static co.com.uma.mseei.invictus.util.ViewOperations.setHintTextView;
@@ -23,6 +21,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -45,13 +44,15 @@ import co.com.uma.mseei.invictus.viewmodel.ProfileViewModel;
 
 public class ProfileFragment
         extends Fragment
-        implements OnItemSelectedListener, OnClickListener, OnDateSetListener, OnEditorActionListener {
+        implements OnItemSelectedListener, OnClickListener, OnDateSetListener, OnEditorActionListener, OnFocusChangeListener {
 
     private Activity activity;
     private FragmentProfileBinding binding;
     private ProfileViewModel profileViewModel;
 
     LocalDate birthdate;
+    TextView weightTextView;
+    TextView heightTextView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -73,7 +74,8 @@ public class ProfileFragment
         initializeHeightUndTextView();
         initializeBmiTextView();
         initializeBmiClassificationTextView();
-        initializesaveButton();
+        initializeUpdateDate();
+        initializeSaveButton();
 
         return root;
     }
@@ -88,79 +90,6 @@ public class ProfileFragment
     public void onStart() {
         super.onStart();
         profileViewModel.initializeValues();
-    }
-
-    private void initializeGenderSpinner() {
-        Spinner genderSpinner = binding.genderSpinner;
-        String[] genderOptions = profileViewModel.getGenderOptions();
-        ArrayAdapter<String> arrayAdapter =
-                new ArrayAdapter<>(activity, item_spinner, genderOptions);
-        genderSpinner.setAdapter(arrayAdapter);
-        genderSpinner.setOnItemSelectedListener(this);
-        profileViewModel.getGender().observe(getViewLifecycleOwner(), genderSpinner::setSelection);
-    }
-
-    private void initializeBirthdateEditText() {
-        EditText birthdateEditText = binding.birthdateEditText;
-        birthdateEditText.setOnClickListener(this);
-        profileViewModel.getBirthdate().observe(getViewLifecycleOwner(), x -> {
-            birthdate = x;
-            birthdateEditText.setText(birthdate.toString());
-        });
-    }
-
-    private void initializeAgeTextView() {
-        TextView ageTextView = binding.ageTextView;
-        profileViewModel.getAge().observe(getViewLifecycleOwner(), x -> setTextView(ageTextView, x));
-    }
-
-    private void initializeWeightEditText(){
-        EditText weightEditText = binding.weightEditText;
-        setHintTextView(weightEditText, DEFAULT_WEIGHT);
-        weightEditText.setOnEditorActionListener(this);
-        profileViewModel.getWeightOnScreen().observe(getViewLifecycleOwner(), x -> setTextView(weightEditText, x));
-    }
-
-    private void initializeWeightUndTextView(){
-        TextView weightUndTextView = binding.weightUndTextView;
-        profileViewModel.getWeightUnd().observe(getViewLifecycleOwner(), weightUndTextView::setText);
-    }
-
-    private void initializeHeightEditText(){
-        EditText heightEditText = binding.heightEditText;
-        setHintTextView(heightEditText, DEFAULT_HEIGHT);
-        heightEditText.setOnEditorActionListener(this);
-        profileViewModel.getHeightOnScreen().observe(getViewLifecycleOwner(), x -> setTextView(heightEditText, x));
-    }
-
-    private void initializeHeightUndTextView(){
-        TextView heightUndTextView = binding.heightUndTextView;
-        profileViewModel.getHeightUnd().observe(getViewLifecycleOwner(), heightUndTextView::setText);
-    }
-
-    private  void  initializeBmiTextView(){
-        TextView bmiTextView = binding.bmiTextView;
-        profileViewModel.getBmi().observe(getViewLifecycleOwner(), x -> setTextView(bmiTextView, x));
-    }
-
-    private  void  initializeBmiClassificationTextView(){
-        TextView bmiClassificationTextView = binding.bmiClassificationTextView;
-        profileViewModel.getBmiClassification().observe(getViewLifecycleOwner(), bmiClassificationTextView::setText);
-    }
-
-    private void initializesaveButton() {
-        Button saveButton = binding.saveButton;
-        saveButton.setOnClickListener(this);
-    }
-
-    private void initializeCalendar() {
-        int year =  birthdate.getYear();
-        int month = birthdate.getMonthValue()-1;
-        int day = birthdate.getDayOfMonth();
-        DatePickerDialog datePickerDialog =
-                new DatePickerDialog(activity, this, year, month, day);
-        datePickerDialog.show();
-        datePickerDialog.getDatePicker().setMaxDate(currentTimeMillis());
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -197,8 +126,22 @@ public class ProfileFragment
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onEditorAction(TextView textView, int actionId, KeyEvent event) {
-        float value = getFloatFrom(textView);
-        switch (textView.getId()){
+        changeEditor(actionId, textView);
+        return true;
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if (!hasFocus) {
+            float value = getFloatFrom((TextView) v);
+            int id = v.getId();
+            changeUserBodyData(id, value);
+        }
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    private void changeUserBodyData(int id, float value) {
+        switch (id) {
             case weightEditText:
                 profileViewModel.setWeight(value);
                 profileViewModel.setBmiValues();
@@ -207,10 +150,86 @@ public class ProfileFragment
                 profileViewModel.setHeight(value);
                 profileViewModel.setBmiValues();
                 break;
-            default:
-                return false;
         }
-        changeEditor(actionId, textView);
-        return true;
+    }
+
+    private void initializeGenderSpinner() {
+        Spinner genderSpinner = binding.genderSpinner;
+        String[] genderOptions = profileViewModel.getGenderOptions();
+        ArrayAdapter<String> arrayAdapter =
+                new ArrayAdapter<>(activity, item_spinner, genderOptions);
+        genderSpinner.setAdapter(arrayAdapter);
+        genderSpinner.setOnItemSelectedListener(this);
+        profileViewModel.getGender().observe(getViewLifecycleOwner(), genderSpinner::setSelection);
+    }
+
+    private void initializeBirthdateEditText() {
+        EditText birthdateEditText = binding.birthdateEditText;
+        birthdateEditText.setOnClickListener(this);
+        profileViewModel.getBirthdate().observe(getViewLifecycleOwner(), x -> {
+            birthdate = x;
+            birthdateEditText.setText(birthdate.toString());
+        });
+    }
+
+    private void initializeCalendar() {
+        int year =  birthdate.getYear();
+        int month = birthdate.getMonthValue()-1;
+        int day = birthdate.getDayOfMonth();
+        DatePickerDialog datePickerDialog =
+                new DatePickerDialog(activity, this, year, month, day);
+        datePickerDialog.show();
+        datePickerDialog.getDatePicker().setMaxDate(currentTimeMillis());
+    }
+
+    private void initializeAgeTextView() {
+        TextView ageTextView = binding.ageTextView;
+        profileViewModel.getAge().observe(getViewLifecycleOwner(), x -> setTextView(ageTextView, x));
+    }
+
+    private void initializeWeightEditText(){
+        weightTextView = binding.weightEditText;
+        weightTextView.setOnEditorActionListener(this);
+        weightTextView.setOnFocusChangeListener(this);
+        profileViewModel.getWeightHint().observe(getViewLifecycleOwner(), x -> setHintTextView(weightTextView, x));
+        profileViewModel.getWeight().observe(getViewLifecycleOwner(), x -> setTextView(weightTextView, x));
+    }
+
+    private void initializeWeightUndTextView(){
+        TextView weightUndTextView = binding.weightUndTextView;
+        profileViewModel.getWeightUnd().observe(getViewLifecycleOwner(), weightUndTextView::setText);
+    }
+
+    private void initializeHeightEditText(){
+        heightTextView = binding.heightEditText;
+        heightTextView.setOnEditorActionListener(this);
+        heightTextView.setOnFocusChangeListener(this);
+        profileViewModel.getHeightHint().observe(getViewLifecycleOwner(), x -> setHintTextView(heightTextView, x));
+        profileViewModel.getHeight().observe(getViewLifecycleOwner(), x -> setTextView(heightTextView, x));
+    }
+
+    private void initializeHeightUndTextView(){
+        TextView heightUndTextView = binding.heightUndTextView;
+        profileViewModel.getHeightUnd().observe(getViewLifecycleOwner(), heightUndTextView::setText);
+    }
+
+    private  void  initializeBmiTextView(){
+        TextView bmiTextView = binding.bmiTextView;
+        profileViewModel.getBmi().observe(getViewLifecycleOwner(), x -> setTextView(bmiTextView, x));
+    }
+
+    private  void  initializeBmiClassificationTextView(){
+        TextView bmiClassificationTextView = binding.bmiClassificationTextView;
+        profileViewModel.getBmiClassification().observe(getViewLifecycleOwner(), bmiClassificationTextView::setText);
+    }
+
+    private void initializeUpdateDate() {
+        TextView updateDate = binding.updateDateTextView;
+        profileViewModel.getUpdateDate().observe(getViewLifecycleOwner(), updateDate::setText);
+    }
+
+    private void initializeSaveButton() {
+        Button saveButton = binding.saveButton;
+        saveButton.setOnClickListener(this);
     }
 }

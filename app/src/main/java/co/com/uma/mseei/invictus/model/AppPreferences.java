@@ -8,8 +8,6 @@ import static java.lang.Integer.parseInt;
 import static java.time.LocalDate.now;
 
 import static co.com.uma.mseei.invictus.model.Profile.NO_ANSWER;
-import static co.com.uma.mseei.invictus.util.MathOperations.kg2lbs;
-import static co.com.uma.mseei.invictus.util.MathOperations.m2in;
 
 import android.app.Application;
 import android.content.SharedPreferences;
@@ -53,8 +51,8 @@ public class AppPreferences {
     public static final String PREF_PROFILE_UPDATE_DATE = "profileUpdateDate";
 
     public static final int DEFAULT_GENDER = NO_ANSWER;
-    public static final float DEFAULT_WEIGHT = 56.7f;
-    public static final float DEFAULT_HEIGHT = 1.70f;
+    public static final float DEFAULT_WEIGHT_KG = 56.7f;
+    public static final float DEFAULT_HEIGHT_M = 1.70f;
 
     /**
      * AppPreferences constants
@@ -94,7 +92,7 @@ public class AppPreferences {
     }
 
     public float getWeight() {
-        return preferences.getFloat(PREF_WEIGHT, DEFAULT_WEIGHT);
+        return preferences.getFloat(PREF_WEIGHT, DEFAULT_WEIGHT_KG);
     }
 
     public void setWeight(float weight) {
@@ -103,7 +101,7 @@ public class AppPreferences {
     }
 
     public float getHeight() {
-        return preferences.getFloat(PREF_HEIGHT, DEFAULT_HEIGHT);
+        return preferences.getFloat(PREF_HEIGHT, DEFAULT_HEIGHT_M);
     }
 
     public void setHeight(float height ) {
@@ -111,9 +109,8 @@ public class AppPreferences {
         editor.apply();
     }
 
-    public LocalDate getProfileUpdateDate() {
-        String profileUpdateDate = preferences.getString(PREF_PROFILE_UPDATE_DATE, now().toString());
-        return LocalDate.parse(profileUpdateDate);
+    public String getProfileUpdateDate() {
+        return preferences.getString(PREF_PROFILE_UPDATE_DATE, now().toString());
     }
 
     public boolean isAutoFinishOn() {
