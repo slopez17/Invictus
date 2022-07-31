@@ -113,6 +113,7 @@ public class ProfileFragment
                 initializeCalendar();
                 break;
             case saveButton:
+                profileViewModel.saveProfile();
                 break;
         }
     }

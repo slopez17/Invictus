@@ -48,8 +48,10 @@
         <item>Obesity Level III (morbid)</item>
         <item>Obesity Level IV (extreme)</item>
     </string-array>
+
     <string name="update_date">Last update</string>
     <string name="save">Save</string>
+    <string name="successfully_saved">Data successfully saved</string>
 
     <!-- Settings -->
     <string name="tracking_category">

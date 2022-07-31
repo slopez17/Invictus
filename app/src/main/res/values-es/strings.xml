@@ -49,8 +49,10 @@
         <item>Obesidad de tipo III (mórbida)</item>
         <item>Obesidad de tipo IV (extrema)</item>
     </string-array>
+
     <string name="update_date">Última actualización</string>
     <string name="save">Guardar</string>
+    <string name="successfully_saved">Datos guardados éxitosamente</string>
 
     <!-- Settings -->
     <string name="tracking_category">

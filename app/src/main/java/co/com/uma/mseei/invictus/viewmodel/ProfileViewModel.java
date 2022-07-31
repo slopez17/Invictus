@@ -1,6 +1,10 @@
 package co.com.uma.mseei.invictus.viewmodel;
 
+import static android.widget.Toast.LENGTH_SHORT;
+import static android.widget.Toast.makeText;
+import static java.time.LocalDate.now;
 import static co.com.uma.mseei.invictus.R.array.gender_array;
+import static co.com.uma.mseei.invictus.R.string.successfully_saved;
 import static co.com.uma.mseei.invictus.model.AppPreferences.DEFAULT_HEIGHT_M;
 import static co.com.uma.mseei.invictus.model.AppPreferences.DEFAULT_WEIGHT_KG;
 import static co.com.uma.mseei.invictus.model.Profile.calculateAge;
@@ -17,6 +21,7 @@ import static co.com.uma.mseei.invictus.util.MathOperations.kg2lbs;
 import static co.com.uma.mseei.invictus.util.MathOperations.lbs2kg;
 import static co.com.uma.mseei.invictus.util.MathOperations.m2in;
 import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringArrayById;
+import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringById;
 
 import android.app.Application;
 
@@ -28,6 +33,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.time.LocalDate;
 
 import co.com.uma.mseei.invictus.model.AppPreferences;
+import co.com.uma.mseei.invictus.util.ResourceOperations;
 
 public class ProfileViewModel extends AndroidViewModel {
 
@@ -48,7 +54,6 @@ public class ProfileViewModel extends AndroidViewModel {
     private final MutableLiveData<Float> bmi;
     private final MutableLiveData<String> bmiClassification;
     private final MutableLiveData<String> updateDate;
-
 
     public ProfileViewModel(@NonNull Application application) {
         super(application);
@@ -112,7 +117,9 @@ public class ProfileViewModel extends AndroidViewModel {
     }
 
     public void setWeight(float weightOnScreen) {
-        this.weight.setValue(isUnitSystemImperial ? lbs2kg(weightOnScreen) : weightOnScreen);
+        float weight = isUnitSystemImperial ? lbs2kg(weightOnScreen) : weightOnScreen;
+        this.weight.setValue(fixWeightToLimits(weight));
+        setWeight();
     }
 
     public LiveData<Float> getWeightHint() {
@@ -137,7 +144,9 @@ public class ProfileViewModel extends AndroidViewModel {
     }
 
     public void setHeight(float heightOnScreen) {
-        this.height.setValue(isUnitSystemImperial ? in2m(heightOnScreen) : heightOnScreen);
+        float height = isUnitSystemImperial ? in2m(heightOnScreen) : heightOnScreen;
+        this.height.setValue(fixHeightToLimits(height));
+        setHeight();
     }
 
     public LiveData<Float> getHeightHint() {
@@ -175,6 +184,25 @@ public class ProfileViewModel extends AndroidViewModel {
 
     public LiveData<String> getUpdateDate() {
         return updateDate;
+    }
+
+    public void saveProfile() {
+        assert gender.getValue() != null && birthdate.getValue() != null &&
+                weight.getValue() != null && height.getValue() != null : "saveProfile";
+        appPreferences.setGender(gender.getValue());
+        appPreferences.setBirthDate(birthdate.getValue());
+        appPreferences.setWeight(weight.getValue());
+        appPreferences.setHeight(height.getValue());
+        appPreferences.setProfileUpdateDate(now());
+
+        saveProfileFeedback();
+    }
+
+    private void saveProfileFeedback() {
+        this.updateDate.setValue(now().toString());
+        Application application = getApplication();
+        String message = getStringById(application, successfully_saved);
+        makeText(application, message, LENGTH_SHORT).show();
     }
 
     private void unitSystem() {

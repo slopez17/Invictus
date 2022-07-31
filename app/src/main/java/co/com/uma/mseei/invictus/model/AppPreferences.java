@@ -113,6 +113,11 @@ public class AppPreferences {
         return preferences.getString(PREF_PROFILE_UPDATE_DATE, now().toString());
     }
 
+    public void setProfileUpdateDate(LocalDate updateDate) {
+        editor.putString(PREF_PROFILE_UPDATE_DATE, updateDate.toString());
+        editor.apply();
+    }
+
     public boolean isAutoFinishOn() {
         return preferences.getBoolean(PREF_AUTO_FINISH, DEFAULT_AUTO_FINISH);
     }
