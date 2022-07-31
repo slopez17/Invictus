@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_historical"
-        android:name="co.com.uma.mseei.invictus.view.DashboardFragment"
+        android:name="co.com.uma.mseei.invictus.view.HistoricalFragment"
         android:label="@string/title_historical"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_historical" />
 
     <fragment
         android:id="@+id/navigation_profile"

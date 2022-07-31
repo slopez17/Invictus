@@ -22,6 +22,15 @@
         Configuración
     </string>
 
+    <!-- Historical -->
+    <string name="select">Escoja una opción</string>
+    <string name="walk">Caminar</string>
+    <string name="jog">Trotar</string>
+    <string name="rope_skipping">Saltar cuerda</string>
+    <string name="run">Correr</string>
+    <string name="bike">Ciclismo</string>
+    <string name="climb">Escalada</string>
+
     <!-- Profile -->
     <string name="basic_category">Tú</string>
     <string name="gender">Género</string>

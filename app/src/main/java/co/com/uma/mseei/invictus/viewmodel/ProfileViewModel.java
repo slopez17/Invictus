@@ -33,7 +33,6 @@ import androidx.lifecycle.MutableLiveData;
 import java.time.LocalDate;
 
 import co.com.uma.mseei.invictus.model.AppPreferences;
-import co.com.uma.mseei.invictus.util.ResourceOperations;
 
 public class ProfileViewModel extends AndroidViewModel {
 

@@ -21,6 +21,15 @@
         Settings
     </string>
 
+    <!-- Historical -->
+    <string name="select">Choose an option</string>
+    <string name="walk">Walk</string>
+    <string name="jog">Jog</string>
+    <string name="rope_skipping">Rope skipping</string>
+    <string name="run">Run</string>
+    <string name="bike">Bike</string>
+    <string name="climb">Climb</string>
+
     <!-- Profile -->
     <string name="basic_category">About you</string>
     <string name="gender">Gender</string>
