@@ -21,6 +21,38 @@
         Settings
     </string>
 
+    <!-- Profile -->
+    <string name="basic_category">About you</string>
+    <string name="gender">Gender</string>
+    <string-array name="gender_array">
+        <item>Prefer not to answer</item>
+        <item>Female</item>
+        <item>Male</item>
+    </string-array>
+    <string name="birthdate">Birthdate</string>
+    <string name="date_format">YYYY-MM-DD</string>
+    <string name="age">Age</string>
+    <string name="age_und">years old</string>
+
+    <string name="body_category">About your body</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="bmi">BMI</string>
+    <string-array name="bmi_clasification_array">
+        <item>Insufficient weight</item>
+        <item>Normal weight</item>
+        <item>Overweight Level I</item>
+        <item>Overweight Level II (pre-obesity)</item>
+        <item>Obesity Level I</item>
+        <item>Obesity Level II</item>
+        <item>Obesity Level III (morbid)</item>
+        <item>Obesity Level IV (extreme)</item>
+    </string-array>
+
+    <string name="update_date">Last update</string>
+    <string name="save">Save</string>
+    <string name="successfully_saved">Data successfully saved</string>
+
     <!-- Settings -->
     <string name="tracking_category">
         Tracking parameters

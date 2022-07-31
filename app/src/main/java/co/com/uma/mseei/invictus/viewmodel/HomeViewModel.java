@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.ui.home;
+package co.com.uma.mseei.invictus.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

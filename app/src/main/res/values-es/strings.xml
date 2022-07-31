@@ -22,6 +22,38 @@
         Configuración
     </string>
 
+    <!-- Profile -->
+    <string name="basic_category">Tú</string>
+    <string name="gender">Género</string>
+    <string-array name="gender_array">
+        <item>Prefiero no responder</item>
+        <item>Femenino</item>
+        <item>Masculino</item>
+    </string-array>
+    <string name="birthdate">Fecha de nacimiento</string>
+    <string name="date_format">YYYY-MM-DD</string>
+    <string name="age">Edad</string>
+    <string name="age_und">años</string>
+
+    <string name="body_category">Tu cuerpo</string>
+    <string name="weight">Peso</string>
+    <string name="height">Estatura</string>
+    <string name="bmi">IMC</string>
+    <string-array name="bmi_clasification_array">
+        <item>Peso insuficiente</item>
+        <item>Normopeso</item>
+        <item>Sobrepeso grado I</item>
+        <item>Sobrepeso grado II (preobesidad)</item>
+        <item>Obesidad de tipo I</item>
+        <item>Obesidad de tipo II</item>
+        <item>Obesidad de tipo III (mórbida)</item>
+        <item>Obesidad de tipo IV (extrema)</item>
+    </string-array>
+
+    <string name="update_date">Última actualización</string>
+    <string name="save">Guardar</string>
+    <string name="successfully_saved">Datos guardados éxitosamente</string>
+
     <!-- Settings -->
     <string name="tracking_category">
         Parámetros de seguimiento

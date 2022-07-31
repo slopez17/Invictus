@@ -1,61 +1,72 @@
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/tracking_category">
+    <PreferenceCategory
+        android:title="@string/tracking_category"
+        app:iconSpaceReserved="false">
         <SwitchPreference
             android:defaultValue="false"
             android:key="autoFinish"
+            android:summary="@string/auto_finish_summary"
             android:title="@string/auto_finish_title"
-            android:summary="@string/auto_finish_summary"/>
+            app:iconSpaceReserved="false" />
         <EditTextPreference
             android:defaultValue="2000"
             android:key="samplesLimit"
             android:selectAllOnFocus="true"
             android:singleLine="true"
+            android:summary="@string/limit_of_samples_summary"
             android:title="@string/limit_of_samples_title"
-            android:summary="@string/limit_of_samples_summary"/>
+            app:iconSpaceReserved="false" />
         <EditTextPreference
             android:defaultValue="200"
             android:key="samplesOnMemory"
             android:selectAllOnFocus="true"
             android:singleLine="true"
+            android:summary="@string/samples_on_memory_summary"
             android:title="@string/samples_on_memory_title"
-            android:summary="@string/samples_on_memory_summary"/>
+            app:iconSpaceReserved="false" />
         <SwitchPreference
             android:defaultValue="false"
             android:key="saveOnSD"
+            android:summary="@string/save_on_sd_summary"
             android:title="@string/save_on_sd_title"
-            android:summary="@string/save_on_sd_summary"/>
+            app:iconSpaceReserved="false" />
         <EditTextPreference
             android:defaultValue="Invictus"
             android:dependency="saveOnSD"
             android:key="fileName"
             android:selectAllOnFocus="true"
             android:singleLine="true"
+            android:summary="@string/filename_summary"
             android:title="@string/fileName_title"
-            android:summary="@string/filename_summary"/>
+            app:iconSpaceReserved="false" />
         <SwitchPreference
             android:defaultValue="false"
-            app:dependency="saveOnSD"
             android:key="multipleFiles"
+            android:summary="@string/multiple_files_summary"
             android:title="@string/multiple_files_title"
-            android:summary="@string/multiple_files_summary"/>
+            app:dependency="saveOnSD"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/visualization_category">
+    <PreferenceCategory
+        android:title="@string/visualization_category"
+        app:iconSpaceReserved="false">
         <EditTextPreference
             android:defaultValue="5"
             android:key="refreshTime"
             android:selectAllOnFocus="true"
             android:singleLine="true"
+            android:summary="@string/refresh_summary"
             android:title="@string/refresh_title"
-            android:summary="@string/refresh_summary"/>
+            app:iconSpaceReserved="false" />
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="false"
             android:entries="@array/unit_system_entries"
             android:entryValues="@array/unit_system_values"
             android:key="unitSystem"
-            android:title="@string/unit_system_title" />
+            android:title="@string/unit_system_title"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 </PreferenceScreen>
