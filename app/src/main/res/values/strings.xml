@@ -29,6 +29,7 @@
     <string name="run">Run</string>
     <string name="bike">Bike</string>
     <string name="climb">Climb</string>
+    <string name="no_implemented">No implemented option</string>
 
     <!-- Profile -->
     <string name="basic_category">About you</string>
@@ -122,5 +123,8 @@
         <item>International System</item>
         <item>Imperial/British System</item>
     </string-array>
+    <string name="title_activity_historical">HistoricalActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 
 </resources>

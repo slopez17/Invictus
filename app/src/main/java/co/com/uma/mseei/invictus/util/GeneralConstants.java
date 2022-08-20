@@ -14,4 +14,14 @@ public class GeneralConstants {
 
     public static final float _1KG_LBS = 2.20462262185f;
     public static final float _1IN_M = 0.0254f;
+
+
+    public static final String SELECTED_OPTION = "selectedOption";
+
+    //TODO quizas van en otro lado
+    public static final int NO_IMPLEMENTED = -1;
+    public static final int WEIGHT = 0;
+    public static final int WALK = 1;
+    public static final int ROPE_SKIPPING = 2;
+
 }

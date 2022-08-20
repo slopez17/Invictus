@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.ProfileFragment"
+    tools:context=".view.navigation.ProfileFragment"
     android:background="@drawable/bg_degrade_lightrasberry">
 
     <ScrollView

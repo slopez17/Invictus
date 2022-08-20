@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="co.com.uma.mseei.invictus.view.HomeFragment"
+        android:name="co.com.uma.mseei.invictus.view.navigation.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_historical"
-        android:name="co.com.uma.mseei.invictus.view.HistoricalFragment"
+        android:name="co.com.uma.mseei.invictus.view.navigation.HistoricalFragment"
         android:label="@string/title_historical"
         tools:layout="@layout/fragment_historical" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="co.com.uma.mseei.invictus.view.ProfileFragment"
+        android:name="co.com.uma.mseei.invictus.view.navigation.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="co.com.uma.mseei.invictus.view.SettingsFragment"
+        android:name="co.com.uma.mseei.invictus.view.navigation.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

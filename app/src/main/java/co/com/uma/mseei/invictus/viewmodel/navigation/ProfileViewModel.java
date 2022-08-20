@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.viewmodel;
+package co.com.uma.mseei.invictus.viewmodel.navigation;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;

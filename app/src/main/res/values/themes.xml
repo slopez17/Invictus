@@ -11,4 +11,13 @@
 
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.Invictus.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Invictus.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Invictus.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -8,19 +8,35 @@ import static java.lang.Integer.parseInt;
 import static java.time.LocalDate.now;
 
 import static co.com.uma.mseei.invictus.model.Profile.NO_ANSWER;
+import static co.com.uma.mseei.invictus.util.GeneralConstants.WEIGHT;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.SharedPreferences;
 
 import java.time.LocalDate;
 
 public class AppPreferences {
+    /*
+     * Profile constants
+     * If you need to modify DEFAULT_WEIGHT/DEFAULT_HEIGHT , you must change corresponding string
+     * value on res directory
+     */
+    public static final String PREF_GENDER = "gender";
+    public static final String PREF_BIRTH_DATE = "birthDate";
+    public static final String PREF_WEIGHT = "weight";
+    public static final String PREF_HEIGHT = "height";
+    public static final String PREF_PROFILE_UPDATE_DATE = "profileUpdateDate";
 
-    /**
+    public static final int DEFAULT_GENDER = NO_ANSWER;
+    public static final float DEFAULT_WEIGHT_KG = 56.7f;
+    public static final float DEFAULT_HEIGHT_M = 1.70f;
+
+    /*
      * Settings constants
      * If you need to modify some value, you must change corresponding key/default value on
      * fragment_settings
-     **/
+     */
     public static final String PREF_AUTO_FINISH = "autoFinish";
     public static final String PREF_SAMPLES_LIMIT = "samplesLimit";
     public static final String PREF_SAMPLES_ON_MEMORY = "samplesOnMemory";
@@ -39,39 +55,29 @@ public class AppPreferences {
     private static final String DEFAULT_REFRESH_TIME = "5";
     public static final String DEFAULT_UNIT_SYSTEM = "false";
 
-    /**
-     * Profile constants
-     * If you need to modify DEFAULT_WEIGHT/DEFAULT_HEIGHT , you must change corresponding string
-     * value on res directory
-     **/
-    public static final String PREF_GENDER = "gender";
-    public static final String PREF_BIRTH_DATE = "birthDate";
-    public static final String PREF_WEIGHT = "weight";
-    public static final String PREF_HEIGHT = "height";
-    public static final String PREF_PROFILE_UPDATE_DATE = "profileUpdateDate";
-
-    public static final int DEFAULT_GENDER = NO_ANSWER;
-    public static final float DEFAULT_WEIGHT_KG = 56.7f;
-    public static final float DEFAULT_HEIGHT_M = 1.70f;
-
-    /**
+    /*
      * AppPreferences constants
-     **/
+     */
     public static final String PREF_FILE = "data";
     private final SharedPreferences preferences;
     private final SharedPreferences.Editor editor;
 
-    /**
+    /*
      * Constructor
-     **/
+     */
     public AppPreferences(Application application) {
         this.preferences = application.getSharedPreferences(PREF_FILE, MODE_PRIVATE);
         this.editor = this.preferences.edit();
     }
 
-    /**
-     * Getters and setters
-     **/
+    public AppPreferences(Activity activity) {
+        this.preferences = activity.getSharedPreferences(PREF_FILE, MODE_PRIVATE);
+        this.editor = this.preferences.edit();
+    }
+
+    /*
+     * Getters and setters Profile
+     */
     public int getGender() {
         return preferences.getInt(PREF_GENDER, DEFAULT_GENDER);
     }
@@ -118,6 +124,9 @@ public class AppPreferences {
         editor.apply();
     }
 
+    /*
+     * Getters and setters Settings
+     */
     public boolean isAutoFinishOn() {
         return preferences.getBoolean(PREF_AUTO_FINISH, DEFAULT_AUTO_FINISH);
     }

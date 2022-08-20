@@ -30,6 +30,7 @@
     <string name="run">Correr</string>
     <string name="bike">Ciclismo</string>
     <string name="climb">Escalada</string>
+    <string name="no_implemented">Opción no implementada</string>
 
     <!-- Profile -->
     <string name="basic_category">Tú</string>

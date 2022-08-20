@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.view;
+package co.com.uma.mseei.invictus.view.navigation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import co.com.uma.mseei.invictus.databinding.FragmentHomeBinding;
-import co.com.uma.mseei.invictus.viewmodel.HomeViewModel;
+import co.com.uma.mseei.invictus.viewmodel.navigation.HomeViewModel;
 
 public class HomeFragment extends Fragment {
 
