@@ -6,11 +6,11 @@ import static co.com.uma.mseei.invictus.R.id.ropeSkippingCardView;
 import static co.com.uma.mseei.invictus.R.id.walkCardView;
 import static co.com.uma.mseei.invictus.R.id.weightCardView;
 import static co.com.uma.mseei.invictus.R.string.no_implemented;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.NO_IMPLEMENTED;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.ROPE_SKIPPING;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.SELECTED_OPTION;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.WALK;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.WEIGHT;
+import static co.com.uma.mseei.invictus.model.HistoricalOptions.NO_IMPLEMENTED;
+import static co.com.uma.mseei.invictus.model.HistoricalOptions.ROPE_SKIPPING;
+import static co.com.uma.mseei.invictus.model.HistoricalOptions.WALK;
+import static co.com.uma.mseei.invictus.model.HistoricalOptions.WEIGHT;
+import static co.com.uma.mseei.invictus.model.HistoricalOptions.SELECTED_OPTION;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

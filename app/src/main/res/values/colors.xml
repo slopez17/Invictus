@@ -27,4 +27,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray1">#616161</color>
     <color name="gray2">#a6a6a6</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

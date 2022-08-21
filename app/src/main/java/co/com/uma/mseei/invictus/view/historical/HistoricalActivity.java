@@ -1,43 +1,47 @@
 package co.com.uma.mseei.invictus.view.historical;
 
+import static co.com.uma.mseei.invictus.model.HistoricalOptions.SELECTED_OPTION;
+import static co.com.uma.mseei.invictus.model.HistoricalOptions.getTabTitlesFor;
+import static co.com.uma.mseei.invictus.model.HistoricalOptions.getTitleFor;
+
 import android.os.Bundle;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
-import android.view.View;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
-import co.com.uma.mseei.invictus.viewmodel.historical.SectionsPagerAdapter;
 import co.com.uma.mseei.invictus.databinding.ActivityHistoricalBinding;
+import co.com.uma.mseei.invictus.viewmodel.historical.SectionsPagerAdapter;
 
 public class HistoricalActivity extends AppCompatActivity {
-
-    private ActivityHistoricalBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityHistoricalBinding.inflate(getLayoutInflater());
+        ActivityHistoricalBinding binding = ActivityHistoricalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = binding.viewPager;
-        viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = binding.tabs;
-        tabs.setupWithViewPager(viewPager);
-        FloatingActionButton fab = binding.fab;
+        ImageButton backButton = binding.backButton;
+        backButton.setOnClickListener(v -> this.finish());
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        int selectedOption = this.getIntent().getExtras().getInt(SELECTED_OPTION);
+
+        TextView title = binding.title;
+        title.setText(getTitleFor(getApplication(), selectedOption));
+
+        ViewPager2 viewPager = binding.viewPager;
+        viewPager.setAdapter(new SectionsPagerAdapter(this, selectedOption));
+
+        TabLayout tabs = binding.tabs;
+        new TabLayoutMediator(tabs, viewPager, ((tab, position) -> {
+            int[] TAB_TITLES = getTabTitlesFor(selectedOption);
+            tab.setText(TAB_TITLES[position]);
+        })).attach();
+
     }
 }

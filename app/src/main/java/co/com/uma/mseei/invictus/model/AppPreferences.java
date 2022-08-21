@@ -2,13 +2,10 @@ package co.com.uma.mseei.invictus.model;
 
 
 import static android.content.Context.MODE_PRIVATE;
-
-import static java.lang.Boolean.*;
+import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
 import static java.time.LocalDate.now;
-
 import static co.com.uma.mseei.invictus.model.Profile.NO_ANSWER;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.WEIGHT;
 
 import android.app.Activity;
 import android.app.Application;

@@ -1,47 +1,41 @@
 package co.com.uma.mseei.invictus.viewmodel.historical;
 
-import android.content.Context;
+import static co.com.uma.mseei.invictus.model.HistoricalOptions.isWeightOption;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import co.com.uma.mseei.invictus.R;
-import co.com.uma.mseei.invictus.view.historical.PlaceholderFragment;
+import co.com.uma.mseei.invictus.view.historical.SportPlaceholderFragment;
+import co.com.uma.mseei.invictus.view.historical.WeightPlaceholderFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class SectionsPagerAdapter extends FragmentStateAdapter {
 
-    @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
-    private final Context mContext;
+    private final int selectedOption;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
-        super(fm);
-        mContext = context;
+    public SectionsPagerAdapter(FragmentActivity fragmentActivity, int selectedOption) {
+        super(fragmentActivity);
+        this.selectedOption = selectedOption;
+    }
+
+    @NonNull
+    @Override
+    public Fragment createFragment(int position) {
+        if (isWeightOption(selectedOption)) {
+            return WeightPlaceholderFragment.newInstance(position + 1);
+        } else {
+            return SportPlaceholderFragment.newInstance(position + 1, selectedOption);
+        }
     }
 
     @Override
-    public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1);
+    public int getItemCount() {
+        return  isWeightOption(selectedOption) ? 2 : 4;
     }
 
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return mContext.getResources().getString(TAB_TITLES[position]);
-    }
-
-    @Override
-    public int getCount() {
-        // Show 2 total pages.
-        return 2;
-    }
 }
