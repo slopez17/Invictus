@@ -21,6 +21,21 @@
         Settings
     </string>
 
+    <!-- Historical -->
+    <string name="select">Choose an option</string>
+    <string name="walk">Walk</string>
+    <string name="jog">Jog</string>
+    <string name="rope_skipping">Rope skipping</string>
+    <string name="run">Run</string>
+    <string name="bike">Bike</string>
+    <string name="climb">Climb</string>
+    <string name="no_implemented">No implemented option</string>
+
+    <string name="day">Day</string>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="all">All</string>
+
     <!-- Profile -->
     <string name="basic_category">About you</string>
     <string name="gender">Gender</string>
@@ -113,5 +128,8 @@
         <item>International System</item>
         <item>Imperial/British System</item>
     </string-array>
+    <string name="title_activity_historical">HistoricalActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 
 </resources>

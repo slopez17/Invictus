@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.view;
+package co.com.uma.mseei.invictus.view.navigation;
 
 import static java.lang.System.currentTimeMillis;
 import static co.com.uma.mseei.invictus.R.id.birthdateEditText;
@@ -40,7 +40,7 @@ import androidx.lifecycle.ViewModelProvider;
 import java.time.LocalDate;
 
 import co.com.uma.mseei.invictus.databinding.FragmentProfileBinding;
-import co.com.uma.mseei.invictus.viewmodel.ProfileViewModel;
+import co.com.uma.mseei.invictus.viewmodel.navigation.ProfileViewModel;
 
 public class ProfileFragment
         extends Fragment

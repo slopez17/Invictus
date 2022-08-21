@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.viewmodel;
+package co.com.uma.mseei.invictus.viewmodel.navigation;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;
@@ -21,7 +21,7 @@ import static co.com.uma.mseei.invictus.util.MathOperations.kg2lbs;
 import static co.com.uma.mseei.invictus.util.MathOperations.lbs2kg;
 import static co.com.uma.mseei.invictus.util.MathOperations.m2in;
 import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringArrayById;
-import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringById;
+
 
 import android.app.Application;
 
@@ -33,7 +33,6 @@ import androidx.lifecycle.MutableLiveData;
 import java.time.LocalDate;
 
 import co.com.uma.mseei.invictus.model.AppPreferences;
-import co.com.uma.mseei.invictus.util.ResourceOperations;
 
 public class ProfileViewModel extends AndroidViewModel {
 
@@ -201,8 +200,7 @@ public class ProfileViewModel extends AndroidViewModel {
     private void saveProfileFeedback() {
         this.updateDate.setValue(now().toString());
         Application application = getApplication();
-        String message = getStringById(application, successfully_saved);
-        makeText(application, message, LENGTH_SHORT).show();
+        makeText(application, successfully_saved, LENGTH_SHORT).show();
     }
 
     private void unitSystem() {

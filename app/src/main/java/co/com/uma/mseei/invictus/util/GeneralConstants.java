@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 public class GeneralConstants {
     public static final String CLEAN_TEXT = "";
+    public static final int ERROR = -1;
 
     public static final String KG_UND = "kg";
     public static final String LBS_UND = "lbs";
@@ -14,4 +15,6 @@ public class GeneralConstants {
 
     public static final float _1KG_LBS = 2.20462262185f;
     public static final float _1IN_M = 0.0254f;
+
+
 }

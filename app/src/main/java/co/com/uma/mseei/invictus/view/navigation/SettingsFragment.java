@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.view;
+package co.com.uma.mseei.invictus.view.navigation;
 
 import static co.com.uma.mseei.invictus.R.xml.fragment_settings;
 import static co.com.uma.mseei.invictus.model.AppPreferences.PREF_FILE;

@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Invictus">
         <activity
+            android:name=".view.historical.HistoricalActivity"
+            android:exported="false"
+            android:label="@string/title_activity_historical"
+            android:theme="@style/Theme.Invictus.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name">
@@ -19,6 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
