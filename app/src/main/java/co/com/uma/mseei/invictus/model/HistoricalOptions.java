@@ -9,8 +9,6 @@ import static co.com.uma.mseei.invictus.R.string.walk;
 import static co.com.uma.mseei.invictus.R.string.week;
 import static co.com.uma.mseei.invictus.R.string.weight;
 
-import android.app.Application;
-
 public class HistoricalOptions {
     public static final String SELECTED_OPTION = "selectedOption";
     public static final int NO_IMPLEMENTED = -1;
@@ -28,7 +26,7 @@ public class HistoricalOptions {
         return TAB_TITLES;
     }
 
-    public static int getTitleFor(Application application, int selectedOption) {
+    public static int getTitleFor(int selectedOption) {
         switch (selectedOption){
             case WEIGHT:
                 return weight;

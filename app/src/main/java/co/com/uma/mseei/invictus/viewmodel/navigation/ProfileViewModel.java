@@ -22,7 +22,6 @@ import static co.com.uma.mseei.invictus.util.MathOperations.lbs2kg;
 import static co.com.uma.mseei.invictus.util.MathOperations.m2in;
 import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringArrayById;
 
-
 import android.app.Application;
 
 import androidx.annotation.NonNull;
@@ -57,6 +56,7 @@ public class ProfileViewModel extends AndroidViewModel {
     public ProfileViewModel(@NonNull Application application) {
         super(application);
         appPreferences = new AppPreferences(application);
+
         genderOptions = getStringArrayById(application, gender_array);
         gender = new MutableLiveData<>();
         birthdate = new MutableLiveData<>();
@@ -186,13 +186,23 @@ public class ProfileViewModel extends AndroidViewModel {
     }
 
     public void saveProfile() {
-        assert gender.getValue() != null && birthdate.getValue() != null &&
-                weight.getValue() != null && height.getValue() != null : "saveProfile";
+        assert gender.getValue() != null &&
+                birthdate.getValue() != null &&
+                weight.getValue() != null &&
+                height.getValue() != null &&
+                bmi.getValue() != null: "saveProfile";
+
+        float weight = this.weight.getValue();
+        float height = this.height.getValue();
+        float bmi = this.bmi.getValue();
+
         appPreferences.setGender(gender.getValue());
         appPreferences.setBirthDate(birthdate.getValue());
-        appPreferences.setWeight(weight.getValue());
-        appPreferences.setHeight(height.getValue());
+        appPreferences.setWeight(weight);
+        appPreferences.setHeight(height);
         appPreferences.setProfileUpdateDate(now());
+
+
 
         saveProfileFeedback();
     }

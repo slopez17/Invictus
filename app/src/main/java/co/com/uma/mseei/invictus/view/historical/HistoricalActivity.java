@@ -32,7 +32,7 @@ public class HistoricalActivity extends AppCompatActivity {
         int selectedOption = this.getIntent().getExtras().getInt(SELECTED_OPTION);
 
         TextView title = binding.title;
-        title.setText(getTitleFor(getApplication(), selectedOption));
+        title.setText(getTitleFor(selectedOption));
 
         ViewPager2 viewPager = binding.viewPager;
         viewPager.setAdapter(new SectionsPagerAdapter(this, selectedOption));
