@@ -44,7 +44,8 @@ import co.com.uma.mseei.invictus.viewmodel.navigation.ProfileViewModel;
 
 public class ProfileFragment
         extends Fragment
-        implements OnItemSelectedListener, OnClickListener, OnDateSetListener, OnEditorActionListener, OnFocusChangeListener {
+        implements OnItemSelectedListener, OnClickListener, OnDateSetListener,
+        OnEditorActionListener, OnFocusChangeListener {
 
     private Activity activity;
     private FragmentProfileBinding binding;
@@ -56,9 +57,7 @@ public class ProfileFragment
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        profileViewModel = new ViewModelProvider(this, new ViewModelProvider
-                .AndroidViewModelFactory()).get(ProfileViewModel.class);
-
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -113,7 +112,9 @@ public class ProfileFragment
                 initializeCalendar();
                 break;
             case saveButton:
-                profileViewModel.saveProfile();
+                profileViewModel.saveProfilePreferences();
+                profileViewModel.saveWeightOnDatabase();
+                profileViewModel.showSavedFeedback();
                 break;
         }
     }

@@ -1,5 +1,7 @@
 package co.com.uma.mseei.invictus.viewmodel;
 
+import androidx.lifecycle.MutableLiveData;
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -9,6 +11,7 @@ import java.util.List;
 
 import co.com.uma.mseei.invictus.model.Weight;
 
+@Dao
 public interface WeightDao {
 
     @Query("SELECT * FROM weights")
@@ -18,7 +21,7 @@ public interface WeightDao {
     Weight findByDate(String date);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertWeights(Weight... weights);
+    void insertWeights(Weight... weights);
 
     @Delete
     void delete(Weight weight);
