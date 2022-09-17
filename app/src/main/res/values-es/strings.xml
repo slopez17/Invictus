@@ -68,6 +68,7 @@
     <string name="update_date">Última actualización</string>
     <string name="save">Guardar</string>
     <string name="successfully_saved">Datos guardados éxitosamente</string>
+    <string name="error_saved">No se pudo guardar en la base de datos</string>
 
     <!-- Settings -->
     <string name="tracking_category">
@@ -130,4 +131,7 @@
         <item>Sistema Imperial/Británico</item>
     </string-array>
 
+    <string name="title_activity_historical">HistoricalActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>

@@ -67,6 +67,7 @@
     <string name="update_date">Last update</string>
     <string name="save">Save</string>
     <string name="successfully_saved">Data successfully saved</string>
+    <string name="error_saved">Unable to save on Database</string>
 
     <!-- Settings -->
     <string name="tracking_category">
@@ -128,6 +129,7 @@
         <item>International System</item>
         <item>Imperial/British System</item>
     </string-array>
+
     <string name="title_activity_historical">HistoricalActivity</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>

@@ -2,7 +2,6 @@ package co.com.uma.mseei.invictus.viewmodel.navigation;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;
-import static androidx.room.Room.databaseBuilder;
 import static java.time.LocalDate.now;
 import static co.com.uma.mseei.invictus.R.array.gender_array;
 import static co.com.uma.mseei.invictus.R.string.successfully_saved;
@@ -13,7 +12,6 @@ import static co.com.uma.mseei.invictus.model.Profile.calculateBmi;
 import static co.com.uma.mseei.invictus.model.Profile.calculateBmiClassification;
 import static co.com.uma.mseei.invictus.model.Profile.fixHeightToLimits;
 import static co.com.uma.mseei.invictus.model.Profile.fixWeightToLimits;
-import static co.com.uma.mseei.invictus.util.AppDatabase.DB_NAME;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.IN_UND;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.KG_UND;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.LBS_UND;
@@ -25,7 +23,6 @@ import static co.com.uma.mseei.invictus.util.MathOperations.m2in;
 import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringArrayById;
 
 import android.app.Application;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -36,11 +33,13 @@ import java.time.LocalDate;
 
 import co.com.uma.mseei.invictus.model.AppPreferences;
 import co.com.uma.mseei.invictus.model.Weight;
-import co.com.uma.mseei.invictus.util.AppDatabase;
+import co.com.uma.mseei.invictus.viewmodel.WeightRepository;
+import io.reactivex.Completable;
 
 public class ProfileViewModel extends AndroidViewModel {
 
     private final AppPreferences appPreferences;
+    private final WeightRepository weightRepository;
     private final String[] genderOptions;
     private Boolean  isUnitSystemImperial;
     private final MutableLiveData<Integer> gender;
@@ -61,6 +60,7 @@ public class ProfileViewModel extends AndroidViewModel {
     public ProfileViewModel(@NonNull Application application) {
         super(application);
         appPreferences = new AppPreferences(application);
+        weightRepository = new WeightRepository(application);
 
         genderOptions = getStringArrayById(application, gender_array);
         gender = new MutableLiveData<>();
@@ -77,6 +77,7 @@ public class ProfileViewModel extends AndroidViewModel {
         bmi = new MutableLiveData<>();
         bmiClassification = new MutableLiveData<>();
         updateDate = new MutableLiveData<>();
+
     }
 
     public void initializeValues(){
@@ -204,15 +205,10 @@ public class ProfileViewModel extends AndroidViewModel {
         appPreferences.setProfileUpdateDate(now());
     }
 
-    public void saveWeightOnDatabase() {
+    public Completable saveWeightOnDatabase() {
         assert  weight.getValue() != null : "saveWeightOnDatabase";
         Weight weight = new Weight(now().toString(), this.weight.getValue());
-        //TODO
-        AppDatabase db = databaseBuilder(getApplication(), AppDatabase.class, DB_NAME).allowMainThreadQueries().build();
-        db.weightDao().insertWeights(weight);
-
-        Weight holi = db.weightDao().findByDate(now().toString());
-        Toast.makeText(getApplication(), holi.getValue()+"", LENGTH_SHORT).show();
+        return weightRepository.insertWeights(weight);
     }
 
     public void showSavedFeedback() {
@@ -257,5 +253,4 @@ public class ProfileViewModel extends AndroidViewModel {
         float height = this.height.getValue();
         this.heightOnScreen.setValue(isUnitSystemImperial ? m2in(height) : height);
     }
-
 }

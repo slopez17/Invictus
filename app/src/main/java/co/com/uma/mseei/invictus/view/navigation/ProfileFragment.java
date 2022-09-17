@@ -7,16 +7,20 @@ import static co.com.uma.mseei.invictus.R.id.heightEditText;
 import static co.com.uma.mseei.invictus.R.id.saveButton;
 import static co.com.uma.mseei.invictus.R.id.weightEditText;
 import static co.com.uma.mseei.invictus.R.layout.item_spinner;
+import static co.com.uma.mseei.invictus.R.string.error_saved;
+import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringById;
 import static co.com.uma.mseei.invictus.util.ViewOperations.changeEditor;
 import static co.com.uma.mseei.invictus.util.ViewOperations.getFloatFrom;
 import static co.com.uma.mseei.invictus.util.ViewOperations.setHintTextView;
 import static co.com.uma.mseei.invictus.util.ViewOperations.setTextView;
+import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +45,8 @@ import java.time.LocalDate;
 
 import co.com.uma.mseei.invictus.databinding.FragmentProfileBinding;
 import co.com.uma.mseei.invictus.viewmodel.navigation.ProfileViewModel;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class ProfileFragment
         extends Fragment
@@ -112,9 +118,7 @@ public class ProfileFragment
                 initializeCalendar();
                 break;
             case saveButton:
-                profileViewModel.saveProfilePreferences();
-                profileViewModel.saveWeightOnDatabase();
-                profileViewModel.showSavedFeedback();
+                saveProfileData();
                 break;
         }
     }
@@ -233,5 +237,16 @@ public class ProfileFragment
     private void initializeSaveButton() {
         Button saveButton = binding.saveButton;
         saveButton.setOnClickListener(this);
+    }
+
+    private void saveProfileData() {
+        profileViewModel.saveProfilePreferences();
+
+        CompositeDisposable disposable = new CompositeDisposable();
+        disposable.add(profileViewModel.saveWeightOnDatabase()
+                .subscribeOn(Schedulers.io())
+                .observeOn(mainThread())
+                .subscribe(() -> profileViewModel.showSavedFeedback(),
+                        throwable -> Log.e("saveProfileData", getStringById(activity.getApplication(), error_saved), throwable)));
     }
 }

@@ -11,36 +11,25 @@ import androidx.room.PrimaryKey;
             @Index(value = "date", unique = true)
         })
 public class Weight {
-
+    @NonNull
     @PrimaryKey
     @ColumnInfo (name = "date")
-    @NonNull
-    public String date;
+    private final String date;
 
     @ColumnInfo (name = "value")
-    public float value;
+    private final float value;
 
-    public Weight() {
-    }
-
-    public Weight(String date, float value) {
+    public Weight(@NonNull String date, float value) {
         this.date = date;
         this.value = value;
     }
 
+    @NonNull
     public String getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public float getValue() {
         return value;
-    }
-
-    public void setValue(float value) {
-        this.value = value;
     }
 }
