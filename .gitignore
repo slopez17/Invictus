@@ -24,17 +24,37 @@ hs_err_pid*
 
 # Android
 *.iml
+misc.xml
 .gradle
+.gradle/
+build/
 /local.properties
+.idea/
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
 .DS_Store
 /build
 /captures
+captures/
 .externalNativeBuild
+.externalNativeBuild/
 .cxx
+.cxx/
 local.properties
+output.json
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+
+# Android Profiling
+*.hprof
