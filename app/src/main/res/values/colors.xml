@@ -18,10 +18,10 @@
     <color name="darkOrange40">#66FF5722</color>
     <color name="blue40">#662196F3</color>
 
-    <color name="teal_200">#03DAC5</color>
-    <color name="teal_500">#009688</color>
-    <color name="teal_700">#004B44</color>
-    <color name="teal_900">#001614</color>
+    <color name="cyan_200">#03DAC5</color>
+    <color name="cyan_500">#009688</color>
+    <color name="cyan_700">#004B44</color>
+    <color name="cyan_900">#001614</color>
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
