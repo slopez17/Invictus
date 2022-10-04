@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.viewmodel;
+package co.com.uma.mseei.invictus.viewmodel.database;
 
 import androidx.room.Dao;
 import androidx.room.Insert;

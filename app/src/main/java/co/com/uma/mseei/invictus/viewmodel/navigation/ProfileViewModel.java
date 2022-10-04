@@ -33,7 +33,7 @@ import java.time.LocalDate;
 
 import co.com.uma.mseei.invictus.model.AppPreferences;
 import co.com.uma.mseei.invictus.model.Weight;
-import co.com.uma.mseei.invictus.viewmodel.WeightRepository;
+import co.com.uma.mseei.invictus.viewmodel.database.WeightRepository;
 import io.reactivex.Completable;
 
 public class ProfileViewModel extends AndroidViewModel {

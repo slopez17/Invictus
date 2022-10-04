@@ -1,13 +1,12 @@
-package co.com.uma.mseei.invictus.viewmodel;
+package co.com.uma.mseei.invictus.viewmodel.database;
 
-import static co.com.uma.mseei.invictus.util.AppDatabase.getDatabase;
+import static co.com.uma.mseei.invictus.viewmodel.database.AppDatabase.getDatabase;
 
 import android.app.Application;
 
 import java.util.List;
 
 import co.com.uma.mseei.invictus.model.Weight;
-import co.com.uma.mseei.invictus.util.AppDatabase;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;

@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import co.com.uma.mseei.invictus.databinding.FragmentHistoricalOptionBinding;
+import co.com.uma.mseei.invictus.databinding.FragmentHistoricalWeightOptionBinding;
 import co.com.uma.mseei.invictus.viewmodel.historical.PageViewModel;
 
 /**
@@ -22,8 +22,8 @@ public class WeightPlaceholderFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    private PageViewModel pageViewModel;
-    private FragmentHistoricalOptionBinding binding;
+    private PageViewModel weightPageViewModel;
+    private FragmentHistoricalWeightOptionBinding binding;
 
     public static WeightPlaceholderFragment newInstance(int index) {
         WeightPlaceholderFragment fragment = new WeightPlaceholderFragment();
@@ -36,12 +36,12 @@ public class WeightPlaceholderFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageViewModel = new ViewModelProvider(this).get(PageViewModel.class);
+        weightPageViewModel = new ViewModelProvider(this).get(PageViewModel.class);
         int index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
-        pageViewModel.setIndex(index);
+        weightPageViewModel.setIndex(index);
     }
 
     @Override
@@ -49,16 +49,16 @@ public class WeightPlaceholderFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
-        binding = FragmentHistoricalOptionBinding.inflate(inflater, container, false);
+        binding = FragmentHistoricalWeightOptionBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
+/*
         final TextView textView = binding.sectionLabel;
-        pageViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        weightPageViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
+        });*/
         return root;
     }
 

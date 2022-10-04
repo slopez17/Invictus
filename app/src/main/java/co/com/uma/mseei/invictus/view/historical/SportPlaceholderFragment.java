@@ -4,15 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import co.com.uma.mseei.invictus.databinding.FragmentHistoricalOptionBinding;
+import co.com.uma.mseei.invictus.databinding.FragmentHistoricalWeightOptionBinding;
 import co.com.uma.mseei.invictus.viewmodel.historical.PageViewModel;
 
 /**
@@ -23,7 +20,7 @@ public class SportPlaceholderFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
-    private FragmentHistoricalOptionBinding binding;
+    private FragmentHistoricalWeightOptionBinding binding;
 
     public static SportPlaceholderFragment newInstance(int index, int selectedOption) {
         SportPlaceholderFragment fragment = new SportPlaceholderFragment();
@@ -49,16 +46,16 @@ public class SportPlaceholderFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
-        binding = FragmentHistoricalOptionBinding.inflate(inflater, container, false);
+        binding = FragmentHistoricalWeightOptionBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.sectionLabel;
+/*        final TextView textView = binding.sectionLabel;
         pageViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
+        });*/
         return root;
     }
 

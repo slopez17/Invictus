@@ -1,43 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SplashActivity"
+    android:orientation="vertical"
     android:background="@color/cyan_700"
     android:gravity="center">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/invictus_logo"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_invictus_color_100dp" />
+
+    <TextView
+        android:id="@+id/invictus_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:fontFamily="@font/amaranth"
+        android:includeFontPadding="false"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/invictus_logo"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_invictus_color_100dp" />
+    <TextView
+        android:id="@+id/invictus_motto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/amaranth"
+        android:includeFontPadding="false"
+        android:text="@string/app_motto"
+        android:textColor="@color/white"
+        android:textSize="25sp" />
 
-        <TextView
-            android:id="@+id/invictus_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/amaranth"
-            android:includeFontPadding="false"
-            android:text="@string/app_name"
-            android:textSize="50sp"
-            android:textStyle="bold"
-            android:layout_marginVertical="@dimen/activity_vertical_margin"/>
-
-        <TextView
-            android:id="@+id/invictus_motto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/amaranth"
-            android:includeFontPadding="false"
-            android:text="@string/app_motto"
-            android:textSize="25sp" />
-    </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

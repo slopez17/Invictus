@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.util;
+package co.com.uma.mseei.invictus.viewmodel.database;
 
 
 import android.content.Context;
@@ -8,7 +8,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import co.com.uma.mseei.invictus.model.Weight;
-import co.com.uma.mseei.invictus.viewmodel.WeightDao;
 
 @Database(entities = {Weight.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {

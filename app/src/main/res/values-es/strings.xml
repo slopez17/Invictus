@@ -21,6 +21,12 @@
     <string name="title_settings">
         Configuración
     </string>
+    <string name="previous">
+        Anterior
+    </string>
+    <string name="next">
+        Siguiente
+    </string>
 
     <!-- Historical -->
     <string name="select">Escoja una opción</string>
@@ -36,6 +42,11 @@
     <string name="week">Semana</string>
     <string name="month">Mes</string>
     <string name="all">Todo</string>
+
+    <!-- Historical - Option weight-->
+    <string name="current_weight">Peso actual: </string>
+    <string name="attention">Atención</string>
+    <string name="no_record">Ups… No encontramos nada. Puedes iniciar el seguimiento en este momento!</string>
 
     <!-- Profile -->
     <string name="basic_category">Tú</string>
@@ -131,7 +142,5 @@
         <item>Sistema Imperial/Británico</item>
     </string-array>
 
-    <string name="title_activity_historical">HistoricalActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+
 </resources>
