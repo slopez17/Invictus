@@ -19,11 +19,8 @@ public interface WeightDao {
     @Query("SELECT * FROM weights ORDER BY date DESC")
     Flowable<List<Weight>> getAllWeights();
 
-    @Query("SELECT * FROM weights WHERE date BETWEEN :dateFrom AND :dateTo")
+    @Query("SELECT * FROM weights WHERE date BETWEEN :dateFrom AND :dateTo ORDER BY date DESC")
     Single<List<Weight>> findWeightsByPeriod(String dateFrom, String dateTo);
-
-    @Query("SELECT * FROM weights WHERE date LIKE :date LIMIT 1")
-    Single<Weight> findWeightByDate(String date);
 
     @Query("SELECT :dateFrom AS minX, :dateTo AS maxX, MIN(value) AS minY, MAX(value) AS maxY FROM weights WHERE date BETWEEN :dateFrom AND :dateTo")
     Single<Limits> getWeightLimits(String dateFrom, String dateTo);

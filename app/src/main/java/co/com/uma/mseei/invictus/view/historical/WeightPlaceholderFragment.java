@@ -2,6 +2,7 @@ package co.com.uma.mseei.invictus.view.historical;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static co.com.uma.mseei.invictus.R.color.yellow;
 import static co.com.uma.mseei.invictus.R.id.nextPeriodButton;
 import static co.com.uma.mseei.invictus.R.id.previousPeriodButton;
@@ -27,8 +28,8 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.List;
 
 import co.com.uma.mseei.invictus.databinding.FragmentHistoricalWeightOptionBinding;
-import co.com.uma.mseei.invictus.model.Weight;
 import co.com.uma.mseei.invictus.model.LineChart;
+import co.com.uma.mseei.invictus.model.Weight;
 import co.com.uma.mseei.invictus.viewmodel.historical.HistoricalViewModel;
 import co.com.uma.mseei.invictus.viewmodel.historical.WeightListViewAdapter;
 import io.reactivex.disposables.CompositeDisposable;
@@ -73,60 +74,16 @@ public class WeightPlaceholderFragment extends Fragment implements View.OnClickL
         compositeDisposable = new CompositeDisposable();
 
         activity = requireActivity();
+        initializeCurrentWeightViews();
         initializeWeightViews();
         initializePeriodViews();
 
         return root;
     }
 
-    private void initializePeriodViews() {
-        initializePreviousPeriodButton();
-        initializePeriodTextView();
-        initializeNextPeriodButton();
-    }
-
-    private void initializePreviousPeriodButton() {
-        ImageButton previousPeriodButton = binding.previousPeriodButton;
-        if (index == ALL){
-            previousPeriodButton.setVisibility(INVISIBLE);
-        } else {
-            previousPeriodButton.setOnClickListener(this);
-        }
-    }
-
-    private void initializePeriodTextView() {
-        TextView periodTextView = binding.periodTextView;
-        weightPageViewModel.getPeriod().observe(getViewLifecycleOwner(), periodTextView::setText);
-    }
-
-    private void initializeNextPeriodButton() {
-        ImageButton nextPeriodButton = binding.nextPeriodButton;
-        if (index == ALL){
-            nextPeriodButton.setVisibility(INVISIBLE);
-        } else {
-            nextPeriodButton.setOnClickListener(this);
-        }
-    }
-
-    private void initializeWeightViews() {
+    private void initializeCurrentWeightViews(){
         initializeCurrentWeightTextView();
         initializeCurrentWeightUndTextView();
-
-        if (index == ALL) {
-            Disposable disposable = weightPageViewModel.getAllWeights()
-                    .subscribeOn(io())
-                    .observeOn(mainThread())
-                    .subscribe(
-                            weightList -> {
-                                setActualPeriod(weightList);
-                                initializeWeightListView(weightList);
-                                initializeWeightLineChartView(weightList);
-                                initializeNoRecordWeightTextView(weightList);
-                            }
-                    );
-
-            compositeDisposable.add(disposable);
-        }
     }
 
     private void initializeCurrentWeightTextView() {
@@ -137,6 +94,47 @@ public class WeightPlaceholderFragment extends Fragment implements View.OnClickL
     private void initializeCurrentWeightUndTextView() {
         TextView currentWeightUndTextView = binding.currentWeightUndTextView;
         weightPageViewModel.getCurrentWeightUnd().observe(getViewLifecycleOwner(), currentWeightUndTextView::setText);
+    }
+
+    private void initializeWeightViews() {
+        if (index == ALL) {
+            compositeDisposable.add(getAllWeigths());
+        } else {
+            weightPageViewModel.getTime().observe(getViewLifecycleOwner(), time -> {
+                String[] period = time.periodToStringArray(ISO_LOCAL_DATE);
+                compositeDisposable.add(findWeightsByPeriod(period));
+            });
+        }
+
+    }
+
+    @NonNull
+    private Disposable getAllWeigths() {
+        return weightPageViewModel.getAllWeights()
+                .subscribeOn(io())
+                .observeOn(mainThread())
+                .subscribe(
+                        weightList -> {
+                            setActualPeriod(weightList);
+                            initializeWeightListView(weightList);
+                            initializeWeightLineChartView(weightList);
+                            initializeNoRecordWeightTextView(weightList);
+                        }
+                );
+    }
+
+    @NonNull
+    private Disposable findWeightsByPeriod(String[] period) {
+        return weightPageViewModel.findWeightsByPeriod(period[0], period[1])
+                .subscribeOn(io())
+                .observeOn(mainThread())
+                .subscribe(
+                        weightList -> {
+                            initializeWeightListView(weightList);
+                            initializeWeightLineChartView(weightList);
+                            initializeNoRecordWeightTextView(weightList);
+                        }
+                );
     }
 
     private void setActualPeriod(List<Weight> weightList) {
@@ -175,11 +173,33 @@ public class WeightPlaceholderFragment extends Fragment implements View.OnClickL
         noRecordWeightTextView.setVisibility(weightList.isEmpty() ? VISIBLE : INVISIBLE);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-        compositeDisposable.dispose();
+    private void initializePeriodViews() {
+        initializePreviousPeriodButton();
+        initializePeriodTextView();
+        initializeNextPeriodButton();
+    }
+
+    private void initializePreviousPeriodButton() {
+        ImageButton previousPeriodButton = binding.previousPeriodButton;
+        if (index == ALL){
+            previousPeriodButton.setVisibility(INVISIBLE);
+        } else {
+            previousPeriodButton.setOnClickListener(this);
+        }
+    }
+
+    private void initializePeriodTextView() {
+        TextView periodTextView = binding.periodTextView;
+        weightPageViewModel.getPeriod().observe(getViewLifecycleOwner(), periodTextView::setText);
+    }
+
+    private void initializeNextPeriodButton() {
+        ImageButton nextPeriodButton = binding.nextPeriodButton;
+        if (index == ALL){
+            nextPeriodButton.setVisibility(INVISIBLE);
+        } else {
+            nextPeriodButton.setOnClickListener(this);
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -193,5 +213,12 @@ public class WeightPlaceholderFragment extends Fragment implements View.OnClickL
                 weightPageViewModel.setNextPeriod();
                 break;
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+        compositeDisposable.dispose();
     }
 }

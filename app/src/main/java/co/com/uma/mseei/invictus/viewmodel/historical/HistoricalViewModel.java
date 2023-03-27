@@ -1,6 +1,7 @@
 package co.com.uma.mseei.invictus.viewmodel.historical;
 
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
+import static java.util.Objects.requireNonNull;
 import static co.com.uma.mseei.invictus.model.Profile.fixWeightToLimits;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.DD_MMM_YYYY;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.KG_UND;
@@ -36,9 +37,9 @@ public class HistoricalViewModel extends AndroidViewModel {
     private final AppPreferences appPreferences;
     private final WeightRepository weightRepository;
     private final Boolean  isUnitSystemImperial;
-    private Time time;
 
     private final MutableLiveData<Integer> index;
+    private final MutableLiveData<Time> time;
     private final MutableLiveData<String> period;
     private final MutableLiveData<String> currentWeight;
     private final MutableLiveData<String> currentWeightUnd;
@@ -49,6 +50,7 @@ public class HistoricalViewModel extends AndroidViewModel {
         weightRepository = new WeightRepository(application);
 
         index = new MutableLiveData<>();
+        time = new MutableLiveData<>();
         period = new MutableLiveData<>();
         currentWeight = new MutableLiveData<>();
         currentWeightUnd = new MutableLiveData<>();
@@ -67,20 +69,20 @@ public class HistoricalViewModel extends AndroidViewModel {
         this.index.setValue(index);
     }
 
-    public Time getTime(){
+    public MutableLiveData<Time> getTime(){
         return time;
     }
 
     public void setTime(int index) {
         switch (index){
             case WEEK:
-                this.time = new Week();
+                this.time.setValue(new Week());
                 break;
             case MONTH:
-                this.time = new Month();
+                this.time.setValue(new Month());
                 break;
             default:
-                this.time = new All();
+                this.time.setValue(new All());
                 break;
         }
     }
@@ -90,21 +92,28 @@ public class HistoricalViewModel extends AndroidViewModel {
     }
 
     public void setPeriod() {
+        Time time = requireNonNull(this.time.getValue());
         this.period.setValue(time.periodToString(DD_MMM_YYYY));
     }
 
-    public void setActualPeriod(String... FromTo) {
-        this.time.setActualPeriod(FromTo);
+    public void setActualPeriod(String... period) {
+        Time time = requireNonNull(this.time.getValue());
+        time.setActualPeriod(period);
+        this.time.setValue(time);
         setPeriod();
     }
 
     public void setNextPeriod() {
-        this.time.setNextPeriod();
+        Time time = requireNonNull(this.time.getValue());
+        time.setNextPeriod();
+        this.time.setValue(time);
         setPeriod();
     }
 
     public void setPreviousPeriod() {
-        this.time.setPreviousPeriod();
+        Time time = requireNonNull(this.time.getValue());
+        time.setPreviousPeriod();
+        this.time.setValue(time);
         setPeriod();
     }
 
@@ -131,9 +140,15 @@ public class HistoricalViewModel extends AndroidViewModel {
         return weightRepository.getAllWeights();
     }
 
+    public Single<List<Weight>> findWeightsByPeriod(String dateFrom, String dateTo) {
+        return weightRepository.findWeightsByPeriod(dateFrom, dateTo);
+    }
+
     public Single<Limits> getWeightLimits(){
+        Time time = requireNonNull(this.time.getValue());
         String[] period = time.periodToStringArray(ISO_LOCAL_DATE);
         return weightRepository.getWeightLimits(period[0], period[1]);
     }
+
 
 }

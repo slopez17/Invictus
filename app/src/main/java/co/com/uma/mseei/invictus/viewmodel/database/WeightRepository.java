@@ -30,10 +30,6 @@ public class WeightRepository {
         return weightDao.findWeightsByPeriod(dateFrom, dateTo);
     }
 
-    public Single<Weight> findWeightByDate(String date){
-        return weightDao.findWeightByDate(date);
-    }
-
     public Single<Limits> getWeightLimits(String dateFrom, String dateTo){
         return weightDao.getWeightLimits(dateFrom, dateTo);
     }
