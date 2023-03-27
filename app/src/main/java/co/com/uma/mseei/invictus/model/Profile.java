@@ -4,7 +4,7 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.time.LocalDate.now;
 import static co.com.uma.mseei.invictus.R.array.bmi_clasification_array;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.CLEAN_TEXT;
+import static co.com.uma.mseei.invictus.util.GeneralConstants.CLEAN;
 import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringArrayById;
 
 import android.app.Application;
@@ -71,7 +71,7 @@ public class Profile {
         } else if (bmi >= OBESITY_4) {
             return classification[7];
         } else {
-            return CLEAN_TEXT;
+            return CLEAN;
         }
 
     }

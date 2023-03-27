@@ -9,6 +9,12 @@ import static co.com.uma.mseei.invictus.R.string.walk;
 import static co.com.uma.mseei.invictus.R.string.week;
 import static co.com.uma.mseei.invictus.R.string.weight;
 
+import androidx.fragment.app.Fragment;
+
+import co.com.uma.mseei.invictus.view.historical.RopeSkippingPlaceholderFragment;
+import co.com.uma.mseei.invictus.view.historical.WalkPlaceholderFragment;
+import co.com.uma.mseei.invictus.view.historical.WeightPlaceholderFragment;
+
 public class HistoricalOptions {
     public static final String SELECTED_OPTION = "selectedOption";
     public static final int NO_IMPLEMENTED = -1;
@@ -16,10 +22,16 @@ public class HistoricalOptions {
     public static final int WALK = 1;
     public static final int ROPE_SKIPPING = 2;
 
+    public static final String SECTION_NUMBER = "sectionNumber";
+    public static final int DAY = 0;
+    public static final int WEEK = 1;
+    public static final int MONTH = 2;
+    public static final int ALL = 3;
+
     public static int[] getTabTitlesFor(int selectedOption) {
         int[] TAB_TITLES;
         if (isWeightOption(selectedOption)) {
-            TAB_TITLES = new int[]{week, month};
+            TAB_TITLES = new int[]{week, month, all};
         } else {
             TAB_TITLES = new int[]{day, week, month, all};
         }
@@ -39,7 +51,25 @@ public class HistoricalOptions {
         }
     }
 
-    public static boolean isWeightOption(int selectedOption){
+    public static Fragment getPlaceholderFragmentFor(int selectedOption, int position) {
+        switch (selectedOption){
+            case WALK:
+                return WalkPlaceholderFragment.newInstance(position);
+            case ROPE_SKIPPING:
+                return RopeSkippingPlaceholderFragment.newInstance(position);
+            default:
+                return WeightPlaceholderFragment.newInstance(position + 1);
+        }
+    }
+
+    public static int getItemCountFor(int selectedOption) {
+        if (isWeightOption(selectedOption)) {
+            return 3;
+        }
+        return 4;
+    }
+
+    private static boolean isWeightOption(int selectedOption) {
         return selectedOption == WEIGHT;
     }
 }

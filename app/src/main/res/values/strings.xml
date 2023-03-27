@@ -41,6 +41,7 @@
     <string name="week">Week</string>
     <string name="month">Month</string>
     <string name="all">All</string>
+    <string name="to">to</string>
 
     <!-- Historical - Option weight-->
     <string name="current_weight">Current weight: </string>

@@ -4,7 +4,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.view.View.FOCUS_DOWN;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_NEXT;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.twoDigits;
+import static co.com.uma.mseei.invictus.util.GeneralConstants.TWO_DIGITS;
 
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -24,11 +24,11 @@ public class ViewOperations {
     }
 
     public static void setTextView(TextView textView, float value) {
-        textView.setText(twoDigits.format(value));
+        textView.setText(TWO_DIGITS.format(value));
     }
 
     public static void setHintTextView(TextView textView, float value) {
-        textView.setHint(twoDigits.format(value));
+        textView.setHint(TWO_DIGITS.format(value));
     }
 
     public static void changeEditor(int actionId, TextView textView) {
@@ -45,7 +45,6 @@ public class ViewOperations {
     public static void hideKeyboard(TextView textView) {
         InputMethodManager inputMethodManager =
                 (InputMethodManager) textView.getContext().getSystemService(INPUT_METHOD_SERVICE);
-        assert inputMethodManager != null;
         inputMethodManager.hideSoftInputFromWindow(textView.getWindowToken(), 0);
     }
 

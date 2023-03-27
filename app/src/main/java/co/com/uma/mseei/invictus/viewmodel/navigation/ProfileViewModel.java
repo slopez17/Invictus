@@ -3,6 +3,7 @@ package co.com.uma.mseei.invictus.viewmodel.navigation;
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;
 import static java.time.LocalDate.now;
+import static java.util.Objects.requireNonNull;
 import static co.com.uma.mseei.invictus.R.array.gender_array;
 import static co.com.uma.mseei.invictus.R.string.successfully_saved;
 import static co.com.uma.mseei.invictus.model.AppPreferences.DEFAULT_HEIGHT_M;
@@ -181,8 +182,7 @@ public class ProfileViewModel extends AndroidViewModel {
     }
 
     public void setBmiValues(){
-        assert weight.getValue() != null && height.getValue() != null : "setBmiValues";
-        float bmi = calculateBmi(weight.getValue(), height.getValue());
+        float bmi = calculateBmi(requireNonNull(weight.getValue()), requireNonNull(height.getValue()));
         this.bmi.setValue(bmi);
         String bmiClassification = calculateBmiClassification(getApplication(), bmi);
         this.bmiClassification.setValue(bmiClassification);
@@ -193,21 +193,15 @@ public class ProfileViewModel extends AndroidViewModel {
     }
 
     public void saveProfilePreferences() {
-        assert gender.getValue() != null &&
-                birthdate.getValue() != null &&
-                weight.getValue() != null &&
-                height.getValue() != null : "saveProfilePreferences";
-
-        appPreferences.setGender(gender.getValue());
-        appPreferences.setBirthDate(birthdate.getValue());
-        appPreferences.setWeight(weight.getValue());
-        appPreferences.setHeight(height.getValue());
+        appPreferences.setGender(requireNonNull(gender.getValue()));
+        appPreferences.setBirthDate(requireNonNull(birthdate.getValue()));
+        appPreferences.setWeight(requireNonNull(weight.getValue()));
+        appPreferences.setHeight(requireNonNull(height.getValue()));
         appPreferences.setProfileUpdateDate(now());
     }
 
     public Completable saveWeightOnDatabase() {
-        assert  weight.getValue() != null : "saveWeightOnDatabase";
-        Weight weight = new Weight(now().toString(), this.weight.getValue());
+        Weight weight = new Weight(now().toString(), requireNonNull(this.weight.getValue()));
         return weightRepository.insertWeights(weight);
     }
 
@@ -243,14 +237,12 @@ public class ProfileViewModel extends AndroidViewModel {
     }
 
     private void setWeight() {
-        assert weight.getValue() != null: "setWeight";
-        float weight = this.weight.getValue();
+        float weight = requireNonNull(this.weight.getValue());
         this.weightOnScreen.setValue(isUnitSystemImperial ? kg2lbs(weight) : weight);
     }
 
     private void setHeight() {
-        assert height.getValue() != null: "setHeight";
-        float height = this.height.getValue();
+        float height = requireNonNull(this.height.getValue());
         this.heightOnScreen.setValue(isUnitSystemImperial ? m2in(height) : height);
     }
 }

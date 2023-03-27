@@ -1,9 +1,12 @@
 package co.com.uma.mseei.invictus.util;
 
 import java.text.DecimalFormat;
+import java.time.format.DateTimeFormatter;
 
 public class GeneralConstants {
-    public static final String CLEAN_TEXT = "";
+    public static final String CLEAN = "";
+    public static final String HYPHEN_WITH_SPACE = " - ";
+    public static final String HASH = "#";
     public static final int ERROR = -1;
 
     public static final String KG_UND = "kg";
@@ -11,10 +14,8 @@ public class GeneralConstants {
     public static final String M_UND = "m";
     public static final String IN_UND = "in";
 
-    public static final DecimalFormat twoDigits = new DecimalFormat("#.00");
-
+    public static final DecimalFormat TWO_DIGITS = new DecimalFormat("#.00");
+    public static final DateTimeFormatter DD_MMM_YYYY = DateTimeFormatter.ofPattern("dd MMM yyyy");
     public static final float _1KG_LBS = 2.20462262185f;
     public static final float _1IN_M = 0.0254f;
-
-
 }

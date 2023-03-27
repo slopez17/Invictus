@@ -10,20 +10,20 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import co.com.uma.mseei.invictus.databinding.FragmentHistoricalWeightOptionBinding;
-import co.com.uma.mseei.invictus.viewmodel.historical.PageViewModel;
+import co.com.uma.mseei.invictus.viewmodel.historical.HistoricalViewModel;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class SportPlaceholderFragment extends Fragment {
+public class RopeSkippingPlaceholderFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    private PageViewModel pageViewModel;
+    private HistoricalViewModel pageViewModel;
     private FragmentHistoricalWeightOptionBinding binding;
 
-    public static SportPlaceholderFragment newInstance(int index, int selectedOption) {
-        SportPlaceholderFragment fragment = new SportPlaceholderFragment();
+    public static RopeSkippingPlaceholderFragment newInstance(int index) {
+        RopeSkippingPlaceholderFragment fragment = new RopeSkippingPlaceholderFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -33,7 +33,7 @@ public class SportPlaceholderFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageViewModel = new ViewModelProvider(this).get(PageViewModel.class);
+        pageViewModel = new ViewModelProvider(this).get(HistoricalViewModel.class);
         int index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);

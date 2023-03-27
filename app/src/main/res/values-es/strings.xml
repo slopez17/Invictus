@@ -42,6 +42,7 @@
     <string name="week">Semana</string>
     <string name="month">Mes</string>
     <string name="all">Todo</string>
+    <string name="to">a</string>
 
     <!-- Historical - Option weight-->
     <string name="current_weight">Peso actual: </string>

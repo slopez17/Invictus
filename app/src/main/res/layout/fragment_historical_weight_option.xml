@@ -5,7 +5,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.historical.SportPlaceholderFragment">
+    tools:context=".view.historical.WalkPlaceholderFragment">
 
     <LinearLayout
         android:id="@+id/weightDataLayout"
@@ -52,12 +52,14 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
+            android:layout_margin="@dimen/activity_general_margin"
             android:padding="@dimen/activity_general_margin"/>
 
         <LinearLayout
             android:id="@+id/currentWeightLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/activity_general_margin"
             android:background="@color/lightYellow"
             android:orientation="horizontal">
 
@@ -80,6 +82,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical|end"
+                android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+                android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+                android:textSize="@dimen/activity_text_level2_size"  />
+
+            <TextView
+                android:id="@+id/currentWeightUndTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:paddingStart="?android:attr/listPreferredItemPaddingStart"
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"

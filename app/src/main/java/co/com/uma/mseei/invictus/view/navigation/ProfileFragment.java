@@ -247,6 +247,6 @@ public class ProfileFragment
                 .subscribeOn(Schedulers.io())
                 .observeOn(mainThread())
                 .subscribe(() -> profileViewModel.showSavedFeedback(),
-                        throwable -> Log.e("saveProfileData", getStringById(activity.getApplication(), error_saved), throwable)));
+                        throwable -> Log.e("saveProfileData", getStringById(activity, error_saved), throwable)));
     }
 }

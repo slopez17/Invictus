@@ -15,7 +15,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import co.com.uma.mseei.invictus.databinding.ActivityHistoricalBinding;
-import co.com.uma.mseei.invictus.viewmodel.historical.SectionsPagerAdapter;
+import co.com.uma.mseei.invictus.viewmodel.historical.HistoricalSectionsAdapter;
 
 public class HistoricalActivity extends AppCompatActivity {
 
@@ -35,7 +35,7 @@ public class HistoricalActivity extends AppCompatActivity {
         title.setText(getTitleFor(selectedOption));
 
         ViewPager2 viewPager = binding.viewPager;
-        viewPager.setAdapter(new SectionsPagerAdapter(this, selectedOption));
+        viewPager.setAdapter(new HistoricalSectionsAdapter(this));
 
         TabLayout tabs = binding.tabs;
         new TabLayoutMediator(tabs, viewPager, ((tab, position) -> {
