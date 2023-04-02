@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -74,29 +75,13 @@ public class WeightPlaceholderFragment extends Fragment implements View.OnClickL
         compositeDisposable = new CompositeDisposable();
 
         activity = requireActivity();
-        initializeCurrentWeightViews();
-        initializeWeightViews();
+        getWeightData();
         initializePeriodViews();
 
         return root;
     }
 
-    private void initializeCurrentWeightViews(){
-        initializeCurrentWeightTextView();
-        initializeCurrentWeightUndTextView();
-    }
-
-    private void initializeCurrentWeightTextView() {
-        TextView currentWeightTextView = binding.currentWeightTextView;
-        weightPageViewModel.getCurrentWeight().observe(getViewLifecycleOwner(), currentWeightTextView::setText);
-    }
-
-    private void initializeCurrentWeightUndTextView() {
-        TextView currentWeightUndTextView = binding.currentWeightUndTextView;
-        weightPageViewModel.getCurrentWeightUnd().observe(getViewLifecycleOwner(), currentWeightUndTextView::setText);
-    }
-
-    private void initializeWeightViews() {
+    private void getWeightData() {
         if (index == ALL) {
             compositeDisposable.add(getAllWeigths());
         } else {
@@ -116,9 +101,7 @@ public class WeightPlaceholderFragment extends Fragment implements View.OnClickL
                 .subscribe(
                         weightList -> {
                             setActualPeriod(weightList);
-                            initializeWeightListView(weightList);
-                            initializeWeightLineChartView(weightList);
-                            initializeNoRecordWeightTextView(weightList);
+                            initializeWeightViews(weightList);
                         }
                 );
     }
@@ -129,11 +112,7 @@ public class WeightPlaceholderFragment extends Fragment implements View.OnClickL
                 .subscribeOn(io())
                 .observeOn(mainThread())
                 .subscribe(
-                        weightList -> {
-                            initializeWeightListView(weightList);
-                            initializeWeightLineChartView(weightList);
-                            initializeNoRecordWeightTextView(weightList);
-                        }
+                        this::initializeWeightViews
                 );
     }
 
@@ -141,6 +120,13 @@ public class WeightPlaceholderFragment extends Fragment implements View.OnClickL
         String dateFrom = weightList.get(weightList.size()-1).getDate();
         String dateTo = weightList.get(0).getDate();
         weightPageViewModel.setActualPeriod(dateFrom, dateTo);
+    }
+
+    private void initializeWeightViews(List<Weight> weightList) {
+        initializeWeightListView(weightList);
+        initializeWeightLineChartView(weightList);
+        initializeNoRecordWeightTextView(weightList);
+        initializeCurrentWeightViews(weightList);
     }
 
     private void initializeWeightListView(List<Weight> weightList) {
@@ -152,25 +138,51 @@ public class WeightPlaceholderFragment extends Fragment implements View.OnClickL
     private void initializeWeightLineChartView(List<Weight> weightList) {
         LineChartView weightLineChartView = binding.weightChart;
 
-        Disposable disposable = weightPageViewModel.getWeightLimits()
-                .subscribeOn(io())
-                .observeOn(mainThread())
-                .subscribe(
-                        weightLimits -> {
-                            LineChart chartWeight = new LineChart(activity, weightLineChartView);
-                            chartWeight.setColor(yellow);
-                            chartWeight.setDataList(weightList);
-                            chartWeight.setLimits(weightLimits);
-                            chartWeight.setChart();
-                        }
-                );
+        if (weightList.isEmpty()) {
+            weightLineChartView.setVisibility(INVISIBLE);
+        } else {
+            weightLineChartView.setVisibility(VISIBLE);
+            Disposable disposable = weightPageViewModel.getWeightLimits()
+                    .subscribeOn(io())
+                    .observeOn(mainThread())
+                    .subscribe(
+                            weightLimits -> {
+                                LineChart chartWeight = new LineChart(activity, weightLineChartView);
+                                chartWeight.setColor(yellow);
+                                chartWeight.setDataList(weightList);
+                                chartWeight.setLimits(weightLimits);
+                                chartWeight.setChart();
+                            }
+                    );
 
-        compositeDisposable.add(disposable);
+            compositeDisposable.add(disposable);
+        }
     }
 
     private void initializeNoRecordWeightTextView(List<Weight> weightList) {
         TextView noRecordWeightTextView = binding.noRecordWeightTextView;
         noRecordWeightTextView.setVisibility(weightList.isEmpty() ? VISIBLE : INVISIBLE);
+    }
+
+    private void initializeCurrentWeightViews(List<Weight> weightList){
+        LinearLayout currentWeightLayout = binding.currentWeightLayout;
+        if (weightList.isEmpty()) {
+            currentWeightLayout.setVisibility(INVISIBLE);
+        } else {
+            currentWeightLayout.setVisibility(VISIBLE);
+            initializeCurrentWeightTextView();
+            initializeCurrentWeightUndTextView();
+        }
+    }
+
+    private void initializeCurrentWeightTextView() {
+        TextView currentWeightTextView = binding.currentWeightTextView;
+        weightPageViewModel.getCurrentWeight().observe(getViewLifecycleOwner(), currentWeightTextView::setText);
+    }
+
+    private void initializeCurrentWeightUndTextView() {
+        TextView currentWeightUndTextView = binding.currentWeightUndTextView;
+        weightPageViewModel.getCurrentWeightUnd().observe(getViewLifecycleOwner(), currentWeightUndTextView::setText);
     }
 
     private void initializePeriodViews() {

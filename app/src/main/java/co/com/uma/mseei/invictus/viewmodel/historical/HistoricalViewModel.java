@@ -123,7 +123,7 @@ public class HistoricalViewModel extends AndroidViewModel {
 
     public void setCurrentWeight() {
         Float weight = fixWeightToLimits(appPreferences.getWeight());
-        weight = isUnitSystemImperial ? kg2lbs(weight) : weight;
+        if (isUnitSystemImperial) weight = kg2lbs(weight);
         this.currentWeight.setValue(TWO_DIGITS.format(weight));
     }
 

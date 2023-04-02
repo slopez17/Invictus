@@ -45,7 +45,7 @@ public class WeightListViewAdapter extends ArrayAdapter<Weight> {
 
         TextView weightTextView = convertView.findViewById(R.id.weightTextView);
         float weight = weightList.get(position).getValue();
-        weight = isUnitSystemImperial ? kg2lbs(weight) : weight;
+        if (isUnitSystemImperial) weight = kg2lbs(weight);
         setTextView(weightTextView, weight);
 
         TextView weightUndTextView = convertView.findViewById(R.id.weightUndTextView);

@@ -5,6 +5,7 @@ import static android.graphics.Color.parseColor;
 import static java.time.LocalDate.parse;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static co.com.uma.mseei.invictus.model.Limits.getPeriodInDaysBetween;
+import static co.com.uma.mseei.invictus.util.MathOperations.kg2lbs;
 import static co.com.uma.mseei.invictus.util.ResourceOperations.getColorById;
 import static lecho.lib.hellocharts.gesture.ContainerScrollType.HORIZONTAL;
 import static lecho.lib.hellocharts.model.ValueShape.CIRCLE;
@@ -23,6 +24,7 @@ import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 
 /**
@@ -31,6 +33,7 @@ import lecho.lib.hellocharts.view.LineChartView;
 public class LineChart  {
 
     private final Activity activity;
+    private final AppPreferences appPreferences;
     private int color;
     private List<Weight> dataList;
     private final LineChartView lineChart;
@@ -40,6 +43,7 @@ public class LineChart  {
     public LineChart(Activity activity, LineChartView lineChartView) {
         this.activity = activity;
         this.lineChart = lineChartView;
+        this.appPreferences = new AppPreferences(activity);
     }
 
     /**
@@ -120,6 +124,7 @@ public class LineChart  {
         for (int i=0; i<dataList.size(); i++){
             xValue = getPeriodInDaysBetween(startDate, dataList.get(i).getDate());
             yValue = dataList.get(i).getValue();
+            if (appPreferences.isUnitSystemImperial()) yValue = kg2lbs(yValue);
             pointValues.add(new PointValue(xValue, yValue));
         }
 
@@ -188,15 +193,17 @@ public class LineChart  {
         lineChart.setZoomType(ZoomType.HORIZONTAL);
         lineChart.setContainerScrollEnabled(true, HORIZONTAL);
         lineChart.setLineChartData(lineChartData);
-        lineChart.setViewportCalculationEnabled(true);
-//        float left = 0f;
-//        float top = limits.getMaxY() * 1.05f;
-//        float right = limits.getPeriodInDays() + 1f;
-//        float bottom = limits.getMinY() * 0.95f;
-//        Viewport viewport = new Viewport(left, top, right, bottom);
-//        lineChart.setMaxZoom(viewport.right * 0.35f);
-//        lineChart.setMaximumViewport(viewport);
-//        lineChart.setCurrentViewport(viewport);
+        lineChart.setViewportCalculationEnabled(false);
+        float left = 0f;
+        float maxY = appPreferences.isUnitSystemImperial() ? kg2lbs(limits.getMaxY()) : limits.getMaxY();
+        float top =  maxY * 1.1f;
+        float right = limits.getPeriodInDays() + 1f;
+        float minY = appPreferences.isUnitSystemImperial() ? kg2lbs(limits.getMinY()) : limits.getMinY();
+        float bottom =  minY * 0.9f;
+        Viewport viewport = new Viewport(left, top, right, bottom);
+        lineChart.setMaxZoom(viewport.right * 0.35f);
+        lineChart.setMaximumViewport(viewport);
+        lineChart.setCurrentViewport(viewport);
     }
 
 }
