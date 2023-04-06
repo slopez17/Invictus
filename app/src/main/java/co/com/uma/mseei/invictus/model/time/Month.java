@@ -1,5 +1,6 @@
 package co.com.uma.mseei.invictus.model.time;
 
+import static java.time.LocalDate.now;
 import static java.time.LocalTime.MAX;
 import static java.time.LocalTime.MIN;
 import static java.time.temporal.ChronoField.DAY_OF_MONTH;
@@ -13,22 +14,25 @@ public class Month implements Time {
 
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
-
+    private final LocalDate now;
     public Month() {
+        now = now();
         setActualPeriod();
     }
 
     @Override
     public void setActualPeriod(String... FromTo) {
-        LocalDate startDate = LocalDate.now().with(DAY_OF_MONTH,1);
+        LocalDate startDate = now.with(DAY_OF_MONTH,1);
         startDateTime = LocalDateTime.of(startDate, MIN);
         endDateTime = LocalDateTime.of(startDate.plusMonths(1).minusDays(1), MAX);
     }
 
     @Override
     public void setNextPeriod() {
-        startDateTime = endDateTime.plusNanos(1);
-        endDateTime = startDateTime.plusMonths(1).minusNanos(1);
+        if (now.isAfter(endDateTime.toLocalDate())) {
+            startDateTime = endDateTime.plusNanos(1);
+            endDateTime = startDateTime.plusMonths(1).minusNanos(1);
+        }
     }
 
     @Override

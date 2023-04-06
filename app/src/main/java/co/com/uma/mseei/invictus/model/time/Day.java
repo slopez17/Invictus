@@ -1,5 +1,6 @@
 package co.com.uma.mseei.invictus.model.time;
 
+import static java.time.LocalDate.now;
 import static java.time.LocalTime.MAX;
 import static java.time.LocalTime.MIN;
 
@@ -11,22 +12,25 @@ public class Day implements Time {
 
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+    private final LocalDate now;
 
     public Day() {
+        now = now();
         setActualPeriod();
     }
 
     @Override
     public void setActualPeriod(String... FromTo) {
-        LocalDate startDate = LocalDate.now();
-        startDateTime = LocalDateTime.of(startDate, MIN);
-        endDateTime = LocalDateTime.of(startDate, MAX);
+        startDateTime = LocalDateTime.of(now, MIN);
+        endDateTime = LocalDateTime.of(now, MAX);
     }
 
     @Override
     public void setNextPeriod() {
-        startDateTime = startDateTime.plusDays(1);
-        endDateTime = endDateTime.plusDays(1);
+        if (now.isAfter(startDateTime.toLocalDate())) {
+            startDateTime = startDateTime.plusDays(1);
+            endDateTime = endDateTime.plusDays(1);
+        }
     }
 
     @Override
