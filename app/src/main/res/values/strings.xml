@@ -27,6 +27,14 @@
         Next
     </string>
 
+    <!-- Home -->
+    <string name="falls">Falls</string>
+    <string name="steps">Steps</string>
+    <string name="calories">Calories</string>
+    <string name="distance">Distance</string>
+    <string name="speed">Speed</string>
+    <string name="elapsed_time">Elapsed Time</string>
+
     <!-- Historical -->
     <string name="select">Choose an option</string>
     <string name="walk">Walk</string>
@@ -141,6 +149,5 @@
         <item>International System</item>
         <item>Imperial/British System</item>
     </string-array>
-
 
 </resources>

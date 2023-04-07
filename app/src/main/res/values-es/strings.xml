@@ -28,6 +28,14 @@
         Siguiente
     </string>
 
+    <!-- Home -->
+    <string name="falls">Caídas</string>
+    <string name="steps">Pasos</string>
+    <string name="calories">Calorías</string>
+    <string name="distance">Distancia</string>
+    <string name="speed">Velocidad</string>
+    <string name="elapsed_time">Tiempo transcurrido</string>
+
     <!-- Historical -->
     <string name="select">Escoja una opción</string>
     <string name="walk">Caminar</string>
