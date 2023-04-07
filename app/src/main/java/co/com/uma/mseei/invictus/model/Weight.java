@@ -1,5 +1,7 @@
 package co.com.uma.mseei.invictus.model;
 
+import static co.com.uma.mseei.invictus.util.MathOperations.kg2lbs;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -31,5 +33,9 @@ public class Weight {
 
     public float getValue() {
         return value;
+    }
+
+    public float getValue(boolean isUnitSystemImperial) {
+        return isUnitSystemImperial ? kg2lbs(value) : value;
     }
 }

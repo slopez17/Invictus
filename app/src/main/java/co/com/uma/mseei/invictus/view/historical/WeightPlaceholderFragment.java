@@ -118,7 +118,6 @@ public class WeightPlaceholderFragment extends Fragment implements View.OnClickL
 
     private void setActualPeriod(List<Weight> weightList) {
         if (!weightList.isEmpty()) {
-
             String dateFrom = weightList.get(weightList.size() - 1).getDate();
             String dateTo = weightList.get(0).getDate();
             weightPageViewModel.setActualPeriod(dateFrom, dateTo);

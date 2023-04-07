@@ -16,6 +16,5 @@ public class GeneralConstants {
 
     public static final DecimalFormat TWO_DIGITS = new DecimalFormat("#.00");
     public static final DateTimeFormatter DD_MMM_YYYY = DateTimeFormatter.ofPattern("dd MMM yyyy");
-    public static final float _1KG_LBS = 2.20462262185f;
-    public static final float _1IN_M = 0.0254f;
+
 }

@@ -2,7 +2,6 @@ package co.com.uma.mseei.invictus.viewmodel.historical;
 
 import static co.com.uma.mseei.invictus.util.GeneralConstants.KG_UND;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.LBS_UND;
-import static co.com.uma.mseei.invictus.util.MathOperations.kg2lbs;
 import static co.com.uma.mseei.invictus.util.ViewOperations.setTextView;
 
 import android.app.Activity;
@@ -44,8 +43,7 @@ public class WeightListViewAdapter extends ArrayAdapter<Weight> {
         boolean isUnitSystemImperial = appPreferences.isUnitSystemImperial();
 
         TextView weightTextView = convertView.findViewById(R.id.weightTextView);
-        float weight = weightList.get(position).getValue();
-        if (isUnitSystemImperial) weight = kg2lbs(weight);
+        float weight = weightList.get(position).getValue(isUnitSystemImperial);
         setTextView(weightTextView, weight);
 
         TextView weightUndTextView = convertView.findViewById(R.id.weightUndTextView);

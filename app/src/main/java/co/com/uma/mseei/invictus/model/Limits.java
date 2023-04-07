@@ -3,12 +3,12 @@ package co.com.uma.mseei.invictus.model;
 import static java.time.LocalDate.parse;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static java.time.temporal.ChronoUnit.DAYS;
+import static co.com.uma.mseei.invictus.util.MathOperations.kg2lbs;
 
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.temporal.ChronoUnit;
 
 public class Limits {
+    public static final int WEIGHT = 0;
     private String minX;
     private String maxX;
     private float minY;
@@ -41,12 +41,30 @@ public class Limits {
         return minY;
     }
 
+    public float getMinY(int undType, boolean isUnitSystemImperial) {
+        switch (undType){
+            default:
+            case WEIGHT:
+                return isUnitSystemImperial ? kg2lbs(minY) : minY;
+        }
+
+    }
+
     public void setMinY(float minY) {
         this.minY = minY;
     }
 
     public float getMaxY() {
         return maxY;
+    }
+
+    public float getMaxY(int undType, boolean isUnitSystemImperial) {
+        switch (undType){
+            default:
+            case WEIGHT:
+                return isUnitSystemImperial ? kg2lbs(maxY) : maxY;
+        }
+
     }
 
     public void setMaxY(float maxY) {

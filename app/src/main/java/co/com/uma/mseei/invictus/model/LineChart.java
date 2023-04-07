@@ -4,8 +4,8 @@ import static android.graphics.Color.GRAY;
 import static android.graphics.Color.parseColor;
 import static java.time.LocalDate.parse;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
+import static co.com.uma.mseei.invictus.model.Limits.WEIGHT;
 import static co.com.uma.mseei.invictus.model.Limits.getPeriodInDaysBetween;
-import static co.com.uma.mseei.invictus.util.MathOperations.kg2lbs;
 import static co.com.uma.mseei.invictus.util.ResourceOperations.getColorById;
 import static lecho.lib.hellocharts.gesture.ContainerScrollType.HORIZONTAL;
 import static lecho.lib.hellocharts.model.ValueShape.CIRCLE;
@@ -123,8 +123,7 @@ public class LineChart  {
         float yValue;
         for (int i=0; i<dataList.size(); i++){
             xValue = getPeriodInDaysBetween(startDate, dataList.get(i).getDate());
-            yValue = dataList.get(i).getValue();
-            if (appPreferences.isUnitSystemImperial()) yValue = kg2lbs(yValue);
+            yValue = dataList.get(i).getValue(appPreferences.isUnitSystemImperial());
             pointValues.add(new PointValue(xValue, yValue));
         }
 
@@ -194,11 +193,12 @@ public class LineChart  {
         lineChart.setContainerScrollEnabled(true, HORIZONTAL);
         lineChart.setLineChartData(lineChartData);
         lineChart.setViewportCalculationEnabled(false);
+        boolean isUnitSystemImperial = appPreferences.isUnitSystemImperial();
         float left = 0f;
-        float maxY = appPreferences.isUnitSystemImperial() ? kg2lbs(limits.getMaxY()) : limits.getMaxY();
+        float maxY = limits.getMaxY(WEIGHT, isUnitSystemImperial);
         float top =  maxY * 1.1f;
         float right = limits.getPeriodInDays() + 1f;
-        float minY = appPreferences.isUnitSystemImperial() ? kg2lbs(limits.getMinY()) : limits.getMinY();
+        float minY =  limits.getMinY(WEIGHT, isUnitSystemImperial);
         float bottom =  minY * 0.9f;
         Viewport viewport = new Viewport(left, top, right, bottom);
         lineChart.setMaxZoom(viewport.right * 0.35f);

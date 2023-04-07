@@ -5,7 +5,6 @@ import static android.content.Context.MODE_PRIVATE;
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
 import static java.time.LocalDate.now;
-import static co.com.uma.mseei.invictus.model.Profile.NO_ANSWER;
 
 import android.app.Activity;
 import android.app.Application;
@@ -25,7 +24,7 @@ public class AppPreferences {
     public static final String PREF_HEIGHT = "height";
     public static final String PREF_PROFILE_UPDATE_DATE = "profileUpdateDate";
 
-    public static final int DEFAULT_GENDER = NO_ANSWER;
+    public static final int DEFAULT_GENDER = 0;
     public static final float DEFAULT_WEIGHT_KG = 56.7f;
     public static final float DEFAULT_HEIGHT_M = 1.70f;
 

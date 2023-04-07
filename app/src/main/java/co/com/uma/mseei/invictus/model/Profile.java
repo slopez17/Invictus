@@ -14,22 +14,15 @@ import java.time.Period;
 
 public class Profile {
 
-    /** Gender constants **/
-    public static final int NO_ANSWER = 0;
-    public static final int FEMALE = 1;
-    public static final int MALE = 2;
-
     /** Weight constants **/
     public static final float MIN_WEIGHT_KG = 0.f;
     public static final float MAX_WEIGHT_KG = 451.f;
-    public static final float MIN_WEIGHT_LBS = 0.f;
-    public static final float MAX_WEIGHT_LBS = 994.28f;
+
 
     /** Height constants **/
     public static final float MIN_HEIGHT_M = 0.29f;
     public static final float MAX_HEIGHT_M = 2.81f;
-    public static final float MIN_HEIGHT_IN = 11.41f;
-    public static final float MAX_HEIGHT_IN = 110.62f;
+
 
     /** Bmi constants **/
     public static final float NORMAL_WEIGHT = 18.5f;

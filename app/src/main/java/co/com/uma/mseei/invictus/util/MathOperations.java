@@ -1,9 +1,9 @@
 package co.com.uma.mseei.invictus.util;
 
-import static co.com.uma.mseei.invictus.util.GeneralConstants._1IN_M;
-import static co.com.uma.mseei.invictus.util.GeneralConstants._1KG_LBS;
-
 public class MathOperations {
+
+    public static final float _1KG_LBS = 2.20462262185f;
+    public static final float _1IN_M = 0.0254f;
 
     public static float kg2lbs(float kg){
         return kg * _1KG_LBS;
