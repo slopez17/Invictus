@@ -1,24 +1,31 @@
 package co.com.uma.mseei.invictus.view.navigation;
 
+import static co.com.uma.mseei.invictus.R.id.monitorButton;
+import static co.com.uma.mseei.invictus.R.string.start;
+import static co.com.uma.mseei.invictus.R.string.stop;
+import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringById;
+
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import co.com.uma.mseei.invictus.databinding.FragmentHomeBinding;
 import co.com.uma.mseei.invictus.viewmodel.navigation.HomeViewModel;
-import co.com.uma.mseei.invictus.viewmodel.navigation.ProfileViewModel;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment
+        extends Fragment implements View.OnClickListener {
 
-    private HomeViewModel homeViewModel;
+
+    private Activity activity;
     private FragmentHomeBinding binding;
+    private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -28,13 +35,9 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-//        final TextView textView = binding.textHome;
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
+        activity = requireActivity();
+
+        initializeMonitorButton();
         return root;
     }
 
@@ -43,4 +46,21 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == monitorButton) {
+            homeViewModel.changeMonitoringState();
+        }
+    }
+
+    private void initializeMonitorButton() {
+        Button monitorButton = binding.monitorButton;
+        monitorButton.setOnClickListener(this);
+        homeViewModel.getMonitoringState().observe(getViewLifecycleOwner(), state -> {
+            int id = state ? stop : start;
+            monitorButton.setText(getStringById(activity, id));
+        });
+    }
+
 }

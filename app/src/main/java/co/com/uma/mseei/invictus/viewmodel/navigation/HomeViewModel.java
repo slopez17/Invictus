@@ -1,19 +1,31 @@
 package co.com.uma.mseei.invictus.viewmodel.navigation;
 
+import static java.util.Objects.requireNonNull;
+
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class HomeViewModel extends AndroidViewModel {
 
-    private MutableLiveData<String> mText;
+    private final MutableLiveData<Boolean> monitoringState;
 
-    public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+    public HomeViewModel(@NonNull Application application) {
+        super(application);
+        monitoringState = new MutableLiveData<>();
+        monitoringState.setValue(false);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<Boolean> getMonitoringState(){
+        return monitoringState;
     }
+
+    public void changeMonitoringState() {
+        boolean state = requireNonNull(this.monitoringState.getValue());
+        monitoringState.setValue(!state);
+    }
+
 }

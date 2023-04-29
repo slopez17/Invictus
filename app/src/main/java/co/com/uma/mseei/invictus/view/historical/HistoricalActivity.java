@@ -15,7 +15,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import co.com.uma.mseei.invictus.databinding.ActivityHistoricalBinding;
-import co.com.uma.mseei.invictus.viewmodel.historical.HistoricalSectionsAdapter;
 
 public class HistoricalActivity extends AppCompatActivity {
 

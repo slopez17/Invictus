@@ -6,24 +6,21 @@
     <color name="lightYellow">#FFEFBE</color>
     <color name="lightGreen">#D7FFCF</color>
     <color name="lightPurple">#F0D7F5</color>
-    <color name="lightOrange">#FADDD0</color>
+    <color name="lightOrange">#FFCFB9</color>
 
     <color name="raspberry">#FF007F</color>
-    <color name="orange">#E94816</color>
+    <color name="orange">#FF651D</color>
     <color name="cyan">#00FFFF</color>
+    <color name="blue">#1D9AFF</color>
     <color name="yellow">#FFCD41</color>
     <color name="green">#37C215</color>
-
-    <color name="raspberry40">#66ff007f</color>
-    <color name="darkOrange40">#66FF5722</color>
-    <color name="blue40">#662196F3</color>
 
     <color name="cyan_200">#03DAC5</color>
     <color name="cyan_500">#009688</color>
     <color name="cyan_700">#004B44</color>
     <color name="cyan_900">#001614</color>
 
-    <color name="black">#FF000000</color>
+    <color name="black">#2C2C2C</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray1">#616161</color>
     <color name="gray2">#a6a6a6</color>

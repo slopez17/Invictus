@@ -32,7 +32,6 @@ import co.com.uma.mseei.invictus.databinding.FragmentHistoricalWeightOptionBindi
 import co.com.uma.mseei.invictus.model.LineChart;
 import co.com.uma.mseei.invictus.model.Weight;
 import co.com.uma.mseei.invictus.viewmodel.historical.HistoricalViewModel;
-import co.com.uma.mseei.invictus.viewmodel.historical.WeightListViewAdapter;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import lecho.lib.hellocharts.view.LineChartView;

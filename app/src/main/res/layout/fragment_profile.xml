@@ -5,11 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".view.navigation.ProfileFragment"
-    android:background="@drawable/bg_degrade_lightrasberry">
+    android:background="@drawable/bg_degrade_lightrasberry"
+    android:gravity="center">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
         android:layout_marginHorizontal="@dimen/activity_general_margin"
         tools:ignore="UselessParent">
@@ -391,20 +393,22 @@
 
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/saveButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/raspberry40"
-                    android:textColor="@color/white"
-                    android:text="@string/save"
-                    android:textStyle="bold"/>
-
             </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:background="@color/raspberry"
+        android:textColor="@color/white"
+        android:text="@string/save"
+        android:textStyle="bold"/>
 
 </LinearLayout>
 

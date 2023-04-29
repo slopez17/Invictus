@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.viewmodel.historical;
+package co.com.uma.mseei.invictus.view.historical;
 
 import static co.com.uma.mseei.invictus.util.GeneralConstants.KG_UND;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.LBS_UND;
