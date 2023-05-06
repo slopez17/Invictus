@@ -17,4 +17,6 @@ public class GeneralConstants {
     public static final DecimalFormat TWO_DIGITS = new DecimalFormat("#.00");
     public static final DateTimeFormatter DD_MMM_YYYY = DateTimeFormatter.ofPattern("dd MMM yyyy");
 
+    public static final String SELECTED_SPORT = "selected_sport";
+
 }

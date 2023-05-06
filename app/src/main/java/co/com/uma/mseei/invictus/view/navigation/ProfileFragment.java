@@ -69,7 +69,6 @@ public class ProfileFragment
         View root = binding.getRoot();
 
         activity = requireActivity();
-
         initializeGenderSpinner();
         initializeBirthdateEditText();
         initializeAgeTextView();

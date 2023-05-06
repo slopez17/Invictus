@@ -8,8 +8,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import co.com.uma.mseei.invictus.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {

@@ -28,6 +28,11 @@
             android:theme="@style/Theme.Invictus.NoActionBar" />
 
         <activity
+            android:name=".view.home.SportSelectionActivity"
+            android:label="@string/select"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+
+        <activity
             android:name=".MainActivity"
             android:exported="true">
         </activity>
