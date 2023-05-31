@@ -1,12 +1,10 @@
 package co.com.uma.mseei.invictus.view.navigation;
 
-import static android.app.Activity.RESULT_OK;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
-import static co.com.uma.mseei.invictus.R.id.monitorButton;
+import static co.com.uma.mseei.invictus.R.id.trackingButton;
 import static co.com.uma.mseei.invictus.R.string.start;
 import static co.com.uma.mseei.invictus.R.string.stop;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.SELECTED_SPORT;
 import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringById;
 
 import android.app.Activity;
@@ -18,10 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,16 +25,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import co.com.uma.mseei.invictus.databinding.FragmentHomeBinding;
 import co.com.uma.mseei.invictus.view.home.SportSelectionActivity;
+import co.com.uma.mseei.invictus.view.home.StopTrackingConfirmationActivity;
 import co.com.uma.mseei.invictus.viewmodel.navigation.HomeViewModel;
 
 public class HomeFragment
         extends Fragment implements View.OnClickListener {
 
-
     private Activity activity;
     private FragmentHomeBinding binding;
     private HomeViewModel homeViewModel;
-    private ActivityResultLauncher<Intent> getSelectedSport;
+    private ActivityResultLauncher<Intent> getSportType;
+    private ActivityResultLauncher<Intent> getStopTrackingConfirmation;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,22 +52,19 @@ public class HomeFragment
         initializeDistanceViews();
         initializeSpeedViews();
         initializeElapsedTimeViews();
-        initializeMonitorButton();
-        initilizeMonitoringService();
+        initializeTrackingButton();
         return root;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO debo mover esta rutina de aquí
-        getSelectedSport = registerForActivityResult(new StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK) {
-                        Intent data = result.getData();
-                        int selectedSport = data.getExtras().getInt(SELECTED_SPORT);
-                    }
-                });
+
+        getSportType = registerForActivityResult(new StartActivityForResult(),
+                result -> homeViewModel.getSportType(result));
+
+        getStopTrackingConfirmation = registerForActivityResult(new StartActivityForResult(),
+                result -> homeViewModel.getStopTrackingConfirmation(result));
     }
 
     @Override
@@ -82,8 +75,8 @@ public class HomeFragment
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == monitorButton) {
-            homeViewModel.changeMonitoringState();
+        if (view.getId() == trackingButton) {
+            runTrackingTriggers();
         }
     }
 
@@ -118,25 +111,30 @@ public class HomeFragment
     }
 
     private void setViewsVisibility(TextView textView) {
-        homeViewModel.getMonitoringState().observe(getViewLifecycleOwner(), state -> {
+        homeViewModel.isTrackingActive().observe(getViewLifecycleOwner(), state -> {
             int visibility = state ? VISIBLE : INVISIBLE;
             textView.setVisibility(visibility);
         });
     }
 
-    private void initializeMonitorButton() {
-        Button monitorButton = binding.monitorButton;
-        monitorButton.setOnClickListener(this);
-        homeViewModel.getMonitoringState().observe(getViewLifecycleOwner(), state -> {
-            int id = state ? stop : start;
-            monitorButton.setText(getStringById(activity, id));
+    private void initializeTrackingButton() {
+        Button trackingButton = binding.trackingButton;
+        trackingButton.setOnClickListener(this);
+        homeViewModel.isTrackingActive().observe(getViewLifecycleOwner(), trackingState -> {
+            int id = trackingState ? stop : start;
+            trackingButton.setText(getStringById(activity, id));
         });
     }
 
-    private void initilizeMonitoringService() {
-        homeViewModel.getMonitoringState().observe(getViewLifecycleOwner(), state -> {
-            Intent intent = new Intent(activity, SportSelectionActivity.class);
-            getSelectedSport.launch(intent);
-        });
+    private void runTrackingTriggers() {
+        boolean state = homeViewModel.isServiceOrTrackingActive();
+        Intent intent;
+        if(!state) {
+            intent = new Intent(activity, SportSelectionActivity.class);
+            getSportType.launch(intent);
+        } else {
+            intent = new Intent(activity, StopTrackingConfirmationActivity.class);
+            getStopTrackingConfirmation.launch(intent);
+        }
     }
 }

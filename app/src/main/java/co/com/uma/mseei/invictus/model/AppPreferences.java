@@ -42,6 +42,7 @@ public class AppPreferences {
     public static final String PREF_REFRESH_TIME = "refreshTime";
     public static final String PREF_UNIT_SYSTEM = "unitSystem";
 
+
     public static final boolean DEFAULT_AUTO_FINISH = false;
     public static final String DEFAULT_SAMPLES_LIMIT = "2000";
     private static final String DEFAULT_SAMPLES_ON_MEMORY = "200";
@@ -52,11 +53,21 @@ public class AppPreferences {
     public static final String DEFAULT_UNIT_SYSTEM = "false";
 
     /*
+     * Service constants
+     */
+    public static final String PREF_SERVICE_BOUND = "serviceBound";
+    public static final String PREF_SPORT_ID = "sportId";
+    public static final boolean DEFAULT_SERVICE_BOUND = false;
+    public static final int DEFAULT_SPORT_ID = 0;
+
+    /*
      * AppPreferences constants
      */
     public static final String PREF_FILE = "data";
     private final SharedPreferences preferences;
     private final SharedPreferences.Editor editor;
+
+
 
     /*
      * Constructor
@@ -157,5 +168,13 @@ public class AppPreferences {
     public boolean isUnitSystemImperial() {
         String unitSystem = preferences.getString(PREF_UNIT_SYSTEM, DEFAULT_UNIT_SYSTEM);
         return parseBoolean(unitSystem);
+    }
+
+    public boolean isServiceBound() {
+        return preferences.getBoolean(PREF_SERVICE_BOUND, DEFAULT_SERVICE_BOUND);
+    }
+
+    public int getSportId() {
+        return preferences.getInt(PREF_SPORT_ID, DEFAULT_SPORT_ID);
     }
 }

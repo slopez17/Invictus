@@ -36,6 +36,10 @@
     <string name="elapsed_time">Elapsed Time</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
+    <string name="sportype_error">You didn\'t choose any sport. Please, try again.</string>
+    <string name="start_traking">Let\'s go! Traking starts for:</string>
+    <string name="confirm">confirm</string>
+    <string name="confirm_message">Are you sure you want to stop this tracking activity?</string>
 
     <!-- Historical -->
     <string name="select">Choose an option</string>
@@ -90,6 +94,9 @@
     <string name="save">Save</string>
     <string name="successfully_saved">Data successfully saved</string>
     <string name="error_saved">Unable to save on Database</string>
+
+    <!-- Service -->
+    <string name="notification_title">Invictus is tracking your activity</string>
 
     <!-- Settings -->
     <string name="tracking_category">

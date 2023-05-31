@@ -107,7 +107,7 @@
                             android:layout_gravity="center"
                             android:layout_margin="@dimen/activity_general_margin"
                             android:contentDescription="@string/walk"
-                            android:src="@drawable/ic_walking_black_24dp"
+                            android:src="@drawable/ic_walk_black_24dp"
                             android:scaleType="fitCenter" />
 
                         <TextView
@@ -150,7 +150,7 @@
                             android:layout_gravity="center"
                             android:layout_margin="@dimen/activity_general_margin"
                             android:contentDescription="@string/jog"
-                            android:src="@drawable/ic_jogging_black_24dp"
+                            android:src="@drawable/ic_jog_black_24dp"
                             android:scaleType="fitCenter" />
 
                         <TextView
