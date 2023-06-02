@@ -1,11 +1,11 @@
 package co.com.uma.mseei.invictus.view.home;
 
 import static co.com.uma.mseei.invictus.R.id.confirmButton;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.SELECTED_SPORT;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RadioGroup;
 
@@ -13,8 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import co.com.uma.mseei.invictus.databinding.ActivitySportSelectionBinding;
 
-public class SportSelectionActivity extends AppCompatActivity implements View.OnClickListener {
+public class SportSelectionActivity extends AppCompatActivity implements OnClickListener {
 
+    public static final String SELECTED_SPORT = "selected_sport";
     private ActivitySportSelectionBinding binding;
 
     @Override
@@ -30,14 +31,18 @@ public class SportSelectionActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View view) {
         if (view.getId() == confirmButton) {
-            RadioGroup sportsRadioGroup = binding.sportsRadioGroup;
-            int selectedSport = sportsRadioGroup.getCheckedRadioButtonId();
-
             Intent i = new Intent();
-            i.putExtra(SELECTED_SPORT, selectedSport);
+            i.putExtra(SELECTED_SPORT, getSelectedSport());
             setResult(RESULT_OK, i);
             finish();
         }
+    }
+
+    private int getSelectedSport() {
+        RadioGroup sportsRadioGroup = binding.sportsRadioGroup;
+        int id = sportsRadioGroup.getCheckedRadioButtonId();
+        View radioButton = sportsRadioGroup.findViewById(id);
+        return sportsRadioGroup.indexOfChild(radioButton);
     }
 }
 

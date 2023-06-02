@@ -37,6 +37,10 @@
     <string name="elapsed_time">Tiempo transcurrido</string>
     <string name="start">Iniciar</string>
     <string name="stop">Detener</string>
+    <string name="sportype_error">No seleccionaste ningún deporte. Por favor, intenta de nuevo.</string>
+    <string name="start_traking">Vamos! Comienza el seguimiento para:</string>
+    <string name="confirm">Confirmar</string>
+    <string name="confirm_message">Seguro que deseas detener el seguimiento de la actividad?</string>
 
     <!-- Historical -->
     <string name="select">Escoja una opción</string>
@@ -91,6 +95,9 @@
     <string name="save">Guardar</string>
     <string name="successfully_saved">Datos guardados éxitosamente</string>
     <string name="error_saved">No se pudo guardar en la base de datos</string>
+
+    <!-- Service -->
+    <string name="notification_title">Invictus está seguiendo tu actividad</string>
 
     <!-- Settings -->
     <string name="tracking_category">
