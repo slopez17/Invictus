@@ -1,6 +1,7 @@
 package co.com.uma.mseei.invictus.viewmodel.navigation;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.BIND_AUTO_CREATE;
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
 import static java.lang.String.format;
@@ -13,7 +14,10 @@ import static co.com.uma.mseei.invictus.view.home.StopTrackingConfirmationActivi
 import static co.com.uma.mseei.invictus.viewmodel.service.ListenAccelerometerService.ACCELEROMETER_SERVICE_PARAMETERS;
 
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
@@ -25,27 +29,23 @@ import co.com.uma.mseei.invictus.model.AccelerometerServiceParameters;
 import co.com.uma.mseei.invictus.model.AppPreferences;
 import co.com.uma.mseei.invictus.model.SportType;
 import co.com.uma.mseei.invictus.viewmodel.service.ListenAccelerometerService;
+import co.com.uma.mseei.invictus.viewmodel.service.ServiceChecker;
 
 public class HomeViewModel extends AndroidViewModel {
 
+    private IBinder binder;
     private final AppPreferences appPreferences;
-    private final MutableLiveData<Boolean> trackingActive;
+    private final MutableLiveData<Boolean> serviceBound;
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
         appPreferences = new AppPreferences(application);
-        trackingActive = new MutableLiveData<>();
-        trackingActive.setValue(false);
+        serviceBound = new MutableLiveData<>();
+        assureServiceState(application);
     }
 
-    public LiveData<Boolean> isTrackingActive(){
-        return trackingActive;
-    }
-
-    public boolean isServiceOrTrackingActive() {
-        boolean trackingState = requireNonNull(this.trackingActive.getValue());
-        boolean serviceState = appPreferences.isServiceBound();
-        return serviceState || trackingState;
+    public LiveData<Boolean> isServiceBound() {
+        return serviceBound;
     }
 
     public void getSportType(ActivityResult result) {
@@ -54,47 +54,63 @@ public class HomeViewModel extends AndroidViewModel {
             int selectedSport = requireNonNull(data).getExtras().getInt(SELECTED_SPORT);
             SportType sportType = values()[selectedSport];
             startService(sportType);
-            changetrackingState();
             getSportTypeMessage(sportType);
         } else {
             getSportTypeMessage();
         }
     }
 
-    public void getStopTrackingConfirmation(ActivityResult result) {
-        if (result.getResultCode() == RESULT_OK) {
-            Intent data = result.getData();
-            boolean stoptracking = requireNonNull(data).getExtras().getBoolean(STOP_TRACKING);
-//                        homeViewModel.startService(sportType);
-//                        homeViewModel.changetrackingState();
-//                        homeViewModel.getSportTypeMessage(sportType);
+    private void assureServiceState(@NonNull Application application) {
+        boolean isListenAccelerometerServiceRunning = new ServiceChecker(application).isServiceRunning(ListenAccelerometerService.class);
+        boolean isServiceBound = appPreferences.isServiceBound();
+        if (isServiceBound){
+            if (!isListenAccelerometerServiceRunning){
+                setServiceBound(false);
+            }
         } else {
-//                        homeViewModel.getSportTypeMessage();
+            serviceBound.setValue(false);
         }
     }
 
-    private void startService(SportType sportType) {
-        Intent intent = new Intent(getApplication(), ListenAccelerometerService.class);
+    private void setServiceBound(boolean state) {
+        serviceBound.setValue(state);
+        appPreferences.setServiceBound(state);
+    }
 
+    private void startService(SportType sportType) {
+        Application application = getApplication();
+        Intent intent = new Intent(application, ListenAccelerometerService.class);
         AccelerometerServiceParameters parameters = new AccelerometerServiceParameters();
         parameters.setGender(appPreferences.getGender());
         parameters.setWeight(appPreferences.getWeight());
         parameters.setSportId(appPreferences.getSportId()+1);
         parameters.setSportType(sportType);
-        parameters.setAutofinishOn(appPreferences.isAutoFinishOn());
+        parameters.setAutofinish(appPreferences.isAutoFinishOn());
         parameters.setSamplesLimit(appPreferences.getSamplesLimit());
         parameters.setSamplesOnMemory(appPreferences.getSamplesOnMemory());
-        parameters.setSaveOnSdOn(appPreferences.isSaveOnSdOn());
+        parameters.setSaveOnSd(appPreferences.isSaveOnSdOn());
         parameters.setFileName(appPreferences.getFileName(), appPreferences.isMultipleFilesOn());
+        parameters.setDebug(appPreferences.isDebugOn());
 
         intent.putExtra(ACCELEROMETER_SERVICE_PARAMETERS, parameters);
-        getApplication().startForegroundService(intent);
+        application.startForegroundService(intent);
+        application.bindService(intent, serviceConnection, BIND_AUTO_CREATE);
     }
 
-    private void changetrackingState() {
-        boolean state = requireNonNull(this.trackingActive.getValue());
-        trackingActive.setValue(!state);
-    }
+    private final ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            binder = iBinder;
+//            ListenAccelerometerService.BinderAccess access = (ListenAccelerometerService.BinderAccess) iBinder;
+//            ListenAccelerometerService listenAccelerometerService = access.getService();
+            setServiceBound(true);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
 
     private void getSportTypeMessage(SportType... sportType) {
         if(sportType.length == 0) {
@@ -105,5 +121,28 @@ public class HomeViewModel extends AndroidViewModel {
                     application.getString(sportType[0].getSportName()));
             makeText(getApplication(), message, LENGTH_LONG).show();
         }
+    }
+
+    public void getStopTrackingConfirmation(ActivityResult result) {
+        if (result.getResultCode() == RESULT_OK) {
+            Intent data = result.getData();
+            boolean stoptracking = requireNonNull(data).getExtras().getBoolean(STOP_TRACKING);
+            if(stoptracking) {
+                stopService();
+            }
+//                        homeViewModel.getSportTypeMessage(sportType);
+        } else {
+//                        homeViewModel.getSportTypeMessage();
+        }
+    }
+
+    private void stopService() {
+        if(appPreferences.isServiceBound()){
+            getApplication().unbindService(serviceConnection);
+            setServiceBound(false);
+        }
+        Application application = getApplication();
+        Intent intent = new Intent(application,  ListenAccelerometerService.class);
+        application.stopService(intent);
     }
 }

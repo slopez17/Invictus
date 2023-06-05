@@ -2,6 +2,7 @@ package co.com.uma.mseei.invictus.view.navigation;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
+import static java.lang.Boolean.TRUE;
 import static co.com.uma.mseei.invictus.R.id.trackingButton;
 import static co.com.uma.mseei.invictus.R.string.start;
 import static co.com.uma.mseei.invictus.R.string.stop;
@@ -111,7 +112,7 @@ public class HomeFragment
     }
 
     private void setViewsVisibility(TextView textView) {
-        homeViewModel.isTrackingActive().observe(getViewLifecycleOwner(), state -> {
+        homeViewModel.isServiceBound().observe(getViewLifecycleOwner(), state -> {
             int visibility = state ? VISIBLE : INVISIBLE;
             textView.setVisibility(visibility);
         });
@@ -120,21 +121,21 @@ public class HomeFragment
     private void initializeTrackingButton() {
         Button trackingButton = binding.trackingButton;
         trackingButton.setOnClickListener(this);
-        homeViewModel.isTrackingActive().observe(getViewLifecycleOwner(), trackingState -> {
+        homeViewModel.isServiceBound().observe(getViewLifecycleOwner(), trackingState -> {
             int id = trackingState ? stop : start;
             trackingButton.setText(getStringById(activity, id));
         });
     }
 
     private void runTrackingTriggers() {
-        boolean state = homeViewModel.isServiceOrTrackingActive();
+        boolean state = TRUE.equals(homeViewModel.isServiceBound().getValue());
         Intent intent;
-        if(!state) {
-            intent = new Intent(activity, SportSelectionActivity.class);
-            getSportType.launch(intent);
-        } else {
+        if(state) {
             intent = new Intent(activity, StopTrackingConfirmationActivity.class);
             getStopTrackingConfirmation.launch(intent);
+        } else {
+            intent = new Intent(activity, SportSelectionActivity.class);
+            getSportType.launch(intent);
         }
     }
 }

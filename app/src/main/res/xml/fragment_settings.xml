@@ -68,5 +68,11 @@
             android:key="unitSystem"
             android:title="@string/unit_system_title"
             app:iconSpaceReserved="false" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="debug"
+            android:summary="@string/debug_summary"
+            android:title="@string/debug_title"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 </PreferenceScreen>

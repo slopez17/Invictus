@@ -16,6 +16,7 @@ public class AccelerometerServiceParameters implements Serializable {
     int samplesOnMemory;
     boolean isSaveOnSdOn;
     String fileName;
+    boolean isDebugOn;
 
     public int getGender() {
         return gender;
@@ -53,8 +54,8 @@ public class AccelerometerServiceParameters implements Serializable {
         return isAutofinishOn;
     }
 
-    public void setAutofinishOn(boolean autofinishOn) {
-        isAutofinishOn = autofinishOn;
+    public void setAutofinish(boolean autofinishState) {
+        isAutofinishOn = autofinishState;
     }
 
     public int getSamplesLimit() {
@@ -77,8 +78,8 @@ public class AccelerometerServiceParameters implements Serializable {
         return isSaveOnSdOn;
     }
 
-    public void setSaveOnSdOn(boolean saveOnSdOn) {
-        isSaveOnSdOn = saveOnSdOn;
+    public void setSaveOnSd(boolean saveOnSdState) {
+        isSaveOnSdOn = saveOnSdState;
     }
 
     public String getFileName() {
@@ -90,4 +91,11 @@ public class AccelerometerServiceParameters implements Serializable {
                 : fileName + EXT_TXT;
     }
 
+    public boolean isDebugOn() {
+        return isDebugOn;
+    }
+
+    public void setDebug(boolean debugState) {
+        isDebugOn = debugState;
+    }
 }

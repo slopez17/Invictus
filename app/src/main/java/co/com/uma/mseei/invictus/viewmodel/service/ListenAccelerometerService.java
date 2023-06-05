@@ -2,7 +2,11 @@ package co.com.uma.mseei.invictus.viewmodel.service;
 
 import static android.app.NotificationManager.IMPORTANCE_DEFAULT;
 import static android.app.PendingIntent.getActivity;
+import static android.widget.Toast.LENGTH_SHORT;
+import static android.widget.Toast.makeText;
+import static java.lang.String.format;
 import static co.com.uma.mseei.invictus.R.string.notification_title;
+import static co.com.uma.mseei.invictus.util.ResourceOperations.getMethodName;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -13,6 +17,7 @@ import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.os.Binder;
 import android.os.IBinder;
 
 import androidx.annotation.NonNull;
@@ -28,9 +33,17 @@ public class ListenAccelerometerService
 
     public static final String  ACCELEROMETER_SERVICE_PARAMETERS = "accelerometerServiceParameters";
     private AccelerometerServiceParameters parameters;
-    private static final int NOTIFICATION_ID = 123;
-    private static final String CHANNEL_ID = "MyForegroundServiceChannel";
-    private static final String CHANNEL_NAME = "My Foreground Service Channel";
+    private static final int NOTIFICATION_ID = 567;
+    private static final String CHANNEL_ID = "ListenAccelerometerServiceChannel";
+    private static final String CHANNEL_NAME = "ListenAccelerometerService Channel";
+    private final String CLASS_NAME = this.getClass().getSimpleName();
+    private IBinder binder;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        binder = new BinderAccess();
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -43,7 +56,20 @@ public class ListenAccelerometerService
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        if (parameters.isDebugOn()){
+            String message = format("%s -> %s", CLASS_NAME, getMethodName());
+            makeText(this, message, LENGTH_SHORT).show();
+        }
+        return binder;
+    }
+
+    @Override
+    public boolean stopService(Intent name) {
+        if (parameters.isDebugOn()){
+            String message = format("%s -> %s", CLASS_NAME, getMethodName());
+            makeText(this, message, LENGTH_SHORT).show();
+        }
+        return super.stopService(name);
     }
 
     @Override
@@ -54,6 +80,16 @@ public class ListenAccelerometerService
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    public boolean getSomething() {
+        return true;
+    }
+
+    public class BinderAccess extends Binder {
+        public ListenAccelerometerService getService() {
+            return ListenAccelerometerService.this;
+        }
     }
 
     private void getAccelerometerServiceParameters(Intent intent) {

@@ -38,7 +38,7 @@
     <string name="stop">Stop</string>
     <string name="sportype_error">You didn\'t choose any sport. Please, try again.</string>
     <string name="start_traking">Let\'s go! Traking starts for:</string>
-    <string name="confirm">confirm</string>
+    <string name="confirm">Confirm</string>
     <string name="confirm_message">Are you sure you want to stop this tracking activity?</string>
 
     <!-- Historical -->
@@ -158,5 +158,10 @@
         <item>International System</item>
         <item>Imperial/British System</item>
     </string-array>
-
+    <string name="debug_summary">
+        Show messages about the application flow.
+    </string>
+    <string name="debug_title">
+        Debugging
+    </string>
 </resources>

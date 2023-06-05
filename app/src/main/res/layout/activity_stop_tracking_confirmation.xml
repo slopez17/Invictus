@@ -1,50 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".view.home.StopTrackingConfirmationActivity">
-<!--TODO-->
+
     <TextView
-        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/activity_vertical_margin"
         android:text="@string/confirm_message"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="20dp" />
+        android:textAlignment="center"/>
 
     <LinearLayout
-        android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginHorizontal="@dimen/activity_vertical_margin"
         android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="20dp">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/cancelButton"
-            android:layout_width="97dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@android:string/cancel"
-            tools:layout_editor_absoluteX="180dp"
-            tools:layout_editor_absoluteY="675dp"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:layout_weight="1"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:background="@color/cyan_500"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="@android:string/cancel"/>
 
         <Button
             android:id="@+id/okButton"
-            android:layout_width="88dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@android:string/ok"
-            tools:layout_editor_absoluteX="54dp"
-            tools:layout_editor_absoluteY="675dp"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:layout_weight="1"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:background="@color/gray1"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="@string/confirm"/>
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -31,7 +31,6 @@ public class StopTrackingConfirmationActivity extends AppCompatActivity implemen
     @Override
     public void onClick(View view) {
         boolean answer = view.getId() == okButton;
-
         Intent i = new Intent();
         i.putExtra(STOP_TRACKING, answer);
         setResult(RESULT_OK, i);

@@ -41,7 +41,7 @@ public class AppPreferences {
     public static final String PREF_MULTIPLE_FILES = "multipleFiles";
     public static final String PREF_REFRESH_TIME = "refreshTime";
     public static final String PREF_UNIT_SYSTEM = "unitSystem";
-
+    public static final String PREF_DEBUG = "debug";
 
     public static final boolean DEFAULT_AUTO_FINISH = false;
     public static final String DEFAULT_SAMPLES_LIMIT = "2000";
@@ -51,6 +51,7 @@ public class AppPreferences {
     private static final boolean DEFAULT_MULTIPLE_FILES = false;
     private static final String DEFAULT_REFRESH_TIME = "5";
     public static final String DEFAULT_UNIT_SYSTEM = "false";
+    public static final boolean DEFAULT_DEBUG = false;
 
     /*
      * Service constants
@@ -170,11 +171,27 @@ public class AppPreferences {
         return parseBoolean(unitSystem);
     }
 
+    public boolean isDebugOn() {
+        return preferences.getBoolean(PREF_DEBUG, DEFAULT_DEBUG);
+    }
+
+    public void setDebug(boolean debugState) {
+        editor.putBoolean(PREF_DEBUG, debugState);
+        editor.apply();
+    }
+
     public boolean isServiceBound() {
         return preferences.getBoolean(PREF_SERVICE_BOUND, DEFAULT_SERVICE_BOUND);
+    }
+
+    public void setServiceBound(boolean serviceBound) {
+        editor.putBoolean(PREF_SERVICE_BOUND, serviceBound);
+        editor.apply();
     }
 
     public int getSportId() {
         return preferences.getInt(PREF_SPORT_ID, DEFAULT_SPORT_ID);
     }
+
+
 }

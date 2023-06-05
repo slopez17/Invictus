@@ -12,6 +12,11 @@
         android:theme="@style/Theme.Invictus">
 
         <activity
+            android:name=".MainActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -24,15 +29,13 @@
         </activity>
 
         <activity
-            android:name=".view.historical.HistoricalActivity"
-            android:exported="false"
-            android:label="@string/title_historical"
-            android:theme="@style/Theme.Invictus.NoActionBar" />
-
-        <activity
             android:name=".view.home.SportSelectionActivity"
             android:label="@string/select"
             android:theme="@style/Theme.AppCompat.Dialog" />
+
+        <service
+            android:name=".viewmodel.service.ListenAccelerometerService"
+            android:exported="false" />
 
         <activity
             android:name=".view.home.StopTrackingConfirmationActivity"
@@ -40,9 +43,10 @@
             android:theme="@style/Theme.AppCompat.Dialog" />
 
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:name=".view.historical.HistoricalActivity"
+            android:exported="false"
+            android:label="@string/title_historical"
+            android:theme="@style/Theme.Invictus.NoActionBar" />
 
     </application>
 
