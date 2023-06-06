@@ -3,10 +3,9 @@ package co.com.uma.mseei.invictus.view.navigation;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static java.lang.Boolean.TRUE;
+import static co.com.uma.mseei.invictus.R.drawable.ic_arrow_black_24dp;
+import static co.com.uma.mseei.invictus.R.drawable.ic_stop_black_24dp;
 import static co.com.uma.mseei.invictus.R.id.trackingButton;
-import static co.com.uma.mseei.invictus.R.string.start;
-import static co.com.uma.mseei.invictus.R.string.stop;
-import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringById;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,7 +13,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -23,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import co.com.uma.mseei.invictus.databinding.FragmentHomeBinding;
 import co.com.uma.mseei.invictus.view.home.SportSelectionActivity;
@@ -119,11 +119,11 @@ public class HomeFragment
     }
 
     private void initializeTrackingButton() {
-        Button trackingButton = binding.trackingButton;
+        FloatingActionButton trackingButton = binding.trackingButton;
         trackingButton.setOnClickListener(this);
         homeViewModel.isServiceBound().observe(getViewLifecycleOwner(), trackingState -> {
-            int id = trackingState ? stop : start;
-            trackingButton.setText(getStringById(activity, id));
+            int id = trackingState ? ic_stop_black_24dp : ic_arrow_black_24dp;
+            trackingButton.setImageResource(id);
         });
     }
 

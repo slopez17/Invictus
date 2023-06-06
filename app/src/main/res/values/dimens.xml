@@ -8,7 +8,7 @@
     <dimen name="activity_text_level2_size">14sp</dimen>
     <dimen name="activity_icon_level0_size">28dp</dimen>
     <dimen name="activity_icon_level1_size">24dp</dimen>
-    <dimen name="activity_layout_height">64dp</dimen>
+    <dimen name="activity_layout_height">48dp</dimen>
     <dimen name="activity_min_height">48dp</dimen>
     <dimen name="zero">0dp</dimen>
     <dimen name="appbar_padding">16dp</dimen>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".view.navigation.ProfileFragment"
     android:background="@drawable/bg_degrade_lightrasberry"
@@ -10,11 +11,16 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:layout_height="0dp"
         android:layout_marginHorizontal="@dimen/activity_general_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="UselessParent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,6 +29,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:orientation="vertical">
 
                 <TextView
@@ -31,8 +38,8 @@
                     android:layout_margin="@dimen/activity_general_margin"
                     android:text="@string/basic_category"
                     android:textColor="@color/raspberry"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/activity_text_level2_size"/>
+                    android:textSize="@dimen/activity_text_level2_size"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -64,7 +71,8 @@
                         <Spinner
                             android:id="@+id/genderSpinner"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/activity_layout_height" />
+                            android:layout_height="@dimen/activity_min_height"
+                            android:layout_gravity="center_vertical" />
 
                     </LinearLayout>
 
@@ -73,97 +81,106 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/activity_general_margin"
-                        android:text="@string/birthdate"
-                        android:textSize="@dimen/activity_text_level1_size" />
+                    android:layout_marginBottom="@dimen/activity_general_margin"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/activity_layout_height"
-                        android:orientation="horizontal">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/dateIcon"
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
                             android:layout_margin="@dimen/activity_general_margin"
-                            android:contentDescription="@string/birthdate"
-                            android:src="@drawable/ic_calendar_black_24dp" />
+                            android:text="@string/birthdate"
+                            android:textSize="@dimen/activity_text_level1_size" />
 
-                        <EditText
-                            android:id="@+id/birthdateEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/activity_general_margin"
-                            android:autofillHints="80"
-                            android:ems="10"
-                            android:focusable="false"
-                            android:hint="@string/date_format"
-                            android:inputType="date"
-                            android:minHeight="48dp"
-                            android:textAlignment="center"
-                            android:textSize="@dimen/activity_text_level2_size" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/activity_layout_height"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/dateIcon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_margin="@dimen/activity_general_margin"
+                                android:contentDescription="@string/birthdate"
+                                android:src="@drawable/ic_calendar_black_24dp" />
+
+                            <EditText
+                                android:id="@+id/birthdateEditText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/activity_min_height"
+                                android:layout_gravity="center"
+                                android:layout_margin="@dimen/activity_general_margin"
+                                android:autofillHints="80"
+                                android:ems="7"
+                                android:focusable="false"
+                                android:hint="@string/date_format"
+                                android:inputType="date"
+                                android:minHeight="48dp"
+                                android:textAlignment="center"
+                                android:textSize="@dimen/activity_text_level2_size" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/activity_general_margin"
-                        android:text="@string/age"
-                        android:textSize="@dimen/activity_text_level1_size" />
-
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/activity_layout_height"
-                        android:orientation="horizontal">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/ageIcon"
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
                             android:layout_margin="@dimen/activity_general_margin"
-                            android:contentDescription="@string/age"
-                            android:src="@drawable/ic_cake_black_24dp" />
+                            android:text="@string/age"
+                            android:textSize="@dimen/activity_text_level1_size" />
 
-                        <TextView
-                            android:id="@+id/ageTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/activity_general_margin"
-                            android:layout_weight="1"
-                            android:ems="3"
-                            android:textAlignment="center"
-                            android:textSize="@dimen/activity_text_level2_size" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/activity_layout_height"
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/ageUndTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/activity_general_margin"
-                            android:layout_weight="2"
-                            android:text="@string/age_und"
-                            android:textAlignment="center"
-                            android:textSize="@dimen/activity_text_level2_size" />
+                            <ImageView
+                                android:id="@+id/ageIcon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_margin="@dimen/activity_general_margin"
+                                android:contentDescription="@string/age"
+                                android:src="@drawable/ic_cake_black_24dp" />
+
+                            <TextView
+                                android:id="@+id/ageTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="@dimen/activity_general_margin"
+                                android:layout_weight="1"
+                                android:ems="3"
+                                android:textAlignment="center"
+                                android:textSize="@dimen/activity_text_level2_size" />
+
+                            <TextView
+                                android:id="@+id/ageUndTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="@dimen/activity_general_margin"
+                                android:layout_weight="2"
+                                android:text="@string/age_und"
+                                android:textAlignment="center"
+                                android:textSize="@dimen/activity_text_level2_size" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -174,6 +191,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginVertical="@dimen/activity_general_margin"
                 android:orientation="vertical">
 
                 <TextView
@@ -182,63 +200,131 @@
                     android:layout_margin="@dimen/activity_general_margin"
                     android:text="@string/body_category"
                     android:textColor="@color/raspberry"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/activity_text_level2_size"/>
+                    android:textSize="@dimen/activity_text_level2_size"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/activity_general_margin"
-                        android:text="@string/weight"
-                        android:textSize="@dimen/activity_text_level1_size" />
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/activity_layout_height"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/weightIcon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_margin="@dimen/activity_general_margin"
-                            android:contentDescription="@string/weight"
-                            android:src="@drawable/ic_weight_black_24dp" />
-
-                        <EditText
-                            android:id="@+id/weightEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/activity_general_margin"
-                            android:layout_weight="1"
-                            android:autofillHints="5"
-                            android:ems="5"
-                            android:inputType="numberDecimal"
-                            android:maxLength="5"
-                            android:minHeight="48dp"
-                            android:textAlignment="center"
-                            android:textSize="@dimen/activity_text_level2_size"
-                            android:focusable="true"
-                            android:windowSoftInputMode="stateAlwaysHidden"
-                            tools:ignore="TextContrastCheck" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/weightUndTextView"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:layout_margin="@dimen/activity_general_margin"
-                            android:layout_weight="2"
-                            android:textAlignment="center"
-                            android:textSize="@dimen/activity_text_level2_size" />
+                            android:text="@string/weight"
+                            android:textSize="@dimen/activity_text_level1_size" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/activity_layout_height"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/weightIcon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_margin="@dimen/activity_general_margin"
+                                android:contentDescription="@string/weight"
+                                android:src="@drawable/ic_weight_black_24dp" />
+
+                            <EditText
+                                android:id="@+id/weightEditText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/activity_min_height"
+                                android:layout_gravity="center"
+                                android:layout_margin="@dimen/activity_general_margin"
+                                android:layout_weight="1"
+                                android:autofillHints="5"
+                                android:ems="5"
+                                android:focusable="true"
+                                android:inputType="numberDecimal"
+                                android:maxLength="5"
+                                android:minHeight="48dp"
+                                android:textAlignment="center"
+                                android:textSize="@dimen/activity_text_level2_size"
+                                android:windowSoftInputMode="stateAlwaysHidden"
+                                tools:ignore="TextContrastCheck" />
+
+                            <TextView
+                                android:id="@+id/weightUndTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="@dimen/activity_general_margin"
+                                android:layout_weight="2"
+                                android:textAlignment="center"
+                                android:textSize="@dimen/activity_text_level2_size" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/activity_general_margin"
+                            android:text="@string/height"
+                            android:textSize="@dimen/activity_text_level1_size" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/activity_layout_height"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/heightIcon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_margin="@dimen/activity_general_margin"
+                                android:contentDescription="@string/height"
+                                android:src="@drawable/ic_height_black_24dp" />
+
+                            <EditText
+                                android:id="@+id/heightEditText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/activity_min_height"
+                                android:layout_gravity="center"
+                                android:layout_margin="@dimen/activity_general_margin"
+                                android:layout_weight="1"
+                                android:autofillHints="5"
+                                android:ems="5"
+                                android:focusable="true"
+                                android:inputType="numberDecimal"
+                                android:maxLength="5"
+                                android:minHeight="48dp"
+                                android:textAlignment="center"
+                                android:textSize="@dimen/activity_text_level2_size"
+                                android:windowSoftInputMode="stateAlwaysHidden"
+                                tools:ignore="TextContrastCheck" />
+
+                            <TextView
+                                android:id="@+id/heightUndTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="@dimen/activity_general_margin"
+                                android:layout_weight="2"
+                                android:textAlignment="center"
+                                android:textSize="@dimen/activity_text_level2_size" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -247,66 +333,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/activity_general_margin"
-                        android:text="@string/height"
-                        android:textSize="@dimen/activity_text_level1_size" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/activity_layout_height"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/heightIcon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_margin="@dimen/activity_general_margin"
-                            android:contentDescription="@string/height"
-                            android:src="@drawable/ic_height_black_24dp" />
-
-                        <EditText
-                            android:id="@+id/heightEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/activity_general_margin"
-                            android:layout_weight="1"
-                            android:autofillHints="5"
-                            android:ems="5"
-                            android:inputType="numberDecimal"
-                            android:maxLength="5"
-                            android:minHeight="48dp"
-                            android:textAlignment="center"
-                            android:textSize="@dimen/activity_text_level2_size"
-                            android:focusable="true"
-                            android:windowSoftInputMode="stateAlwaysHidden"
-                            tools:ignore="TextContrastCheck" />
-
-                        <TextView
-                            android:id="@+id/heightUndTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/activity_general_margin"
-                            android:layout_weight="2"
-                            android:textAlignment="center"
-                            android:textSize="@dimen/activity_text_level2_size" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:layout_marginBottom="@dimen/activity_general_margin"
                     android:orientation="vertical">
 
                     <TextView
@@ -350,8 +377,6 @@
                             android:textAlignment="center"
                             android:textSize="@dimen/activity_text_level2_size" />
 
-
-
                     </LinearLayout>
 
                 </LinearLayout>
@@ -361,14 +386,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_general_margin"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/activity_layout_height"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
 
                     <TextView
                         android:layout_width="match_parent"
@@ -399,16 +423,20 @@
 
     </ScrollView>
 
-    <Button
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:layout_margin="@dimen/activity_vertical_margin"
-        android:background="@color/raspberry"
-        android:textColor="@color/white"
-        android:text="@string/save"
-        android:textStyle="bold"/>
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/save"
+        android:src="@drawable/ic_save_black_24dp"
+        android:tint="@color/white"
+        app:backgroundTint="@color/raspberry"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="32dp" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

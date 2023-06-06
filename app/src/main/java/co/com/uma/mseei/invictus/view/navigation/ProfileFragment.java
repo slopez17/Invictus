@@ -30,7 +30,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -40,6 +39,8 @@ import android.widget.TextView.OnEditorActionListener;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
 
@@ -234,7 +235,7 @@ public class ProfileFragment
     }
 
     private void initializeSaveButton() {
-        Button saveButton = binding.saveButton;
+        FloatingActionButton saveButton = binding.saveButton;
         saveButton.setOnClickListener(this);
     }
 
