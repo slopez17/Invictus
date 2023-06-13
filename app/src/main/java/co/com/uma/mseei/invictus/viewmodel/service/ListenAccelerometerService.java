@@ -25,7 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import co.com.uma.mseei.invictus.MainActivity;
-import co.com.uma.mseei.invictus.model.AccelerometerServiceParameters;
+import co.com.uma.mseei.invictus.model.service.AccelerometerServiceParameters;
 
 public class ListenAccelerometerService
         extends Service
@@ -106,8 +106,8 @@ public class ListenAccelerometerService
     @NonNull
     private Notification createNotification() {
         String contentTitle = getString(notification_title);
-        String contentText = getString(parameters.getSportType().getSportName());
-        int icon = parameters.getSportType().getSportIcon();
+        String contentText = getString(parameters.getSportType().getName());
+        int icon = parameters.getSportType().getIcon();
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = getActivity(this, 0, notificationIntent, 0);

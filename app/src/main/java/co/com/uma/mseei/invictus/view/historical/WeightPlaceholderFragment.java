@@ -6,8 +6,8 @@ import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static co.com.uma.mseei.invictus.R.color.yellow;
 import static co.com.uma.mseei.invictus.R.id.nextPeriodButton;
 import static co.com.uma.mseei.invictus.R.id.previousPeriodButton;
-import static co.com.uma.mseei.invictus.model.HistoricalOptions.ALL;
-import static co.com.uma.mseei.invictus.model.HistoricalOptions.SECTION_NUMBER;
+import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.ALL;
+import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.SECTION_NUMBER;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
 
@@ -30,7 +30,7 @@ import java.util.List;
 
 import co.com.uma.mseei.invictus.databinding.FragmentHistoricalWeightOptionBinding;
 import co.com.uma.mseei.invictus.model.LineChart;
-import co.com.uma.mseei.invictus.model.Weight;
+import co.com.uma.mseei.invictus.model.database.Weight;
 import co.com.uma.mseei.invictus.viewmodel.historical.HistoricalViewModel;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;

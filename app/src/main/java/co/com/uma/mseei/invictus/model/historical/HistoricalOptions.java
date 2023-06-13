@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.model;
+package co.com.uma.mseei.invictus.model.historical;
 
 import static co.com.uma.mseei.invictus.R.string.all;
 import static co.com.uma.mseei.invictus.R.string.day;
@@ -23,9 +23,6 @@ public class HistoricalOptions {
     public static final int ROPE_SKIPPING = 2;
 
     public static final String SECTION_NUMBER = "sectionNumber";
-    public static final int DAY = 0;
-    public static final int WEEK = 1;
-    public static final int MONTH = 2;
     public static final int ALL = 3;
 
     public static int[] getTabTitlesFor(int selectedOption) {

@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.view.navigation;
+package co.com.uma.mseei.invictus.view.profile;
 
 import static java.lang.System.currentTimeMillis;
 import static co.com.uma.mseei.invictus.R.id.birthdateEditText;
@@ -8,6 +8,7 @@ import static co.com.uma.mseei.invictus.R.id.saveButton;
 import static co.com.uma.mseei.invictus.R.id.weightEditText;
 import static co.com.uma.mseei.invictus.R.layout.item_spinner;
 import static co.com.uma.mseei.invictus.R.string.error_saved;
+import static co.com.uma.mseei.invictus.util.ResourceOperations.getMethodName;
 import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringById;
 import static co.com.uma.mseei.invictus.util.ViewOperations.changeEditor;
 import static co.com.uma.mseei.invictus.util.ViewOperations.getFloatFrom;
@@ -45,7 +46,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.time.LocalDate;
 
 import co.com.uma.mseei.invictus.databinding.FragmentProfileBinding;
-import co.com.uma.mseei.invictus.viewmodel.navigation.ProfileViewModel;
+import co.com.uma.mseei.invictus.viewmodel.profile.ProfileViewModel;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -247,6 +248,6 @@ public class ProfileFragment
                 .subscribeOn(Schedulers.io())
                 .observeOn(mainThread())
                 .subscribe(() -> profileViewModel.showSavedFeedback(),
-                        throwable -> Log.e("saveProfileData", getStringById(activity, error_saved), throwable)));
+                        throwable -> Log.e(getMethodName(), getStringById(activity, error_saved), throwable)));
     }
 }

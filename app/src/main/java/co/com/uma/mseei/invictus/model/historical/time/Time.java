@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.model.time;
+package co.com.uma.mseei.invictus.model.historical.time;
 
 import java.time.format.DateTimeFormatter;
 

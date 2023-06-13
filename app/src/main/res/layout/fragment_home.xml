@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".view.navigation.HomeFragment"
+    tools:context=".view.home.HomeFragment"
     android:background="@drawable/bg_degrade_lightblue"
     android:gravity="center">
 
@@ -297,7 +297,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:contentDescription="@string/save"
+        android:contentDescription="@string/tracking_category"
         android:tint="@color/white"
         app:backgroundTint="@color/blue"
         app:fabSize="normal"

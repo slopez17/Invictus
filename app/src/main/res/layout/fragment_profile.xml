@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".view.navigation.ProfileFragment"
+    tools:context=".view.profile.ProfileFragment"
     android:background="@drawable/bg_degrade_lightrasberry"
     android:gravity="center">
 
@@ -29,13 +29,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_general_margin"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/activity_general_margin"
+                    android:layout_marginVertical="@dimen/activity_vertical_margin"
+                    android:layout_marginHorizontal="@dimen/activity_general_margin"
                     android:text="@string/basic_category"
                     android:textColor="@color/raspberry"
                     android:textSize="@dimen/activity_text_level2_size"
@@ -44,7 +45,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:layout_marginVertical="@dimen/activity_general_margin"
                     android:orientation="vertical">
 
                     <TextView
@@ -81,7 +82,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_general_margin"
+                    android:layout_marginVertical="@dimen/activity_general_margin"
                     android:baselineAligned="false"
                     android:orientation="horizontal">
 
@@ -197,7 +198,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/activity_general_margin"
+                    android:layout_marginVertical="@dimen/activity_vertical_margin"
+                    android:layout_marginHorizontal="@dimen/activity_general_margin"
                     android:text="@string/body_category"
                     android:textColor="@color/raspberry"
                     android:textSize="@dimen/activity_text_level2_size"
@@ -206,7 +208,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:layout_marginVertical="@dimen/activity_general_margin"
                     android:baselineAligned="false"
                     android:orientation="horizontal">
 
@@ -333,7 +335,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_general_margin"
+                    android:layout_marginVertical="@dimen/activity_general_margin"
                     android:orientation="vertical">
 
                     <TextView
@@ -386,7 +388,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/activity_general_margin"
+                android:layout_marginVertical="@dimen/activity_general_margin"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -395,22 +397,20 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/activity_general_margin"
-                        android:layout_weight="1"
                         android:text="@string/update_date"
                         android:textColor="@color/gray1"
                         android:textSize="@dimen/activity_text_level2_size" />
 
                     <TextView
                         android:id="@+id/updateDateTextView"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/activity_general_margin"
-                        android:layout_weight="2"
                         android:textAlignment="center"
                         android:textColor="@color/gray1"
                         android:textSize="@dimen/activity_text_level2_size" />
@@ -429,7 +429,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:contentDescription="@string/save"
+        android:contentDescription="@string/confirm"
         android:src="@drawable/ic_save_black_24dp"
         android:tint="@color/white"
         app:backgroundTint="@color/raspberry"

@@ -1,6 +1,8 @@
-package co.com.uma.mseei.invictus.model;
+package co.com.uma.mseei.invictus.model.service;
 
 import java.io.Serializable;
+
+import co.com.uma.mseei.invictus.model.SportType;
 
 public class AccelerometerServiceParameters implements Serializable {
 

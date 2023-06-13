@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.viewmodel.navigation;
+package co.com.uma.mseei.invictus.viewmodel.profile;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;
@@ -33,7 +33,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.time.LocalDate;
 
 import co.com.uma.mseei.invictus.model.AppPreferences;
-import co.com.uma.mseei.invictus.model.Weight;
+import co.com.uma.mseei.invictus.model.database.Weight;
 import co.com.uma.mseei.invictus.viewmodel.database.WeightRepository;
 import io.reactivex.Completable;
 

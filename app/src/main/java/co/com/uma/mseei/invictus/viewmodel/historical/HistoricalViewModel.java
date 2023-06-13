@@ -20,11 +20,11 @@ import java.util.List;
 
 import co.com.uma.mseei.invictus.model.AppPreferences;
 import co.com.uma.mseei.invictus.model.Limits;
-import co.com.uma.mseei.invictus.model.Weight;
-import co.com.uma.mseei.invictus.model.time.All;
-import co.com.uma.mseei.invictus.model.time.Month;
-import co.com.uma.mseei.invictus.model.time.Time;
-import co.com.uma.mseei.invictus.model.time.Week;
+import co.com.uma.mseei.invictus.model.database.Weight;
+import co.com.uma.mseei.invictus.model.historical.time.All;
+import co.com.uma.mseei.invictus.model.historical.time.Month;
+import co.com.uma.mseei.invictus.model.historical.time.Time;
+import co.com.uma.mseei.invictus.model.historical.time.Week;
 import co.com.uma.mseei.invictus.viewmodel.database.WeightRepository;
 import io.reactivex.Flowable;
 import io.reactivex.Single;

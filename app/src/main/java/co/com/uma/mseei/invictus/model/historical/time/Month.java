@@ -1,47 +1,49 @@
-package co.com.uma.mseei.invictus.model.time;
+package co.com.uma.mseei.invictus.model.historical.time;
 
 import static java.time.LocalDate.now;
 import static java.time.LocalTime.MAX;
 import static java.time.LocalTime.MIN;
+import static java.time.temporal.ChronoField.DAY_OF_MONTH;
+import static co.com.uma.mseei.invictus.util.GeneralConstants.HYPHEN_WITH_SPACE;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Day implements Time {
+public class Month implements Time {
 
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     private final LocalDate now;
-
-    public Day() {
+    public Month() {
         now = now();
         setActualPeriod();
     }
 
     @Override
     public void setActualPeriod(String... FromTo) {
-        startDateTime = LocalDateTime.of(now, MIN);
-        endDateTime = LocalDateTime.of(now, MAX);
+        LocalDate startDate = now.with(DAY_OF_MONTH,1);
+        startDateTime = LocalDateTime.of(startDate, MIN);
+        endDateTime = LocalDateTime.of(startDate.plusMonths(1).minusDays(1), MAX);
     }
 
     @Override
     public void setNextPeriod() {
-        if (now.isAfter(startDateTime.toLocalDate())) {
-            startDateTime = startDateTime.plusDays(1);
-            endDateTime = endDateTime.plusDays(1);
+        if (now.isAfter(endDateTime.toLocalDate())) {
+            startDateTime = endDateTime.plusNanos(1);
+            endDateTime = startDateTime.plusMonths(1).minusNanos(1);
         }
     }
 
     @Override
     public void setPreviousPeriod() {
-        startDateTime = startDateTime.minusDays(1);
-        endDateTime = endDateTime.minusDays(1);
+        endDateTime = startDateTime.minusNanos(1);
+        startDateTime = startDateTime.minusMonths(1);
     }
 
     @Override
     public String periodToString(DateTimeFormatter formatter) {
-        return startDateTime.format(formatter);
+        return startDateTime.format(formatter) + HYPHEN_WITH_SPACE + endDateTime.format(formatter);
     }
 
     @Override
@@ -49,4 +51,3 @@ public class Day implements Time {
         return new String[] {startDateTime.format(formatter), endDateTime.format(formatter)};
     }
 }
-

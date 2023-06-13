@@ -175,11 +175,6 @@ public class AppPreferences {
         return preferences.getBoolean(PREF_DEBUG, DEFAULT_DEBUG);
     }
 
-    public void setDebug(boolean debugState) {
-        editor.putBoolean(PREF_DEBUG, debugState);
-        editor.apply();
-    }
-
     public boolean isServiceBound() {
         return preferences.getBoolean(PREF_SERVICE_BOUND, DEFAULT_SERVICE_BOUND);
     }
@@ -193,5 +188,9 @@ public class AppPreferences {
         return preferences.getInt(PREF_SPORT_ID, DEFAULT_SPORT_ID);
     }
 
+    public void setSportId(int sportId) {
+        editor.putInt(PREF_SPORT_ID, sportId);
+        editor.apply();
+    }
 
 }

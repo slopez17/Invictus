@@ -1,53 +1,56 @@
-package co.com.uma.mseei.invictus.model.time;
+package co.com.uma.mseei.invictus.model.historical.time;
 
+import static java.time.DayOfWeek.MONDAY;
+import static java.time.DayOfWeek.SUNDAY;
 import static java.time.LocalDate.now;
 import static java.time.LocalTime.MAX;
 import static java.time.LocalTime.MIN;
-import static java.time.temporal.ChronoField.DAY_OF_MONTH;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.HYPHEN_WITH_SPACE;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Month implements Time {
+public class Week implements Time {
 
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     private final LocalDate now;
-    public Month() {
+
+    public Week() {
         now = now();
         setActualPeriod();
     }
 
     @Override
     public void setActualPeriod(String... FromTo) {
-        LocalDate startDate = now.with(DAY_OF_MONTH,1);
-        startDateTime = LocalDateTime.of(startDate, MIN);
-        endDateTime = LocalDateTime.of(startDate.plusMonths(1).minusDays(1), MAX);
+        startDateTime = LocalDateTime.of(now.with(MONDAY), MIN);
+        endDateTime = LocalDateTime.of(now.with(SUNDAY), MAX);
     }
 
     @Override
     public void setNextPeriod() {
         if (now.isAfter(endDateTime.toLocalDate())) {
-            startDateTime = endDateTime.plusNanos(1);
-            endDateTime = startDateTime.plusMonths(1).minusNanos(1);
+            startDateTime = startDateTime.plusDays(7);
+            endDateTime = endDateTime.plusDays(7);
         }
     }
 
     @Override
     public void setPreviousPeriod() {
-        endDateTime = startDateTime.minusNanos(1);
-        startDateTime = startDateTime.minusMonths(1);
+        startDateTime = startDateTime.minusDays(7);
+        endDateTime = endDateTime.minusDays(7);
     }
 
     @Override
     public String periodToString(DateTimeFormatter formatter) {
-        return startDateTime.format(formatter) + HYPHEN_WITH_SPACE + endDateTime.format(formatter);
+        return startDateTime.format(formatter) + HYPHEN_WITH_SPACE +  endDateTime.format(formatter);
     }
 
     @Override
     public String[] periodToStringArray(DateTimeFormatter formatter) {
         return new String[] {startDateTime.format(formatter), endDateTime.format(formatter)};
     }
+
 }
+

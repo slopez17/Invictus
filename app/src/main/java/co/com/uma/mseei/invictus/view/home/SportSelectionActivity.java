@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import co.com.uma.mseei.invictus.databinding.ActivitySportSelectionBinding;
 
 public class SportSelectionActivity extends AppCompatActivity implements OnClickListener {
-
     public static final String SELECTED_SPORT = "selected_sport";
     private ActivitySportSelectionBinding binding;
 

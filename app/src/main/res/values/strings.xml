@@ -38,6 +38,8 @@
     <string name="start_traking">Let\'s go! Traking starts for:</string>
     <string name="confirm">Confirm</string>
     <string name="confirm_message">Are you sure you want to stop this tracking activity?</string>
+    <string name="leave_comment">What\'s on your mind? how was your activity?</string>
+    <string name="congrats">Well done!</string>
 
     <!-- Historical -->
     <string name="select">Choose an option</string>
@@ -47,7 +49,7 @@
     <string name="run">Run</string>
     <string name="bike">Bike</string>
     <string name="climb">Climb</string>
-    <string name="no_implemented">No implemented option</string>
+    <string name="no_implemented">Sorry, this option hasn\'t been implemented yet.</string>
 
     <string name="day">Day</string>
     <string name="week">Week</string>
@@ -89,7 +91,6 @@
     </string-array>
 
     <string name="update_date">Last update</string>
-    <string name="save">Save</string>
     <string name="successfully_saved">Data successfully saved</string>
     <string name="error_saved">Unable to save on Database</string>
 

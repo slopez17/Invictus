@@ -43,6 +43,11 @@
             android:theme="@style/Theme.AppCompat.Dialog" />
 
         <activity
+            android:name=".view.home.FeedbackActivity"
+            android:label="@string/congrats"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+
+        <activity
             android:name=".view.historical.HistoricalActivity"
             android:exported="false"
             android:label="@string/title_historical"

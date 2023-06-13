@@ -18,7 +18,7 @@ import java.util.List;
 
 import co.com.uma.mseei.invictus.R;
 import co.com.uma.mseei.invictus.model.AppPreferences;
-import co.com.uma.mseei.invictus.model.Weight;
+import co.com.uma.mseei.invictus.model.database.Weight;
 
 public class WeightListViewAdapter extends ArrayAdapter<Weight> {
 

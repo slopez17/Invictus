@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.view.navigation;
+package co.com.uma.mseei.invictus.view.home;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -25,9 +25,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import co.com.uma.mseei.invictus.databinding.FragmentHomeBinding;
-import co.com.uma.mseei.invictus.view.home.SportSelectionActivity;
-import co.com.uma.mseei.invictus.view.home.StopTrackingConfirmationActivity;
-import co.com.uma.mseei.invictus.viewmodel.navigation.HomeViewModel;
+import co.com.uma.mseei.invictus.viewmodel.home.HomeViewModel;
 
 public class HomeFragment
         extends Fragment implements View.OnClickListener {
@@ -62,10 +60,16 @@ public class HomeFragment
         super.onCreate(savedInstanceState);
 
         getSportType = registerForActivityResult(new StartActivityForResult(),
-                result -> homeViewModel.getSportType(result));
+                result -> homeViewModel.startTrackingFor(result));
 
         getStopTrackingConfirmation = registerForActivityResult(new StartActivityForResult(),
-                result -> homeViewModel.getStopTrackingConfirmation(result));
+                result -> {
+                    boolean wasTrackingStopped = homeViewModel.stopTrackingFor(result);
+                    if(wasTrackingStopped){
+                        Intent intent = new Intent(activity, FeedbackActivity.class);
+                        startActivity(intent);
+                    }
+                });
     }
 
     @Override

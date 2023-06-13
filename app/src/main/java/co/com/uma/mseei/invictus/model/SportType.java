@@ -14,26 +14,32 @@ import static co.com.uma.mseei.invictus.R.string.run;
 import static co.com.uma.mseei.invictus.R.string.walk;
 
 public enum SportType {
-    WALK(walk, ic_walk_black_24dp),
-    JOG(jog, ic_jog_black_24dp),
-    ROPE_SKIPPING(rope_skipping, ic_skiping_rope_black_24dp),
-    CLIMB(climb, ic_climb_black_24dp),
-    RUN(run, ic_run_black_24dp),
-    BIKE(bike, ic_bike_black_24dp);
+    WALK(walk, ic_walk_black_24dp, true),
+    JOG(jog, ic_jog_black_24dp, false),
+    ROPE_SKIPPING(rope_skipping, ic_skiping_rope_black_24dp, false),
+    CLIMB(climb, ic_climb_black_24dp,false),
+    RUN(run, ic_run_black_24dp, false),
+    BIKE(bike, ic_bike_black_24dp, false);
 
-    private final int sportName;
-    private final int sportIcon;
+    private final int name;
+    private final int icon;
+    private final boolean implemented;
 
-    SportType(int sportName, int sportIcon) {
-        this.sportName = sportName;
-        this.sportIcon = sportIcon;
+    SportType(int name, int icon, boolean implemented) {
+        this.name = name;
+        this.icon = icon;
+        this.implemented = implemented;
     }
 
-    public int getSportName() {
-        return sportName;
+    public int getName() {
+        return name;
     }
 
-    public int getSportIcon() {
-        return sportIcon;
+    public int getIcon() {
+        return icon;
+    }
+
+    public boolean isImplemented() {
+        return implemented;
     }
 }

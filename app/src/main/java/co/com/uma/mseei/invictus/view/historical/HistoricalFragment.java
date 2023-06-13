@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.view.navigation;
+package co.com.uma.mseei.invictus.view.historical;
 
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
@@ -6,11 +6,11 @@ import static co.com.uma.mseei.invictus.R.id.ropeSkippingCardView;
 import static co.com.uma.mseei.invictus.R.id.walkCardView;
 import static co.com.uma.mseei.invictus.R.id.weightCardView;
 import static co.com.uma.mseei.invictus.R.string.no_implemented;
-import static co.com.uma.mseei.invictus.model.HistoricalOptions.NO_IMPLEMENTED;
-import static co.com.uma.mseei.invictus.model.HistoricalOptions.ROPE_SKIPPING;
-import static co.com.uma.mseei.invictus.model.HistoricalOptions.WALK;
-import static co.com.uma.mseei.invictus.model.HistoricalOptions.WEIGHT;
-import static co.com.uma.mseei.invictus.model.HistoricalOptions.SELECTED_OPTION;
+import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.NO_IMPLEMENTED;
+import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.ROPE_SKIPPING;
+import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.WALK;
+import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.WEIGHT;
+import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.SELECTED_OPTION;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

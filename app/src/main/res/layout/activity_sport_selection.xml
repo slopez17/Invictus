@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,72 +7,80 @@
     android:orientation="vertical"
     tools:context=".view.home.SportSelectionActivity">
 
-    <RadioGroup
-        android:id="@+id/sportsRadioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_vertical_margin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <RadioButton
-            android:id="@+id/walkRadioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/activity_min_height"
-            android:text="@string/walk" />
-
-        <RadioButton
-            android:id="@+id/jogRadioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/activity_min_height"
-            android:text="@string/jog" />
-
-        <RadioButton
-            android:id="@+id/skippingRopeRadioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/activity_min_height"
-            android:text="@string/rope_skipping" />
-
-        <RadioButton
-            android:id="@+id/climbRadioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/activity_min_height"
-            android:text="@string/climb" />
-
-        <RadioButton
-            android:id="@+id/runRadioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/activity_min_height"
-            android:text="@string/run" />
-
-        <RadioButton
-            android:id="@+id/bikeRadioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/activity_min_height"
-            android:text="@string/bike" />
-    </RadioGroup>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/confirmButton"
+        <RadioGroup
+            android:id="@+id/sportsRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_vertical_margin"
-            android:background="@color/gray2"
-            android:textColor="@color/white"
-            android:text="@string/save"
-            android:textStyle="bold"/>
+            android:layout_margin="@dimen/activity_general_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/walkRadioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/activity_min_height"
+                android:text="@string/walk" />
+
+            <RadioButton
+                android:id="@+id/jogRadioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/activity_min_height"
+                android:text="@string/jog" />
+
+            <RadioButton
+                android:id="@+id/skippingRopeRadioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/activity_min_height"
+                android:text="@string/rope_skipping" />
+
+            <RadioButton
+                android:id="@+id/climbRadioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/activity_min_height"
+                android:text="@string/climb" />
+
+            <RadioButton
+                android:id="@+id/runRadioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/activity_min_height"
+                android:text="@string/run" />
+
+            <RadioButton
+                android:id="@+id/bikeRadioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/activity_min_height"
+                android:text="@string/bike" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/confirmButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:background="@color/gray1"
+                android:textColor="@color/white"
+                android:text="@string/confirm"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>
