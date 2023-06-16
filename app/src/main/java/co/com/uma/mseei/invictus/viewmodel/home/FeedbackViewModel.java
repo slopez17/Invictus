@@ -25,4 +25,8 @@ public class FeedbackViewModel extends AndroidViewModel {
         Feedback feedback = new Feedback(sportId, comments);
         return feedbackRepository.insertFeedback(feedback);
     }
+
+//    public Single<Feedback> getFeedback(int id) {
+//        return feedbackRepository.getFeedback(id);
+//    }
 }

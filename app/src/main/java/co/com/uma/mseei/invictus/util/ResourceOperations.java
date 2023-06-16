@@ -2,7 +2,6 @@ package co.com.uma.mseei.invictus.util;
 
 import static androidx.core.content.ContextCompat.getColor;
 import static java.lang.Integer.toHexString;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.CLEAN;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.HASH;
 
 import android.app.Activity;
@@ -29,11 +28,4 @@ public class ResourceOperations {
         return HASH + toHexString(getColor(context, id));
     }
 
-    public static String getMethodName() {
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        if (stackTrace.length > 0) {
-            return stackTrace[3].getMethodName();
-        }
-        return CLEAN;
-    }
 }

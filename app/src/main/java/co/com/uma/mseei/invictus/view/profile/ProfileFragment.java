@@ -1,5 +1,6 @@
 package co.com.uma.mseei.invictus.view.profile;
 
+import static android.view.inputmethod.EditorInfo.IME_ACTION_NEXT;
 import static java.lang.System.currentTimeMillis;
 import static co.com.uma.mseei.invictus.R.id.birthdateEditText;
 import static co.com.uma.mseei.invictus.R.id.genderSpinner;
@@ -8,7 +9,7 @@ import static co.com.uma.mseei.invictus.R.id.saveButton;
 import static co.com.uma.mseei.invictus.R.id.weightEditText;
 import static co.com.uma.mseei.invictus.R.layout.item_spinner;
 import static co.com.uma.mseei.invictus.R.string.error_saved;
-import static co.com.uma.mseei.invictus.util.ResourceOperations.getMethodName;
+import static co.com.uma.mseei.invictus.util.DebugOperations.getMethodName;
 import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringById;
 import static co.com.uma.mseei.invictus.util.ViewOperations.changeEditor;
 import static co.com.uma.mseei.invictus.util.ViewOperations.getFloatFrom;
@@ -32,7 +33,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -60,6 +60,7 @@ public class ProfileFragment
     private ProfileViewModel profileViewModel;
 
     LocalDate birthdate;
+    TextView birthdateTextView;
     TextView weightTextView;
     TextView heightTextView;
 
@@ -128,6 +129,7 @@ public class ProfileFragment
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         profileViewModel.setBirthdate(year, month+1, dayOfMonth);
         profileViewModel.setAge();
+        changeEditor(IME_ACTION_NEXT, birthdateTextView);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -171,11 +173,11 @@ public class ProfileFragment
     }
 
     private void initializeBirthdateEditText() {
-        EditText birthdateEditText = binding.birthdateEditText;
-        birthdateEditText.setOnClickListener(this);
+        birthdateTextView = binding.birthdateEditText;
+        birthdateTextView.setOnClickListener(this);
         profileViewModel.getBirthdate().observe(getViewLifecycleOwner(), x -> {
             birthdate = x;
-            birthdateEditText.setText(birthdate.toString());
+            birthdateTextView.setText(birthdate.toString());
         });
     }
 

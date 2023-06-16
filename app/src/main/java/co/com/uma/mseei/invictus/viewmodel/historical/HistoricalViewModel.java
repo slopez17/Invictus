@@ -2,7 +2,7 @@ package co.com.uma.mseei.invictus.viewmodel.historical;
 
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static java.util.Objects.requireNonNull;
-import static co.com.uma.mseei.invictus.model.Profile.fixWeightToLimits;
+import static co.com.uma.mseei.invictus.model.profile.Profile.fixWeightToLimits;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.DD_MMM_YYYY;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.KG_UND;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.LBS_UND;
@@ -19,7 +19,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 
 import co.com.uma.mseei.invictus.model.AppPreferences;
-import co.com.uma.mseei.invictus.model.Limits;
+import co.com.uma.mseei.invictus.model.database.Limits;
 import co.com.uma.mseei.invictus.model.database.Weight;
 import co.com.uma.mseei.invictus.model.historical.time.All;
 import co.com.uma.mseei.invictus.model.historical.time.Month;

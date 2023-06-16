@@ -7,6 +7,7 @@ import static android.view.inputmethod.EditorInfo.IME_ACTION_NEXT;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.CLEAN;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.TWO_DIGITS;
 
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
@@ -40,10 +41,10 @@ public class ViewOperations {
         textView.setHint(TWO_DIGITS.format(value));
     }
 
-    public static void changeEditor(int actionId, TextView textView) {
+    public static void changeEditor(int actionId, View textView) {
         switch (actionId){
             case IME_ACTION_DONE:
-                hideKeyboard(textView);
+                hideKeyboard((TextView) textView);
                 textView.clearFocus();
                 break;
             case IME_ACTION_NEXT:

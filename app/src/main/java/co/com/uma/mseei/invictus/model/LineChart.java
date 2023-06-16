@@ -4,8 +4,8 @@ import static android.graphics.Color.GRAY;
 import static android.graphics.Color.parseColor;
 import static java.time.LocalDate.parse;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
-import static co.com.uma.mseei.invictus.model.Limits.WEIGHT;
-import static co.com.uma.mseei.invictus.model.Limits.getPeriodInDaysBetween;
+import static co.com.uma.mseei.invictus.model.database.Limits.WEIGHT;
+import static co.com.uma.mseei.invictus.model.database.Limits.getPeriodInDaysBetween;
 import static co.com.uma.mseei.invictus.util.ResourceOperations.getColorById;
 import static lecho.lib.hellocharts.gesture.ContainerScrollType.HORIZONTAL;
 import static lecho.lib.hellocharts.model.ValueShape.CIRCLE;
@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.com.uma.mseei.invictus.model.database.Limits;
 import co.com.uma.mseei.invictus.model.database.Weight;
 import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter;
 import lecho.lib.hellocharts.formatter.SimpleLineChartValueFormatter;

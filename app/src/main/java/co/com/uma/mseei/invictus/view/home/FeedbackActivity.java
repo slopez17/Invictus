@@ -6,7 +6,7 @@ import static co.com.uma.mseei.invictus.R.id.confirmButton;
 import static co.com.uma.mseei.invictus.R.string.error_saved;
 import static co.com.uma.mseei.invictus.R.string.successfully_saved;
 import static co.com.uma.mseei.invictus.databinding.ActivityFeedbackBinding.inflate;
-import static co.com.uma.mseei.invictus.util.ResourceOperations.getMethodName;
+import static co.com.uma.mseei.invictus.util.DebugOperations.getMethodName;
 import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringById;
 import static co.com.uma.mseei.invictus.util.ViewOperations.getStringFromTextView;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
@@ -59,5 +59,19 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
                 .observeOn(mainThread())
                 .subscribe(() -> makeText(this, successfully_saved, LENGTH_SHORT).show(),
                         throwable -> Log.e(getMethodName(), getStringById(this, error_saved), throwable)));
+
+        //disposable.add(getFeedback(1));
     }
+
+//    @NonNull
+//    private Disposable getFeedback(int id) {
+//        return feedbackViewModel.getFeedback(id)
+//                .subscribeOn(io())
+//                .observeOn(mainThread())
+//                .subscribe(
+//                        feedback -> {
+//                            makeText(this, feedback.getComments(), LENGTH_SHORT).show();
+//                        }
+//                );
+//    }
 }

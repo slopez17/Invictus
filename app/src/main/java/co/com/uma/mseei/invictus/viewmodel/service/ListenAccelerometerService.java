@@ -2,11 +2,9 @@ package co.com.uma.mseei.invictus.viewmodel.service;
 
 import static android.app.NotificationManager.IMPORTANCE_DEFAULT;
 import static android.app.PendingIntent.getActivity;
-import static android.widget.Toast.LENGTH_SHORT;
-import static android.widget.Toast.makeText;
-import static java.lang.String.format;
 import static co.com.uma.mseei.invictus.R.string.notification_title;
-import static co.com.uma.mseei.invictus.util.ResourceOperations.getMethodName;
+import static co.com.uma.mseei.invictus.util.DebugOperations.getMethodName;
+import static co.com.uma.mseei.invictus.util.DebugOperations.showExecutionPoint;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -36,7 +34,6 @@ public class ListenAccelerometerService
     private static final int NOTIFICATION_ID = 567;
     private static final String CHANNEL_ID = "ListenAccelerometerServiceChannel";
     private static final String CHANNEL_NAME = "ListenAccelerometerService Channel";
-    private final String CLASS_NAME = this.getClass().getSimpleName();
     private IBinder binder;
 
     @Override
@@ -56,19 +53,21 @@ public class ListenAccelerometerService
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        if (parameters.isDebugOn()){
-            String message = format("%s -> %s", CLASS_NAME, getMethodName());
-            makeText(this, message, LENGTH_SHORT).show();
-        }
+        showExecutionPoint(this, getMethodName(), parameters.isDebugOn());
         return binder;
+    }
+
+
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        showExecutionPoint(this, getMethodName(), parameters.isDebugOn());
+        return super.onUnbind(intent);
     }
 
     @Override
     public boolean stopService(Intent name) {
-        if (parameters.isDebugOn()){
-            String message = format("%s -> %s", CLASS_NAME, getMethodName());
-            makeText(this, message, LENGTH_SHORT).show();
-        }
+        showExecutionPoint(this, getMethodName(), parameters.isDebugOn());
         return super.stopService(name);
     }
 

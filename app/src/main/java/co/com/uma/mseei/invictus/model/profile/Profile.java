@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.model;
+package co.com.uma.mseei.invictus.model.profile;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;

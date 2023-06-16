@@ -32,5 +32,6 @@ public abstract class AppDatabase extends RoomDatabase {
         }
 
         public abstract WeightDao weightDao();
+
         public abstract FeedbackDao feedbackDao();
 }

@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.model;
+package co.com.uma.mseei.invictus.model.database;
 
 import static java.time.LocalDate.parse;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
