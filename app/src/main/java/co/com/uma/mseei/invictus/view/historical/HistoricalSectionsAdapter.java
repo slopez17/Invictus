@@ -1,8 +1,8 @@
-package co.com.uma.mseei.invictus.viewmodel.historical;
+package co.com.uma.mseei.invictus.view.historical;
 
-import static co.com.uma.mseei.invictus.model.HistoricalOptions.SELECTED_OPTION;
-import static co.com.uma.mseei.invictus.model.HistoricalOptions.getItemCountFor;
-import static co.com.uma.mseei.invictus.model.HistoricalOptions.getPlaceholderFragmentFor;
+import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.SELECTED_OPTION;
+import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.getItemCountFor;
+import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.getPlaceholderFragmentFor;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

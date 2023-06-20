@@ -1,5 +1,6 @@
-package co.com.uma.mseei.invictus.view.navigation;
+package co.com.uma.mseei.invictus.view.profile;
 
+import static android.view.inputmethod.EditorInfo.IME_ACTION_NEXT;
 import static java.lang.System.currentTimeMillis;
 import static co.com.uma.mseei.invictus.R.id.birthdateEditText;
 import static co.com.uma.mseei.invictus.R.id.genderSpinner;
@@ -8,6 +9,7 @@ import static co.com.uma.mseei.invictus.R.id.saveButton;
 import static co.com.uma.mseei.invictus.R.id.weightEditText;
 import static co.com.uma.mseei.invictus.R.layout.item_spinner;
 import static co.com.uma.mseei.invictus.R.string.error_saved;
+import static co.com.uma.mseei.invictus.util.DebugOperations.getMethodName;
 import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringById;
 import static co.com.uma.mseei.invictus.util.ViewOperations.changeEditor;
 import static co.com.uma.mseei.invictus.util.ViewOperations.getFloatFrom;
@@ -30,9 +32,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -41,10 +41,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.time.LocalDate;
 
 import co.com.uma.mseei.invictus.databinding.FragmentProfileBinding;
-import co.com.uma.mseei.invictus.viewmodel.navigation.ProfileViewModel;
+import co.com.uma.mseei.invictus.viewmodel.profile.ProfileViewModel;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -58,6 +60,7 @@ public class ProfileFragment
     private ProfileViewModel profileViewModel;
 
     LocalDate birthdate;
+    TextView birthdateTextView;
     TextView weightTextView;
     TextView heightTextView;
 
@@ -69,7 +72,6 @@ public class ProfileFragment
         View root = binding.getRoot();
 
         activity = requireActivity();
-
         initializeGenderSpinner();
         initializeBirthdateEditText();
         initializeAgeTextView();
@@ -127,6 +129,7 @@ public class ProfileFragment
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         profileViewModel.setBirthdate(year, month+1, dayOfMonth);
         profileViewModel.setAge();
+        changeEditor(IME_ACTION_NEXT, birthdateTextView);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -170,11 +173,11 @@ public class ProfileFragment
     }
 
     private void initializeBirthdateEditText() {
-        EditText birthdateEditText = binding.birthdateEditText;
-        birthdateEditText.setOnClickListener(this);
+        birthdateTextView = binding.birthdateEditText;
+        birthdateTextView.setOnClickListener(this);
         profileViewModel.getBirthdate().observe(getViewLifecycleOwner(), x -> {
             birthdate = x;
-            birthdateEditText.setText(birthdate.toString());
+            birthdateTextView.setText(birthdate.toString());
         });
     }
 
@@ -235,7 +238,7 @@ public class ProfileFragment
     }
 
     private void initializeSaveButton() {
-        Button saveButton = binding.saveButton;
+        FloatingActionButton saveButton = binding.saveButton;
         saveButton.setOnClickListener(this);
     }
 
@@ -247,6 +250,6 @@ public class ProfileFragment
                 .subscribeOn(Schedulers.io())
                 .observeOn(mainThread())
                 .subscribe(() -> profileViewModel.showSavedFeedback(),
-                        throwable -> Log.e("saveProfileData", getStringById(activity, error_saved), throwable)));
+                        throwable -> Log.e(getMethodName(), getStringById(activity, error_saved), throwable)));
     }
 }

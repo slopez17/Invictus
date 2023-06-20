@@ -34,6 +34,12 @@
     <string name="distance">Distance</string>
     <string name="speed">Speed</string>
     <string name="elapsed_time">Elapsed Time</string>
+    <string name="sportype_error">You didn\'t choose any sport. Please, try again.</string>
+    <string name="start_traking">Let\'s go! Traking starts for:</string>
+    <string name="confirm">Confirm</string>
+    <string name="confirm_message">Are you sure you want to stop this tracking activity?</string>
+    <string name="leave_comment">What\'s on your mind? how was your activity?</string>
+    <string name="congrats">Well done!</string>
 
     <!-- Historical -->
     <string name="select">Choose an option</string>
@@ -43,7 +49,7 @@
     <string name="run">Run</string>
     <string name="bike">Bike</string>
     <string name="climb">Climb</string>
-    <string name="no_implemented">No implemented option</string>
+    <string name="no_implemented">Sorry, this option hasn\'t been implemented yet.</string>
 
     <string name="day">Day</string>
     <string name="week">Week</string>
@@ -85,9 +91,11 @@
     </string-array>
 
     <string name="update_date">Last update</string>
-    <string name="save">Save</string>
     <string name="successfully_saved">Data successfully saved</string>
     <string name="error_saved">Unable to save on Database</string>
+
+    <!-- Service -->
+    <string name="notification_title">Invictus is tracking your activity</string>
 
     <!-- Settings -->
     <string name="tracking_category">
@@ -137,7 +145,7 @@
         Visualization parameters
     </string>
     <string name="refresh_title">
-        Refresh time
+        Refresh period
     </string>
     <string name="refresh_summary">
         Time in seconds to update information on the screen.
@@ -149,5 +157,10 @@
         <item>International System</item>
         <item>Imperial/British System</item>
     </string-array>
-
+    <string name="debug_summary">
+        Show messages about the application flow.
+    </string>
+    <string name="debug_title">
+        Debugging
+    </string>
 </resources>

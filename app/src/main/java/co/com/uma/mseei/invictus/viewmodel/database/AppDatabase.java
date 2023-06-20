@@ -7,9 +7,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import co.com.uma.mseei.invictus.model.Weight;
+import co.com.uma.mseei.invictus.model.database.Feedback;
+import co.com.uma.mseei.invictus.model.database.Weight;
 
-@Database(entities = {Weight.class}, version = 1)
+@Database(entities = {Weight.class, Feedback.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
         private static volatile AppDatabase INSTANCE;
@@ -31,4 +32,6 @@ public abstract class AppDatabase extends RoomDatabase {
         }
 
         public abstract WeightDao weightDao();
+
+        public abstract FeedbackDao feedbackDao();
 }

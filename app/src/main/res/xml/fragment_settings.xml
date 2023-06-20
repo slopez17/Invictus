@@ -55,7 +55,7 @@
         app:iconSpaceReserved="false">
         <EditTextPreference
             android:defaultValue="5"
-            android:key="refreshTime"
+            android:key="refreshPeriod"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="@string/refresh_summary"
@@ -67,6 +67,12 @@
             android:entryValues="@array/unit_system_values"
             android:key="unitSystem"
             android:title="@string/unit_system_title"
+            app:iconSpaceReserved="false" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="debug"
+            android:summary="@string/debug_summary"
+            android:title="@string/debug_title"
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
 </PreferenceScreen>

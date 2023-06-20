@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.model;
+package co.com.uma.mseei.invictus.model.database;
 
 import static co.com.uma.mseei.invictus.util.MathOperations.kg2lbs;
 

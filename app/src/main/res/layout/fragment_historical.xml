@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".view.navigation.HistoricalFragment"
+    tools:context=".view.historical.HistoricalFragment"
     android:background="@drawable/bg_degrade_lightorange">
 
     <ScrollView
@@ -48,7 +48,7 @@
                     android:layout_margin="@dimen/activity_general_margin"
                     app:cardCornerRadius="@dimen/activity_general_margin"
                     android:elevation="@dimen/activity_general_margin"
-                    android:backgroundTint="@color/darkOrange40">
+                    android:backgroundTint="@color/orange">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -65,8 +65,7 @@
                             android:layout_margin="@dimen/activity_general_margin"
                             android:contentDescription="@string/weight"
                             android:src="@drawable/ic_weight_black_24dp"
-                            android:scaleType="fitCenter"
-                            />
+                            android:scaleType="fitCenter" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -74,7 +73,7 @@
                             android:layout_gravity="center"
                             android:text="@string/weight"
                             android:textAlignment="center"
-                            android:textSize="@dimen/activity_text_level1_size" />
+                            android:textSize="@dimen/activity_text_level2_size" />
 
                     </LinearLayout>
 
@@ -92,7 +91,7 @@
                     android:layout_margin="@dimen/activity_general_margin"
                     app:cardCornerRadius="@dimen/activity_general_margin"
                     android:elevation="@dimen/activity_general_margin"
-                    android:backgroundTint="@color/darkOrange40">
+                    android:backgroundTint="@color/orange">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -108,9 +107,8 @@
                             android:layout_gravity="center"
                             android:layout_margin="@dimen/activity_general_margin"
                             android:contentDescription="@string/walk"
-                            android:src="@drawable/ic_walking_black_24dp"
-                            android:scaleType="fitCenter"
-                            />
+                            android:src="@drawable/ic_walk_black_24dp"
+                            android:scaleType="fitCenter" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -118,7 +116,7 @@
                             android:layout_gravity="center"
                             android:text="@string/walk"
                             android:textAlignment="center"
-                            android:textSize="@dimen/activity_text_level1_size" />
+                            android:textSize="@dimen/activity_text_level2_size" />
 
                     </LinearLayout>
 
@@ -136,7 +134,7 @@
                     android:layout_margin="@dimen/activity_general_margin"
                     app:cardCornerRadius="@dimen/activity_general_margin"
                     android:elevation="@dimen/activity_general_margin"
-                    android:backgroundTint="@color/darkOrange40">
+                    android:backgroundTint="@color/orange">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -152,9 +150,8 @@
                             android:layout_gravity="center"
                             android:layout_margin="@dimen/activity_general_margin"
                             android:contentDescription="@string/jog"
-                            android:src="@drawable/ic_jogging_black_24dp"
-                            android:scaleType="fitCenter"
-                            />
+                            android:src="@drawable/ic_jog_black_24dp"
+                            android:scaleType="fitCenter" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -162,7 +159,7 @@
                             android:layout_gravity="center"
                             android:text="@string/jog"
                             android:textAlignment="center"
-                            android:textSize="@dimen/activity_text_level1_size" />
+                            android:textSize="@dimen/activity_text_level2_size" />
 
                     </LinearLayout>
 
@@ -180,7 +177,7 @@
                     android:layout_margin="@dimen/activity_general_margin"
                     app:cardCornerRadius="@dimen/activity_general_margin"
                     android:elevation="@dimen/activity_general_margin"
-                    android:backgroundTint="@color/darkOrange40">
+                    android:backgroundTint="@color/orange">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -197,8 +194,7 @@
                             android:layout_margin="@dimen/activity_general_margin"
                             android:contentDescription="@string/rope_skipping"
                             android:src="@drawable/ic_skiping_rope_black_24dp"
-                            android:scaleType="fitCenter"
-                            />
+                            android:scaleType="fitCenter" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -206,7 +202,7 @@
                             android:layout_gravity="center"
                             android:text="@string/rope_skipping"
                             android:textAlignment="center"
-                            android:textSize="@dimen/activity_text_level1_size" />
+                            android:textSize="@dimen/activity_text_level2_size" />
 
                     </LinearLayout>
 
@@ -224,7 +220,7 @@
                     android:layout_margin="@dimen/activity_general_margin"
                     app:cardCornerRadius="@dimen/activity_general_margin"
                     android:elevation="@dimen/activity_general_margin"
-                    android:backgroundTint="@color/darkOrange40">
+                    android:backgroundTint="@color/orange">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -241,8 +237,7 @@
                             android:layout_margin="@dimen/activity_general_margin"
                             android:contentDescription="@string/climb"
                             android:src="@drawable/ic_climb_black_24dp"
-                            android:scaleType="fitCenter"
-                            />
+                            android:scaleType="fitCenter" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -250,7 +245,7 @@
                             android:layout_gravity="center"
                             android:text="@string/climb"
                             android:textAlignment="center"
-                            android:textSize="@dimen/activity_text_level1_size" />
+                            android:textSize="@dimen/activity_text_level2_size" />
 
                     </LinearLayout>
 
@@ -268,7 +263,7 @@
                     android:layout_margin="@dimen/activity_general_margin"
                     app:cardCornerRadius="@dimen/activity_general_margin"
                     android:elevation="@dimen/activity_general_margin"
-                    android:backgroundTint="@color/darkOrange40">
+                    android:backgroundTint="@color/orange">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -285,8 +280,7 @@
                             android:layout_margin="@dimen/activity_general_margin"
                             android:contentDescription="@string/run"
                             android:src="@drawable/ic_run_black_24dp"
-                            android:scaleType="fitCenter"
-                            />
+                            android:scaleType="fitCenter"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -294,7 +288,7 @@
                             android:layout_gravity="center"
                             android:text="@string/run"
                             android:textAlignment="center"
-                            android:textSize="@dimen/activity_text_level1_size" />
+                            android:textSize="@dimen/activity_text_level2_size" />
 
                     </LinearLayout>
 
@@ -312,7 +306,7 @@
                     android:layout_margin="@dimen/activity_general_margin"
                     app:cardCornerRadius="@dimen/activity_general_margin"
                     android:elevation="@dimen/activity_general_margin"
-                    android:backgroundTint="@color/darkOrange40">
+                    android:backgroundTint="@color/orange">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -329,8 +323,7 @@
                             android:layout_margin="@dimen/activity_general_margin"
                             android:contentDescription="@string/bike"
                             android:src="@drawable/ic_bike_black_24dp"
-                            android:scaleType="fitCenter"
-                            />
+                            android:scaleType="fitCenter" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -338,7 +331,7 @@
                             android:layout_gravity="center"
                             android:text="@string/bike"
                             android:textAlignment="center"
-                            android:textSize="@dimen/activity_text_level1_size" />
+                            android:textSize="@dimen/activity_text_level2_size" />
 
                     </LinearLayout>
 

@@ -7,8 +7,8 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import co.com.uma.mseei.invictus.model.Limits;
-import co.com.uma.mseei.invictus.model.Weight;
+import co.com.uma.mseei.invictus.model.database.Limits;
+import co.com.uma.mseei.invictus.model.database.Weight;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;

@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".view.navigation.HomeFragment"
+    tools:context=".view.home.HomeFragment"
     android:background="@drawable/bg_degrade_lightblue"
-    >
+    android:gravity="center">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/activity_general_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:orientation="vertical">
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp">
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:paddingVertical="@dimen/activity_vertical_margin">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -37,13 +43,15 @@
                         android:id="@+id/fallsTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="24sp"
+                        android:fontFamily="@font/amaranth"
+                        android:textSize="@dimen/activity_text_level0_size"
                         android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/fallsImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/activity_icon_level0_size"
+                        android:layout_height="@dimen/activity_icon_level0_size"
+                        android:contentDescription="@string/falls"
                         android:src="@drawable/ic_falls_black_24dp" />
 
                     <TextView
@@ -52,12 +60,13 @@
                         android:layout_height="wrap_content"
                         android:text="@string/falls"
                         android:textAlignment="center"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/activity_text_level2_size" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -66,13 +75,15 @@
                         android:id="@+id/stepsJumpsTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="24sp"
+                        android:fontFamily="@font/amaranth"
+                        android:textSize="@dimen/activity_text_level0_size"
                         android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/stepsJumpsImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/activity_icon_level0_size"
+                        android:layout_height="@dimen/activity_icon_level0_size"
+                        android:contentDescription="@string/steps"
                         android:src="@drawable/ic_steps_black_24dp" />
 
                     <TextView
@@ -81,7 +92,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/steps"
                         android:textAlignment="center"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/activity_text_level2_size" />
+
                 </LinearLayout>
 
             </TableRow>
@@ -89,11 +101,12 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp">
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:paddingVertical="@dimen/activity_vertical_margin">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -102,13 +115,15 @@
                         android:id="@+id/caloriesTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="24sp"
+                        android:fontFamily="@font/amaranth"
+                        android:textSize="@dimen/activity_text_level0_size"
                         android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/caloriesImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/activity_icon_level0_size"
+                        android:layout_height="@dimen/activity_icon_level0_size"
+                        android:contentDescription="@string/calories"
                         android:src="@drawable/ic_calories_black_24dp" />
 
                     <LinearLayout
@@ -123,21 +138,22 @@
                             android:layout_height="wrap_content"
                             android:text="@string/calories"
                             android:textAlignment="center"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/activity_text_level2_size" />
 
                         <TextView
                             android:id="@+id/caloriesUndText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/activity_text_level2_size" />
+
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -146,13 +162,15 @@
                         android:id="@+id/distanceTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="24sp"
+                        android:fontFamily="@font/amaranth"
+                        android:textSize="@dimen/activity_text_level0_size"
                         android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/distanceImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/activity_icon_level0_size"
+                        android:layout_height="@dimen/activity_icon_level0_size"
+                        android:contentDescription="@string/distance"
                         android:src="@drawable/ic_distance_black_24dp" />
 
                     <LinearLayout
@@ -167,14 +185,15 @@
                             android:layout_height="wrap_content"
                             android:text="@string/distance"
                             android:textAlignment="center"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/activity_text_level2_size" />
 
                         <TextView
                             android:id="@+id/distanceUndText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/activity_text_level2_size" />
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -184,11 +203,12 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp">
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:paddingVertical="@dimen/activity_vertical_margin">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -197,13 +217,15 @@
                         android:id="@+id/speedTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="24sp"
+                        android:fontFamily="@font/amaranth"
+                        android:textSize="@dimen/activity_text_level0_size"
                         android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/speedImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/activity_icon_level0_size"
+                        android:layout_height="@dimen/activity_icon_level0_size"
+                        android:contentDescription="@string/speed"
                         android:src="@drawable/ic_speed_black_24dp" />
 
                     <LinearLayout
@@ -218,21 +240,22 @@
                             android:layout_height="wrap_content"
                             android:text="@string/speed"
                             android:textAlignment="center"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/activity_text_level2_size" />
 
                         <TextView
                             android:id="@+id/speedUndText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/activity_text_level2_size" />
+
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -241,13 +264,15 @@
                         android:id="@+id/elapsedTimeTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="24sp"
+                        android:fontFamily="@font/amaranth"
+                        android:textSize="@dimen/activity_text_level0_size"
                         android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/timeImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/activity_icon_level0_size"
+                        android:layout_height="@dimen/activity_icon_level0_size"
+                        android:contentDescription="@string/elapsed_time"
                         android:src="@drawable/ic_time_black_24dp" />
 
                     <TextView
@@ -256,7 +281,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/elapsed_time"
                         android:textAlignment="center"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/activity_text_level2_size" />
 
                 </LinearLayout>
 
@@ -266,27 +291,19 @@
 
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/trackingButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-
-        <Button
-            android:id="@+id/monitorButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
-            android:background="@color/blue40"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:textColor="@color/design_default_color_background"
-            android:textStyle="bold" />
-
-    </LinearLayout>
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/tracking_category"
+        android:tint="@color/white"
+        app:backgroundTint="@color/blue"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="36dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

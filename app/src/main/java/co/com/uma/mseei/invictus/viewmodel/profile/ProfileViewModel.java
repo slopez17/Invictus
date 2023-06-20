@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.viewmodel.navigation;
+package co.com.uma.mseei.invictus.viewmodel.profile;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;
@@ -8,11 +8,11 @@ import static co.com.uma.mseei.invictus.R.array.gender_array;
 import static co.com.uma.mseei.invictus.R.string.successfully_saved;
 import static co.com.uma.mseei.invictus.model.AppPreferences.DEFAULT_HEIGHT_M;
 import static co.com.uma.mseei.invictus.model.AppPreferences.DEFAULT_WEIGHT_KG;
-import static co.com.uma.mseei.invictus.model.Profile.calculateAge;
-import static co.com.uma.mseei.invictus.model.Profile.calculateBmi;
-import static co.com.uma.mseei.invictus.model.Profile.calculateBmiClassification;
-import static co.com.uma.mseei.invictus.model.Profile.fixHeightToLimits;
-import static co.com.uma.mseei.invictus.model.Profile.fixWeightToLimits;
+import static co.com.uma.mseei.invictus.model.profile.Profile.calculateAge;
+import static co.com.uma.mseei.invictus.model.profile.Profile.calculateBmi;
+import static co.com.uma.mseei.invictus.model.profile.Profile.calculateBmiClassification;
+import static co.com.uma.mseei.invictus.model.profile.Profile.fixHeightToLimits;
+import static co.com.uma.mseei.invictus.model.profile.Profile.fixWeightToLimits;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.IN_UND;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.KG_UND;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.LBS_UND;
@@ -33,7 +33,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.time.LocalDate;
 
 import co.com.uma.mseei.invictus.model.AppPreferences;
-import co.com.uma.mseei.invictus.model.Weight;
+import co.com.uma.mseei.invictus.model.database.Weight;
 import co.com.uma.mseei.invictus.viewmodel.database.WeightRepository;
 import io.reactivex.Completable;
 

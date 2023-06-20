@@ -1,8 +1,8 @@
 package co.com.uma.mseei.invictus.view.historical;
 
-import static co.com.uma.mseei.invictus.model.HistoricalOptions.SELECTED_OPTION;
-import static co.com.uma.mseei.invictus.model.HistoricalOptions.getTabTitlesFor;
-import static co.com.uma.mseei.invictus.model.HistoricalOptions.getTitleFor;
+import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.SELECTED_OPTION;
+import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.getTabTitlesFor;
+import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.getTitleFor;
 
 import android.os.Bundle;
 import android.widget.ImageButton;
@@ -15,7 +15,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import co.com.uma.mseei.invictus.databinding.ActivityHistoricalBinding;
-import co.com.uma.mseei.invictus.viewmodel.historical.HistoricalSectionsAdapter;
 
 public class HistoricalActivity extends AppCompatActivity {
 

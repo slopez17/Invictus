@@ -35,6 +35,12 @@
     <string name="distance">Distancia</string>
     <string name="speed">Velocidad</string>
     <string name="elapsed_time">Tiempo transcurrido</string>
+    <string name="sportype_error">No seleccionaste ningún deporte. Por favor, intenta de nuevo.</string>
+    <string name="start_traking">Vamos! Comienza el seguimiento para:</string>
+    <string name="confirm">Confirmar</string>
+    <string name="confirm_message">Seguro que deseas detener el seguimiento de la actividad?</string>
+    <string name="leave_comment">¿En qué piensas? ¿cómo estuvo tu actividad?</string>
+    <string name="congrats">Bien hecho!</string>
 
     <!-- Historical -->
     <string name="select">Escoja una opción</string>
@@ -44,7 +50,7 @@
     <string name="run">Correr</string>
     <string name="bike">Ciclismo</string>
     <string name="climb">Escalada</string>
-    <string name="no_implemented">Opción no implementada</string>
+    <string name="no_implemented">Lo siento, está opción no ha sido implementada aún.</string>
 
     <string name="day">Día</string>
     <string name="week">Semana</string>
@@ -86,9 +92,11 @@
     </string-array>
 
     <string name="update_date">Última actualización</string>
-    <string name="save">Guardar</string>
     <string name="successfully_saved">Datos guardados éxitosamente</string>
     <string name="error_saved">No se pudo guardar en la base de datos</string>
+
+    <!-- Service -->
+    <string name="notification_title">Invictus está seguiendo tu actividad</string>
 
     <!-- Settings -->
     <string name="tracking_category">
@@ -138,7 +146,7 @@
         Parámetros de visualización
     </string>
     <string name="refresh_title">
-        Tiempo de refresco
+        Periodo de actualización
     </string>
     <string name="refresh_summary">
         Tiempo en segundos para renovar la información en pantalla.
@@ -150,6 +158,11 @@
         <item>Sistema Internacional</item>
         <item>Sistema Imperial/Británico</item>
     </string-array>
-
+    <string name="debug_summary">
+        Mostrar mensajes sobre el flujo de la aplicación.
+    </string>
+    <string name="debug_title">
+        Depuración
+    </string>
 
 </resources>

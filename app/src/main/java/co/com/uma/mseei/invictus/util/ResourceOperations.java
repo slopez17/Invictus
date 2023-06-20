@@ -27,4 +27,5 @@ public class ResourceOperations {
         Context context = activity.getApplicationContext();
         return HASH + toHexString(getColor(context, id));
     }
+
 }

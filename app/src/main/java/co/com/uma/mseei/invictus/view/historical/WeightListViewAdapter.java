@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.viewmodel.historical;
+package co.com.uma.mseei.invictus.view.historical;
 
 import static co.com.uma.mseei.invictus.util.GeneralConstants.KG_UND;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.LBS_UND;
@@ -18,7 +18,7 @@ import java.util.List;
 
 import co.com.uma.mseei.invictus.R;
 import co.com.uma.mseei.invictus.model.AppPreferences;
-import co.com.uma.mseei.invictus.model.Weight;
+import co.com.uma.mseei.invictus.model.database.Weight;
 
 public class WeightListViewAdapter extends ArrayAdapter<Weight> {
 

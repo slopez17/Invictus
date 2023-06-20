@@ -39,8 +39,9 @@ public class AppPreferences {
     public static final String PREF_SAVE_ON_SD = "saveOnSD";
     public static final String PREF_FILE_NAME = "fileName";
     public static final String PREF_MULTIPLE_FILES = "multipleFiles";
-    public static final String PREF_REFRESH_TIME = "refreshTime";
+    public static final String PREF_REFRESH_PERIOD = "refreshPeriod";
     public static final String PREF_UNIT_SYSTEM = "unitSystem";
+    public static final String PREF_DEBUG = "debug";
 
     public static final boolean DEFAULT_AUTO_FINISH = false;
     public static final String DEFAULT_SAMPLES_LIMIT = "2000";
@@ -48,8 +49,17 @@ public class AppPreferences {
     private static final boolean DEFAULT_SAVE_ON_SD = false;
     private static final String DEFAULT_FILE_NAME = "Invictus";
     private static final boolean DEFAULT_MULTIPLE_FILES = false;
-    private static final String DEFAULT_REFRESH_TIME = "5";
+    private static final String DEFAULT_REFRESH_PERIOD = "5";
     public static final String DEFAULT_UNIT_SYSTEM = "false";
+    public static final boolean DEFAULT_DEBUG = false;
+
+    /*
+     * Service constants
+     */
+    public static final String PREF_SERVICE_BOUND = "serviceBound";
+    public static final String PREF_SPORT_ID = "sportId";
+    public static final boolean DEFAULT_SERVICE_BOUND = false;
+    public static final int DEFAULT_SPORT_ID = 0;
 
     /*
      * AppPreferences constants
@@ -57,6 +67,8 @@ public class AppPreferences {
     public static final String PREF_FILE = "data";
     private final SharedPreferences preferences;
     private final SharedPreferences.Editor editor;
+
+
 
     /*
      * Constructor
@@ -149,13 +161,36 @@ public class AppPreferences {
         return preferences.getBoolean(PREF_MULTIPLE_FILES, DEFAULT_MULTIPLE_FILES);
     }
 
-    public int getRefreshTime() {
-        String refreshTime = preferences.getString(PREF_REFRESH_TIME, DEFAULT_REFRESH_TIME);
-        return parseInt(refreshTime);
+    public int getRefreshPeriod() {
+        String refreshPeriod = preferences.getString(PREF_REFRESH_PERIOD, DEFAULT_REFRESH_PERIOD);
+        return parseInt(refreshPeriod);
     }
 
     public boolean isUnitSystemImperial() {
         String unitSystem = preferences.getString(PREF_UNIT_SYSTEM, DEFAULT_UNIT_SYSTEM);
         return parseBoolean(unitSystem);
     }
+
+    public boolean isDebugOn() {
+        return preferences.getBoolean(PREF_DEBUG, DEFAULT_DEBUG);
+    }
+
+    public boolean isServiceBound() {
+        return preferences.getBoolean(PREF_SERVICE_BOUND, DEFAULT_SERVICE_BOUND);
+    }
+
+    public void setServiceBound(boolean serviceBound) {
+        editor.putBoolean(PREF_SERVICE_BOUND, serviceBound);
+        editor.apply();
+    }
+
+    public int getSportId() {
+        return preferences.getInt(PREF_SPORT_ID, DEFAULT_SPORT_ID);
+    }
+
+    public void setSportId(int sportId) {
+        editor.putInt(PREF_SPORT_ID, sportId);
+        editor.apply();
+    }
+
 }
