@@ -145,7 +145,7 @@
         Visualization parameters
     </string>
     <string name="refresh_title">
-        Refresh time
+        Refresh period
     </string>
     <string name="refresh_summary">
         Time in seconds to update information on the screen.

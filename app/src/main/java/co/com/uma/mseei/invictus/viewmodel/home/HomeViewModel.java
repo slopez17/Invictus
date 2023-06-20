@@ -4,6 +4,7 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.Context.BIND_AUTO_CREATE;
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
+import static java.lang.Boolean.TRUE;
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
 import static co.com.uma.mseei.invictus.R.string.no_implemented;
@@ -19,6 +20,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
@@ -26,15 +28,20 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import co.com.uma.mseei.invictus.model.service.AccelerometerServiceParameters;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import co.com.uma.mseei.invictus.model.AppPreferences;
 import co.com.uma.mseei.invictus.model.SportType;
+import co.com.uma.mseei.invictus.model.service.AccelerometerServiceParameters;
 import co.com.uma.mseei.invictus.viewmodel.service.ListenAccelerometerService;
 import co.com.uma.mseei.invictus.viewmodel.service.ServiceChecker;
 
 public class HomeViewModel extends AndroidViewModel {
 
+    private final long REFRESH_PERIOD;
     private IBinder binder;
+    private Timer timer;
     private final AppPreferences appPreferences;
     private final MutableLiveData<Boolean> serviceBound;
 
@@ -42,6 +49,7 @@ public class HomeViewModel extends AndroidViewModel {
         super(application);
         appPreferences = new AppPreferences(application);
         serviceBound = new MutableLiveData<>();
+        REFRESH_PERIOD = appPreferences.getRefreshPeriod();
         assureServiceState(application);
     }
 
@@ -61,21 +69,15 @@ public class HomeViewModel extends AndroidViewModel {
         }
     }
 
-    private void assureServiceState(@NonNull Application application) {
-        boolean isListenAccelerometerServiceRunning = new ServiceChecker(application).isServiceRunning(ListenAccelerometerService.class);
-        boolean isServiceBound = appPreferences.isServiceBound();
-        if (isServiceBound){
-            if (!isListenAccelerometerServiceRunning){
-                setServiceBound(false);
+    public boolean stopTrackingFor(ActivityResult result) {
+        if (result.getResultCode() == RESULT_OK) {
+            Intent data = result.getData();
+            boolean stopTracking = requireNonNull(data).getExtras().getBoolean(STOP_TRACKING);
+            if(stopTracking) {
+                return stopService();
             }
-        } else {
-            serviceBound.setValue(false);
         }
-    }
-
-    private void setServiceBound(boolean state) {
-        serviceBound.setValue(state);
-        appPreferences.setServiceBound(state);
+        return false;
     }
 
     private void startService(SportType sportType) {
@@ -106,9 +108,8 @@ public class HomeViewModel extends AndroidViewModel {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             binder = iBinder;
-//            ListenAccelerometerService.BinderAccess access = (ListenAccelerometerService.BinderAccess) iBinder;
-//            ListenAccelerometerService listenAccelerometerService = access.getService();
             setServiceBound(true);
+            setRefreshDataTimer(true);
         }
 
         @Override
@@ -135,17 +136,6 @@ public class HomeViewModel extends AndroidViewModel {
         makeText(application, message, LENGTH_LONG).show();
     }
 
-    public boolean stopTrackingFor(ActivityResult result) {
-        if (result.getResultCode() == RESULT_OK) {
-            Intent data = result.getData();
-            boolean stopTracking = requireNonNull(data).getExtras().getBoolean(STOP_TRACKING);
-            if(stopTracking) {
-                return stopService();
-            }
-        }
-        return false;
-    }
-
     private boolean stopService() {
         if(appPreferences.isServiceBound()){
             getApplication().unbindService(serviceConnection);
@@ -155,4 +145,63 @@ public class HomeViewModel extends AndroidViewModel {
         Intent intent = new Intent(application,  ListenAccelerometerService.class);
         return application.stopService(intent);
     }
+
+    private void assureServiceState(@NonNull Application application) {
+        boolean isListenAccelerometerServiceRunning = new ServiceChecker(application).isServiceRunning(ListenAccelerometerService.class);
+        boolean isServiceBound = appPreferences.isServiceBound();
+        if (isServiceBound){
+            if (!isListenAccelerometerServiceRunning){
+                setServiceBound(false);
+            }
+        } else {
+            serviceBound.setValue(false);
+        }
+    }
+
+    private void setServiceBound(boolean state) {
+        serviceBound.setValue(state);
+        appPreferences.setServiceBound(state);
+    }
+
+    public void setRefreshDataTimer(boolean state) {
+        boolean serviceBound = TRUE.equals(this.serviceBound.getValue());
+        if(serviceBound) {
+            if (state) {
+                startRefreshDataTimer();
+            } else {
+                stopRefreshDataTimer();
+            }
+        }
+    }
+
+    private void startRefreshDataTimer() {
+        timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                getListenAccelerometerServiceData();
+            }
+        };
+        timer.schedule(timerTask,0, REFRESH_PERIOD * 1000L);
+    }
+
+    private void getListenAccelerometerServiceData() {
+        ListenAccelerometerService.BinderAccess access = (ListenAccelerometerService.BinderAccess) binder;
+        ListenAccelerometerService listenAccelerometerService = access.getService();
+        String hey = listenAccelerometerService.getData();
+        Log.i("juapa", hey);
+
+    }
+
+    private void stopRefreshDataTimer() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+    }
+
+
+
+
+
 }

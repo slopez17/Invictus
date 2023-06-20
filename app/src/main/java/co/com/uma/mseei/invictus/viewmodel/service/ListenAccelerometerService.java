@@ -81,8 +81,8 @@ public class ListenAccelerometerService
 
     }
 
-    public boolean getSomething() {
-        return true;
+    public String getData() {
+        return "holiwi preciosura";
     }
 
     public class BinderAccess extends Binder {

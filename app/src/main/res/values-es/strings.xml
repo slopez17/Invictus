@@ -146,7 +146,7 @@
         Parámetros de visualización
     </string>
     <string name="refresh_title">
-        Tiempo de refresco
+        Periodo de actualización
     </string>
     <string name="refresh_summary">
         Tiempo en segundos para renovar la información en pantalla.

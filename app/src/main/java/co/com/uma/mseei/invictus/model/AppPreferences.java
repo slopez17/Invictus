@@ -39,7 +39,7 @@ public class AppPreferences {
     public static final String PREF_SAVE_ON_SD = "saveOnSD";
     public static final String PREF_FILE_NAME = "fileName";
     public static final String PREF_MULTIPLE_FILES = "multipleFiles";
-    public static final String PREF_REFRESH_TIME = "refreshTime";
+    public static final String PREF_REFRESH_PERIOD = "refreshPeriod";
     public static final String PREF_UNIT_SYSTEM = "unitSystem";
     public static final String PREF_DEBUG = "debug";
 
@@ -49,7 +49,7 @@ public class AppPreferences {
     private static final boolean DEFAULT_SAVE_ON_SD = false;
     private static final String DEFAULT_FILE_NAME = "Invictus";
     private static final boolean DEFAULT_MULTIPLE_FILES = false;
-    private static final String DEFAULT_REFRESH_TIME = "5";
+    private static final String DEFAULT_REFRESH_PERIOD = "5";
     public static final String DEFAULT_UNIT_SYSTEM = "false";
     public static final boolean DEFAULT_DEBUG = false;
 
@@ -161,9 +161,9 @@ public class AppPreferences {
         return preferences.getBoolean(PREF_MULTIPLE_FILES, DEFAULT_MULTIPLE_FILES);
     }
 
-    public int getRefreshTime() {
-        String refreshTime = preferences.getString(PREF_REFRESH_TIME, DEFAULT_REFRESH_TIME);
-        return parseInt(refreshTime);
+    public int getRefreshPeriod() {
+        String refreshPeriod = preferences.getString(PREF_REFRESH_PERIOD, DEFAULT_REFRESH_PERIOD);
+        return parseInt(refreshPeriod);
     }
 
     public boolean isUnitSystemImperial() {

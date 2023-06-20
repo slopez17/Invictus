@@ -8,7 +8,6 @@ import static co.com.uma.mseei.invictus.R.string.successfully_saved;
 import static co.com.uma.mseei.invictus.databinding.ActivityFeedbackBinding.inflate;
 import static co.com.uma.mseei.invictus.util.DebugOperations.getMethodName;
 import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringById;
-import static co.com.uma.mseei.invictus.util.ViewOperations.getStringFromTextView;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 
 import android.os.Bundle;
@@ -51,16 +50,18 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
 
     private void saveFeedback() {
         TextView commentsTextView = binding.commentsEditText;
-        String comments = getStringFromTextView(commentsTextView);
+        String comments = commentsTextView.getText().toString();
 
-        CompositeDisposable disposable = new CompositeDisposable();
-        disposable.add(feedbackViewModel.saveFeedbackOnDatabase(comments)
-                .subscribeOn(Schedulers.io())
-                .observeOn(mainThread())
-                .subscribe(() -> makeText(this, successfully_saved, LENGTH_SHORT).show(),
-                        throwable -> Log.e(getMethodName(), getStringById(this, error_saved), throwable)));
+        if(!comments.isEmpty()) {
+            CompositeDisposable disposable = new CompositeDisposable();
+            disposable.add(feedbackViewModel.saveFeedbackOnDatabase(comments)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(mainThread())
+                    .subscribe(() -> makeText(this, successfully_saved, LENGTH_SHORT).show(),
+                            throwable -> Log.e(getMethodName(), getStringById(this, error_saved), throwable)));
 
-        //disposable.add(getFeedback(1));
+            //disposable.add(getFeedback(1));
+        }
     }
 
 //    @NonNull

@@ -73,6 +73,18 @@ public class HomeFragment
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        homeViewModel.setRefreshDataTimer(true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        homeViewModel.setRefreshDataTimer(false);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
