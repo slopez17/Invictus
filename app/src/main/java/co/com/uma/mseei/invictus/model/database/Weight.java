@@ -8,6 +8,11 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+/**
+ * Weight is an entity class used to perform CRUD operations (Create, Read, Update, Delete) on table "weights" in invictus_database.
+ * @author Sandra Marcela López Torres
+ * @version 0.1, 2023/07/02
+ */
 @Entity (tableName = "weights",
         indices = {
             @Index(value = "date", unique = true)

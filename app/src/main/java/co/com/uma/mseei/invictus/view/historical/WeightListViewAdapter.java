@@ -28,7 +28,7 @@ public class WeightListViewAdapter extends ArrayAdapter<Weight> {
     public WeightListViewAdapter(Activity activity, List<Weight> weightList) {
         super(activity.getApplicationContext(), R.layout.item_list_weight, weightList);
         this.weightList = weightList;
-        this.appPreferences = new AppPreferences(activity);
+        this.appPreferences = new AppPreferences(activity.getApplication());
     }
 
     @NonNull

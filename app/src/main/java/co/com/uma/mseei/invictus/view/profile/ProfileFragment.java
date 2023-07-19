@@ -127,8 +127,7 @@ public class ProfileFragment
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        profileViewModel.setBirthdate(year, month+1, dayOfMonth);
-        profileViewModel.setAge();
+        profileViewModel.setBirthdate(LocalDate.of(year, month+1, dayOfMonth));
         changeEditor(IME_ACTION_NEXT, birthdateTextView);
     }
 
@@ -152,12 +151,10 @@ public class ProfileFragment
     private void changeUserBodyData(int id, float value) {
         switch (id) {
             case weightEditText:
-                profileViewModel.setWeight(value);
-                profileViewModel.setBmiValues();
+                profileViewModel.updateWeight(value);
                 break;
             case heightEditText:
-                profileViewModel.setHeight(value);
-                profileViewModel.setBmiValues();
+                profileViewModel.updateHeight(value);
                 break;
         }
     }

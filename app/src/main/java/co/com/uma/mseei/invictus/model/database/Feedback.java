@@ -5,6 +5,11 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+/**
+ * Feedback is an entity class used to perform CRUD operations (Create, Read, Update, Delete) on table "feedbacks" in invictus_database.
+ * @author Sandra Marcela López Torres
+ * @version 0.1, 2023/07/02
+ */
 @Entity (tableName = "feedbacks",
         indices = {
             @Index(value = "id", unique = true)

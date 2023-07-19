@@ -7,7 +7,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import co.com.uma.mseei.invictus.model.database.Limits;
+import co.com.uma.mseei.invictus.model.chart.limit.WeightLimit;
 import co.com.uma.mseei.invictus.model.database.Weight;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
@@ -23,7 +23,7 @@ public interface WeightDao {
     Single<List<Weight>> findWeightsByPeriod(String dateFrom, String dateTo);
 
     @Query("SELECT :dateFrom AS minX, :dateTo AS maxX, MIN(value) AS minY, MAX(value) AS maxY FROM weights WHERE date BETWEEN :dateFrom AND :dateTo")
-    Single<Limits> getWeightLimits(String dateFrom, String dateTo);
+    Single<WeightLimit> getWeightLimits(String dateFrom, String dateTo);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insertWeights(Weight... weights);

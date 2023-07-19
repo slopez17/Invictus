@@ -2,7 +2,6 @@ package co.com.uma.mseei.invictus.viewmodel.historical;
 
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static java.util.Objects.requireNonNull;
-import static co.com.uma.mseei.invictus.model.profile.Profile.fixWeightToLimits;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.DD_MMM_YYYY;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.KG_UND;
 import static co.com.uma.mseei.invictus.util.GeneralConstants.LBS_UND;
@@ -19,12 +18,12 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 
 import co.com.uma.mseei.invictus.model.AppPreferences;
-import co.com.uma.mseei.invictus.model.database.Limits;
+import co.com.uma.mseei.invictus.model.chart.limit.WeightLimit;
 import co.com.uma.mseei.invictus.model.database.Weight;
-import co.com.uma.mseei.invictus.model.historical.time.All;
-import co.com.uma.mseei.invictus.model.historical.time.Month;
-import co.com.uma.mseei.invictus.model.historical.time.Time;
-import co.com.uma.mseei.invictus.model.historical.time.Week;
+import co.com.uma.mseei.invictus.model.time.All;
+import co.com.uma.mseei.invictus.model.time.Month;
+import co.com.uma.mseei.invictus.model.time.Time;
+import co.com.uma.mseei.invictus.model.time.Week;
 import co.com.uma.mseei.invictus.viewmodel.database.WeightRepository;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
@@ -93,26 +92,26 @@ public class HistoricalViewModel extends AndroidViewModel {
 
     public void setPeriod() {
         Time time = requireNonNull(this.time.getValue());
-        this.period.setValue(time.periodToString(DD_MMM_YYYY));
+        this.period.setValue(time.toString(DD_MMM_YYYY));
     }
 
     public void setActualPeriod(String... period) {
         Time time = requireNonNull(this.time.getValue());
-        time.setActualPeriod(period);
+        time.setCurrent(period);
         this.time.setValue(time);
         setPeriod();
     }
 
     public void setNextPeriod() {
         Time time = requireNonNull(this.time.getValue());
-        time.setNextPeriod();
+        time.setNext();
         this.time.setValue(time);
         setPeriod();
     }
 
     public void setPreviousPeriod() {
         Time time = requireNonNull(this.time.getValue());
-        time.setPreviousPeriod();
+        time.setPrevious();
         this.time.setValue(time);
         setPeriod();
     }
@@ -123,7 +122,6 @@ public class HistoricalViewModel extends AndroidViewModel {
 
     public void setCurrentWeight() {
         Float weight = appPreferences.getWeight();
-        weight = fixWeightToLimits(weight);
         if (isUnitSystemImperial) weight = kg2lbs(weight);
         this.currentWeight.setValue(TWO_DIGITS.format(weight));
     }
@@ -145,9 +143,9 @@ public class HistoricalViewModel extends AndroidViewModel {
         return weightRepository.findWeightsByPeriod(dateFrom, dateTo);
     }
 
-    public Single<Limits> getWeightLimits(){
+    public Single<WeightLimit> getWeightLimits(){
         Time time = requireNonNull(this.time.getValue());
-        String[] period = time.periodToStringArray(ISO_LOCAL_DATE);
+        String[] period = time.toStringArray(ISO_LOCAL_DATE);
         return weightRepository.getWeightLimits(period[0], period[1]);
     }
 

@@ -1,11 +1,9 @@
-package co.com.uma.mseei.invictus.model;
+package co.com.uma.mseei.invictus.model.chart;
 
 import static android.graphics.Color.GRAY;
 import static android.graphics.Color.parseColor;
 import static java.time.LocalDate.parse;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
-import static co.com.uma.mseei.invictus.model.database.Limits.WEIGHT;
-import static co.com.uma.mseei.invictus.model.database.Limits.getPeriodInDaysBetween;
 import static co.com.uma.mseei.invictus.util.ResourceOperations.getColorById;
 import static lecho.lib.hellocharts.gesture.ContainerScrollType.HORIZONTAL;
 import static lecho.lib.hellocharts.model.ValueShape.CIRCLE;
@@ -16,7 +14,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.com.uma.mseei.invictus.model.database.Limits;
+import co.com.uma.mseei.invictus.model.AppPreferences;
+import co.com.uma.mseei.invictus.model.chart.limit.Limit;
 import co.com.uma.mseei.invictus.model.database.Weight;
 import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter;
 import lecho.lib.hellocharts.formatter.SimpleLineChartValueFormatter;
@@ -30,7 +29,9 @@ import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 
 /**
- * Data model for a line Chart. Allows you to assign color, data, limits and view to show.
+ * LineChart is a model class which allows to define color, data, limits and other attributes in a line chart.
+ * @author Sandra Marcela López Torres
+ * @version 0.1, 2023/07/02
  */
 public class LineChart  {
 
@@ -40,45 +41,40 @@ public class LineChart  {
     private List<Weight> dataList;
     private final LineChartView lineChart;
     private LineChartData lineChartData;
-    private Limits limits;
+    private Limit limits;
 
     public LineChart(Activity activity, LineChartView lineChartView) {
         this.activity = activity;
         this.lineChart = lineChartView;
-        this.appPreferences = new AppPreferences(activity);
+        this.appPreferences = new AppPreferences(activity.getApplication());
     }
 
     /**
-     * Define a line color for line chart
-     *
-     * @param color   Color id to search for in colors.xml
-     *
+     * This method is used to choose line color from colors.xml.
+     * @param color   Integer parameter which identify the chosen color
      */
     public void setColor(int color) {
         this.color = parseColor(getColorById(activity, color));
     }
 
     /**
-     * Define a data to display in line chart
-     *
-     * @param dataList   List with data
-     *
+     * This method is used to set chart data.
+     * @param dataList   List parameter with data
      */
     public void setDataList(List<Weight> dataList) {
         this.dataList = dataList;
     }
 
     /**
-     * Define limits in line chart
-     * @param limits    X and Y axis limits (min, max)
-
+     * This method sets chart limits
+     * @param limits    Limit parameter with minimum and maximum values for X and Y axis
      */
-    public void setLimits(Limits limits) {
+    public void setLimits(Limit limits) {
         this.limits = limits;
     }
 
     /**
-     * Configures main attributes for line chart<br>
+     * This method sets line chart main attributes: <br>
      * - Lines<br>
      * - Axis<br>
      * - Interaction<br>
@@ -91,8 +87,7 @@ public class LineChart  {
     }
 
     /**
-     * Define line properties for line chart: <br>
-     *
+     * This method sets line attribute: <br>
      *  - Point values<br>
      *  - Line color<br>
      *  - Shape for points values<br>
@@ -116,15 +111,15 @@ public class LineChart  {
     }
 
     /**
-     * Create an array with coordinates XY for every point value in line chart
+     * This method creates XY coordinates for each point value.
+     * @return Point values list
      */
     private List<PointValue> getPointValues() {
         List<PointValue> pointValues = new ArrayList<>();
-        String startDate = limits.getMinX();
         float xValue;
         float yValue;
         for (int i=0; i<dataList.size(); i++){
-            xValue = getPeriodInDaysBetween(startDate, dataList.get(i).getDate());
+            xValue = limits.getPeriodInDaysFromStartTo(dataList.get(i).getDate());
             yValue = dataList.get(i).getValue(appPreferences.isUnitSystemImperial());
             pointValues.add(new PointValue(xValue, yValue));
         }
@@ -133,8 +128,7 @@ public class LineChart  {
     }
 
     /**
-     * Define X axis properties for line chart: <br>
-     *
+     * This method sets X axis attribute: <br>
      *  - Labels value<br>
      *  - Labels orientation<br>
      *  - Labels text color<br>
@@ -155,11 +149,12 @@ public class LineChart  {
     }
 
     /**
-     * Create an array with labels for X axis
+     * This method creates X axis labels
+     * @return X axis label list
      */
     private List<AxisValue> getAxisXValuesFrom() {
         List<AxisValue> axisXValues = new ArrayList<>();
-        long period = limits.getPeriodInDays();
+        long period = limits.getPeriodInDaysFromStartToEnd();
         LocalDate date = parse(limits.getMinX(), ISO_LOCAL_DATE);
         for (int i = 0; i <= period; i++) {
             axisXValues.add(new AxisValue(i).setLabel(date.toString()));
@@ -169,8 +164,7 @@ public class LineChart  {
     }
 
     /**
-     * Define Y axis properties for line chart: <br>
-     *
+     * This method sets Y axis attribute: <br>
      *  - Labels text size<br>
      *  - Labels decimal format<br>
      *  - Y axis location
@@ -183,8 +177,7 @@ public class LineChart  {
     }
 
     /**
-     * Define interaction properties for line chart: <br>
-     *
+     * This method sets interaction attribute: <br>
      *  - Zoom<br>
      *  - Scroll<br>
      *  - Line<br>
@@ -197,10 +190,10 @@ public class LineChart  {
         lineChart.setViewportCalculationEnabled(false);
         boolean isUnitSystemImperial = appPreferences.isUnitSystemImperial();
         float left = 0f;
-        float maxY = limits.getMaxY(WEIGHT, isUnitSystemImperial);
+        float maxY = limits.getMaxY(isUnitSystemImperial);
         float top =  maxY * 1.1f;
-        float right = limits.getPeriodInDays() + 1f;
-        float minY =  limits.getMinY(WEIGHT, isUnitSystemImperial);
+        float right = limits.getPeriodInDaysFromStartToEnd() + 1f;
+        float minY =  limits.getMinY(isUnitSystemImperial);
         float bottom =  minY * 0.9f;
         Viewport viewport = new Viewport(left, top, right, bottom);
         lineChart.setMaxZoom(viewport.right * 0.35f);

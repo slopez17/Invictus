@@ -1,8 +1,11 @@
 package co.com.uma.mseei.invictus.view.historical;
 
-import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.SELECTED_OPTION;
-import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.getTabTitlesFor;
-import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.getTitleFor;
+import static co.com.uma.mseei.invictus.R.string.all;
+import static co.com.uma.mseei.invictus.R.string.day;
+import static co.com.uma.mseei.invictus.R.string.month;
+import static co.com.uma.mseei.invictus.R.string.week;
+import static co.com.uma.mseei.invictus.R.string.weight;
+import static co.com.uma.mseei.invictus.view.historical.HistoricalFragment.SELECTED_OPTION;
 
 import android.os.Bundle;
 import android.widget.ImageButton;
@@ -15,6 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import co.com.uma.mseei.invictus.databinding.ActivityHistoricalBinding;
+import co.com.uma.mseei.invictus.model.SportType;
 
 public class HistoricalActivity extends AppCompatActivity {
 
@@ -28,10 +32,10 @@ public class HistoricalActivity extends AppCompatActivity {
         ImageButton backButton = binding.backButton;
         backButton.setOnClickListener(v -> this.finish());
 
-        int selectedOption = this.getIntent().getExtras().getInt(SELECTED_OPTION);
+        SportType selectedOption = (SportType) this.getIntent().getSerializableExtra(SELECTED_OPTION);
 
         TextView title = binding.title;
-        title.setText(getTitleFor(selectedOption));
+        title.setText(selectedOption == null ? weight : selectedOption.getName());
 
         ViewPager2 viewPager = binding.viewPager;
         viewPager.setAdapter(new HistoricalSectionsAdapter(this));
@@ -42,5 +46,15 @@ public class HistoricalActivity extends AppCompatActivity {
             tab.setText(TAB_TITLES[position]);
         })).attach();
 
+    }
+
+    private int[] getTabTitlesFor(SportType selectedOption) {
+        int[] TAB_TITLES;
+        if (selectedOption == null) {
+            TAB_TITLES = new int[]{week, month, all};
+        } else {
+            TAB_TITLES = new int[]{day, week, month, all};
+        }
+        return TAB_TITLES;
     }
 }
