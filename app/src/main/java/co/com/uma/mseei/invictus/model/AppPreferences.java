@@ -26,8 +26,8 @@ public class AppPreferences {
     private static final String PREF_PROFILE_HEIGHT = "height";
     private static final String PREF_PROFILE_UPDATE_DATE = "profileUpdateDate";
     private static final int DEF_PROFILE_GENDER = 0;
-    private static final float DEF_PROFILE_WEIGHT_KG = 56.7f; //If you need to modify this, you must change corresponding string value on res directory
-    private static final float DEF_PROFILE_HEIGHT_M = 1.70f; //If you need to modify this, you must change corresponding string value on res directory
+    public static final float DEF_PROFILE_WEIGHT_KG = 56.7f; //If you need to modify this, you must change corresponding string value on res directory
+    public static final float DEF_PROFILE_HEIGHT_M = 1.70f; //If you need to modify this, you must change corresponding string value on res directory
 
     private static final String PREF_SETTINGS_AUTO_FINISH = "autoFinish"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
     private static final String PREF_SETTINGS_SAMPLES_LIMIT = "samplesLimit"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
@@ -84,10 +84,6 @@ public class AppPreferences {
         return preferences.getFloat(PREF_PROFILE_WEIGHT, DEF_PROFILE_WEIGHT_KG);
     }
 
-    public float getDefaultWeight() {
-        return DEF_PROFILE_WEIGHT_KG;
-    }
-
     public void setWeight(float weight) {
         editor.putFloat(PREF_PROFILE_WEIGHT, weight);
         editor.apply();
@@ -100,10 +96,6 @@ public class AppPreferences {
     public void setHeight(float height ) {
         editor.putFloat(PREF_PROFILE_HEIGHT, height);
         editor.apply();
-    }
-
-    public float getDefaultHeight() {
-        return DEF_PROFILE_HEIGHT_M;
     }
 
     public String getProfileUpdateDate() {

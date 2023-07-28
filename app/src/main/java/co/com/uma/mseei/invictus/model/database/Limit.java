@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.model.chart.limit;
+package co.com.uma.mseei.invictus.model.database;
 
 import static java.time.LocalDate.parse;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
@@ -7,8 +7,8 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import java.time.LocalDate;
 
 /**
- * Limit is a model abstract class which contains minimum and maximum tracking values, where X axis
- * represents time and Y axis represents a magnitude.
+ * Limit is a model abstract class which contains minimum and maximum tracking values to delimit a
+ * chart. X axis represents time and Y axis represents a magnitude.
  * @author Sandra Marcela López Torres
  * @version 0.1, 2023/07/02
  */
@@ -42,29 +42,28 @@ public abstract class Limit {
         this.maxX = maxX;
     }
 
-    public abstract float getMinY(boolean isUnitSystemImperial);
+    public abstract float getMinY();
 
     public void setMinY(float minY) {
         this.minY = minY;
     }
 
-    public abstract float getMaxY(boolean isUnitSystemImperial);
+    public abstract float getMaxY();
 
     public void setMaxY(float maxY) {
         this.maxY = maxY;
     }
 
     /**
-     * This method determines tracking time period, in days.
-     * @return period in days
+     * @return period in days, from start (minX) to end (maxY).
      */
     public long getPeriodInDaysFromStartToEnd() {
         return getPeriodInDaysBetween(minX, maxX);
     }
 
     /**
-     * This method determines time period, in days, between time zero/start and an specificated time.
-     * @return period in days
+     * @param end A string date with 'yyyy-MM-dd' format.
+     * @return period in days, from start (minX) to end (specificated date).
      */
     public long getPeriodInDaysFromStartTo(String end) {
         return getPeriodInDaysBetween(minX, end);

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.com.uma.mseei.invictus.model.AppPreferences;
-import co.com.uma.mseei.invictus.model.chart.limit.Limit;
+import co.com.uma.mseei.invictus.model.database.Limit;
 import co.com.uma.mseei.invictus.model.database.Weight;
 import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter;
 import lecho.lib.hellocharts.formatter.SimpleLineChartValueFormatter;
@@ -33,48 +33,48 @@ import lecho.lib.hellocharts.view.LineChartView;
  * @author Sandra Marcela López Torres
  * @version 0.1, 2023/07/02
  */
-public class LineChart  {
+public abstract class LineChart  {
 
     private final Activity activity;
-    private final AppPreferences appPreferences;
-    private int color;
-    private List<Weight> dataList;
-    private final LineChartView lineChart;
+    protected final boolean isUnitSystemImperial;
+    private final LineChartView lineChartView;
     private LineChartData lineChartData;
-    private Limit limits;
+    protected List<Weight> dataList;
+    protected Limit limits;
+    private int color;
 
     public LineChart(Activity activity, LineChartView lineChartView) {
         this.activity = activity;
-        this.lineChart = lineChartView;
-        this.appPreferences = new AppPreferences(activity.getApplication());
+        this.lineChartView = lineChartView;
+        this.isUnitSystemImperial = new AppPreferences(activity.getApplication()).isUnitSystemImperial();
     }
 
     /**
-     * This method is used to choose line color from colors.xml.
-     * @param color   Integer parameter which identify the chosen color
+     * Customizes the line color of the line chart, using a color from colors.xml.
+     * @param color   Integer which identifies the chosen color.
      */
     public void setColor(int color) {
         this.color = parseColor(getColorById(activity, color));
     }
 
     /**
-     * This method is used to set chart data.
-     * @param dataList   List parameter with data
+     * Sets up the data for its visual representation in the line chart.
+     * @param dataList   List with data.
      */
     public void setDataList(List<Weight> dataList) {
         this.dataList = dataList;
     }
 
     /**
-     * This method sets chart limits
-     * @param limits    Limit parameter with minimum and maximum values for X and Y axis
+     * Configures line chart limits.
+     * @param limits    Argument with minimum and maximum values for X and Y axis.
      */
     public void setLimits(Limit limits) {
         this.limits = limits;
     }
 
     /**
-     * This method sets line chart main attributes: <br>
+     * Defines line chart main attributes: <br>
      * - Lines<br>
      * - Axis<br>
      * - Interaction<br>
@@ -87,7 +87,12 @@ public class LineChart  {
     }
 
     /**
-     * This method sets line attribute: <br>
+     * @return List of point values with XY coordinates.
+     */
+    protected abstract List<PointValue> getPointValues();
+
+    /**
+     * Adjusts line attributes: <br>
      *  - Point values<br>
      *  - Line color<br>
      *  - Shape for points values<br>
@@ -111,24 +116,7 @@ public class LineChart  {
     }
 
     /**
-     * This method creates XY coordinates for each point value.
-     * @return Point values list
-     */
-    private List<PointValue> getPointValues() {
-        List<PointValue> pointValues = new ArrayList<>();
-        float xValue;
-        float yValue;
-        for (int i=0; i<dataList.size(); i++){
-            xValue = limits.getPeriodInDaysFromStartTo(dataList.get(i).getDate());
-            yValue = dataList.get(i).getValue(appPreferences.isUnitSystemImperial());
-            pointValues.add(new PointValue(xValue, yValue));
-        }
-
-        return pointValues;
-    }
-
-    /**
-     * This method sets X axis attribute: <br>
+     * Adjusts X axis attributes: <br>
      *  - Labels value<br>
      *  - Labels orientation<br>
      *  - Labels text color<br>
@@ -149,8 +137,7 @@ public class LineChart  {
     }
 
     /**
-     * This method creates X axis labels
-     * @return X axis label list
+     * @return list with X axis labels.
      */
     private List<AxisValue> getAxisXValuesFrom() {
         List<AxisValue> axisXValues = new ArrayList<>();
@@ -164,7 +151,7 @@ public class LineChart  {
     }
 
     /**
-     * This method sets Y axis attribute: <br>
+     * Adjusts Y axis attributes: <br>
      *  - Labels text size<br>
      *  - Labels decimal format<br>
      *  - Y axis location
@@ -177,28 +164,27 @@ public class LineChart  {
     }
 
     /**
-     * This method sets interaction attribute: <br>
+     * Adjusts interaction attributes: <br>
      *  - Zoom<br>
      *  - Scroll<br>
      *  - Line<br>
      *  - Viewport<br>
      */
     private void setInteraction() {
-        lineChart.setZoomType(ZoomType.HORIZONTAL);
-        lineChart.setContainerScrollEnabled(true, HORIZONTAL);
-        lineChart.setLineChartData(lineChartData);
-        lineChart.setViewportCalculationEnabled(false);
-        boolean isUnitSystemImperial = appPreferences.isUnitSystemImperial();
+        lineChartView.setZoomType(ZoomType.HORIZONTAL);
+        lineChartView.setContainerScrollEnabled(true, HORIZONTAL);
+        lineChartView.setLineChartData(lineChartData);
+        lineChartView.setViewportCalculationEnabled(false);
         float left = 0f;
-        float maxY = limits.getMaxY(isUnitSystemImperial);
+        float maxY = limits.getMaxY();
         float top =  maxY * 1.1f;
         float right = limits.getPeriodInDaysFromStartToEnd() + 1f;
-        float minY =  limits.getMinY(isUnitSystemImperial);
+        float minY =  limits.getMinY();
         float bottom =  minY * 0.9f;
         Viewport viewport = new Viewport(left, top, right, bottom);
-        lineChart.setMaxZoom(viewport.right * 0.35f);
-        lineChart.setMaximumViewport(viewport);
-        lineChart.setCurrentViewport(viewport);
+        lineChartView.setMaxZoom(viewport.right * 0.35f);
+        lineChartView.setMaximumViewport(viewport);
+        lineChartView.setCurrentViewport(viewport);
     }
 
 }

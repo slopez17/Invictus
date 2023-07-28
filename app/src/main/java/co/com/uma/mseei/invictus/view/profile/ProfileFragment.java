@@ -12,9 +12,6 @@ import static co.com.uma.mseei.invictus.R.string.error_saved;
 import static co.com.uma.mseei.invictus.util.DebugOperations.getMethodName;
 import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringById;
 import static co.com.uma.mseei.invictus.util.ViewOperations.changeEditor;
-import static co.com.uma.mseei.invictus.util.ViewOperations.getFloatFrom;
-import static co.com.uma.mseei.invictus.util.ViewOperations.setHintTextView;
-import static co.com.uma.mseei.invictus.util.ViewOperations.setTextView;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 
 import android.annotation.SuppressLint;
@@ -58,11 +55,8 @@ public class ProfileFragment
     private Activity activity;
     private FragmentProfileBinding binding;
     private ProfileViewModel profileViewModel;
-
-    LocalDate birthdate;
-    TextView birthdateTextView;
-    TextView weightTextView;
-    TextView heightTextView;
+    private LocalDate birthdate;
+    private TextView birthdateTextView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -141,14 +135,14 @@ public class ProfileFragment
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (!hasFocus) {
-            float value = getFloatFrom((TextView) v);
+            String value = ((TextView) v).getText().toString();
             int id = v.getId();
             changeUserBodyData(id, value);
         }
     }
 
     @SuppressLint("NonConstantResourceId")
-    private void changeUserBodyData(int id, float value) {
+    private void changeUserBodyData(int id, String value) {
         switch (id) {
             case weightEditText:
                 profileViewModel.updateWeight(value);
@@ -162,9 +156,8 @@ public class ProfileFragment
     private void initializeGenderSpinner() {
         Spinner genderSpinner = binding.genderSpinner;
         String[] genderOptions = profileViewModel.getGenderOptions();
-        ArrayAdapter<String> arrayAdapter =
-                new ArrayAdapter<>(activity, item_spinner, genderOptions);
-        genderSpinner.setAdapter(arrayAdapter);
+        ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(activity, item_spinner, genderOptions);
+        genderSpinner.setAdapter(genderAdapter);
         genderSpinner.setOnItemSelectedListener(this);
         profileViewModel.getGender().observe(getViewLifecycleOwner(), genderSpinner::setSelection);
     }
@@ -182,23 +175,22 @@ public class ProfileFragment
         int year =  birthdate.getYear();
         int month = birthdate.getMonthValue()-1;
         int day = birthdate.getDayOfMonth();
-        DatePickerDialog datePickerDialog =
-                new DatePickerDialog(activity, this, year, month, day);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(activity, this, year, month, day);
         datePickerDialog.show();
         datePickerDialog.getDatePicker().setMaxDate(currentTimeMillis());
     }
 
     private void initializeAgeTextView() {
         TextView ageTextView = binding.ageTextView;
-        profileViewModel.getAge().observe(getViewLifecycleOwner(), x -> setTextView(ageTextView, x));
+        profileViewModel.getAge().observe(getViewLifecycleOwner(), ageTextView::setText);
     }
 
     private void initializeWeightEditText(){
-        weightTextView = binding.weightEditText;
+        TextView weightTextView = binding.weightEditText;
         weightTextView.setOnEditorActionListener(this);
         weightTextView.setOnFocusChangeListener(this);
-        profileViewModel.getWeightHint().observe(getViewLifecycleOwner(), x -> setHintTextView(weightTextView, x));
-        profileViewModel.getWeight().observe(getViewLifecycleOwner(), x -> setTextView(weightTextView, x));
+        profileViewModel.getWeightHint().observe(getViewLifecycleOwner(), weightTextView::setHint);
+        profileViewModel.getWeight().observe(getViewLifecycleOwner(), weightTextView::setText);
     }
 
     private void initializeWeightUndTextView(){
@@ -207,11 +199,11 @@ public class ProfileFragment
     }
 
     private void initializeHeightEditText(){
-        heightTextView = binding.heightEditText;
+        TextView heightTextView = binding.heightEditText;
         heightTextView.setOnEditorActionListener(this);
         heightTextView.setOnFocusChangeListener(this);
-        profileViewModel.getHeightHint().observe(getViewLifecycleOwner(), x -> setHintTextView(heightTextView, x));
-        profileViewModel.getHeight().observe(getViewLifecycleOwner(), x -> setTextView(heightTextView, x));
+        profileViewModel.getHeightHint().observe(getViewLifecycleOwner(), heightTextView::setHint);
+        profileViewModel.getHeight().observe(getViewLifecycleOwner(), heightTextView::setText);
     }
 
     private void initializeHeightUndTextView(){
@@ -221,7 +213,7 @@ public class ProfileFragment
 
     private  void  initializeBmiTextView(){
         TextView bmiTextView = binding.bmiTextView;
-        profileViewModel.getBmi().observe(getViewLifecycleOwner(), x -> setTextView(bmiTextView, x));
+        profileViewModel.getBmi().observe(getViewLifecycleOwner(), bmiTextView::setText);
     }
 
     private  void  initializeBmiClassificationTextView(){

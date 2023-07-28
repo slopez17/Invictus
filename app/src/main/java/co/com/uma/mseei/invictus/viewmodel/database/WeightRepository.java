@@ -6,7 +6,7 @@ import android.app.Application;
 
 import java.util.List;
 
-import co.com.uma.mseei.invictus.model.chart.limit.WeightLimit;
+import co.com.uma.mseei.invictus.model.database.WeightLimit;
 import co.com.uma.mseei.invictus.model.database.Weight;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;

@@ -2,11 +2,11 @@ package co.com.uma.mseei.invictus.viewmodel.historical;
 
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static java.util.Objects.requireNonNull;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.DD_MMM_YYYY;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.KG_UND;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.LBS_UND;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.TWO_DIGITS;
-import static co.com.uma.mseei.invictus.util.MathOperations.kg2lbs;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.DD_MMM_YYYY;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.KG_UND;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.LBS_UND;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.TWO_DIGITS;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.kg2lbs;
 
 import android.app.Application;
 
@@ -18,7 +18,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 
 import co.com.uma.mseei.invictus.model.AppPreferences;
-import co.com.uma.mseei.invictus.model.chart.limit.WeightLimit;
+import co.com.uma.mseei.invictus.model.database.WeightLimit;
 import co.com.uma.mseei.invictus.model.database.Weight;
 import co.com.uma.mseei.invictus.model.time.All;
 import co.com.uma.mseei.invictus.model.time.Month;

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0ab3ddfa6474cc6dd82a398640030a1e",
+    "identityHash": "5590835bf3679bdb010bbc8f35643162",
     "entities": [
       {
         "tableName": "weights",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`date` TEXT NOT NULL, `value` REAL NOT NULL, PRIMARY KEY(`date`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`date` TEXT NOT NULL, `weight` REAL NOT NULL, PRIMARY KEY(`date`))",
         "fields": [
           {
             "fieldPath": "date",
@@ -15,8 +15,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "value",
-            "columnName": "value",
+            "fieldPath": "weight",
+            "columnName": "weight",
             "affinity": "REAL",
             "notNull": true
           }
@@ -80,7 +80,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0ab3ddfa6474cc6dd82a398640030a1e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5590835bf3679bdb010bbc8f35643162')"
     ]
   }
 }

@@ -1,7 +1,5 @@
 package co.com.uma.mseei.invictus.model.database;
 
-import static co.com.uma.mseei.invictus.util.MathOperations.kg2lbs;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -9,7 +7,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 /**
- * Weight is an entity class used to perform CRUD operations (Create, Read, Update, Delete) on table "weights" in invictus_database.
+ * WeightRecord is an entity class used to perform CRUD operations (Create, Read, Update, Delete) on table "weights" in invictus_database.
  * @author Sandra Marcela López Torres
  * @version 0.1, 2023/07/02
  */
@@ -23,12 +21,12 @@ public class Weight {
     @ColumnInfo (name = "date")
     private final String date;
 
-    @ColumnInfo (name = "value")
-    private final float value;
+    @ColumnInfo (name = "weight")
+    private final float weight;
 
-    public Weight(@NonNull String date, float value) {
+    public Weight(@NonNull String date, float weight) {
         this.date = date;
-        this.value = value;
+        this.weight = weight;
     }
 
     @NonNull
@@ -36,11 +34,8 @@ public class Weight {
         return date;
     }
 
-    public float getValue() {
-        return value;
+    public float getWeight() {
+        return weight;
     }
 
-    public float getValue(boolean isUnitSystemImperial) {
-        return isUnitSystemImperial ? kg2lbs(value) : value;
-    }
 }

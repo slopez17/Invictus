@@ -28,6 +28,7 @@ import java.util.List;
 
 import co.com.uma.mseei.invictus.databinding.FragmentHistoricalWeightOptionBinding;
 import co.com.uma.mseei.invictus.model.chart.LineChart;
+import co.com.uma.mseei.invictus.model.chart.WeightLineChart;
 import co.com.uma.mseei.invictus.model.database.Weight;
 import co.com.uma.mseei.invictus.viewmodel.historical.HistoricalViewModel;
 import io.reactivex.disposables.CompositeDisposable;
@@ -147,7 +148,8 @@ public class WeightPlaceholderFragment extends Fragment implements View.OnClickL
                     .observeOn(mainThread())
                     .subscribe(
                             weightLimits -> {
-                                LineChart chartWeight = new LineChart(activity, weightLineChartView);
+                                weightLimits.setUnitSystem(activity);
+                                LineChart chartWeight = new WeightLineChart(activity, weightLineChartView);
                                 chartWeight.setColor(yellow);
                                 chartWeight.setDataList(weightList);
                                 chartWeight.setLimits(weightLimits);
