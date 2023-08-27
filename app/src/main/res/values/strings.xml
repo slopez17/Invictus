@@ -40,6 +40,7 @@
     <string name="confirm_message">Are you sure you want to stop this tracking activity?</string>
     <string name="leave_comment">What\'s on your mind? how was your activity?</string>
     <string name="congrats">Well done!</string>
+    <string name="permissions">Allow Invictus to access your physical activity in app permissions.</string>
 
     <!-- Historical -->
     <string name="select">Choose an option</string>
@@ -120,8 +121,23 @@
         Maximum number of samples in working memory. Falls, steps and distance
          will be calculated, when this value is reached.
     </string>
+    <string name="saving_category">
+        Saving parameters
+    </string>
+    <string name="speed_title">
+        Speed period
+    </string>
+    <string name="speed_summary">
+        Time in seconds to update and save speed information.
+    </string>
+    <string name="sport_title">
+        Sport period
+    </string>
+    <string name="sport_summary">
+        Time in minutes to update and save sport tracking information.
+    </string>
     <string name="save_on_sd_title">
-        Save samples
+        Save accelerometer samples
     </string>
     <string name="save_on_sd_summary">
         Save sensor acquired samples on a text file in download directory. Each sample has triaxial
@@ -138,20 +154,23 @@
     </string>
     <string name="multiple_files_summary">
         Create a new file peer each tracking. The filename will have a consecutive number at the end
-        . Example: sporting1, sporting2,…,sporting100.
+        . Example: Invictus1, Invictus2,…,Invictus100.
     </string>
 
     <string name="visualization_category">
         Visualization parameters
     </string>
     <string name="refresh_title">
-        Refresh period
+        Screen period
     </string>
     <string name="refresh_summary">
         Time in seconds to update information on the screen.
     </string>
     <string name="unit_system_title">
         Units
+    </string>
+    <string name="unit_system_summary">
+        System of Units
     </string>
     <string-array name="unit_system_entries">
         <item>International System</item>

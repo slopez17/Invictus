@@ -2,8 +2,8 @@ package co.com.uma.mseei.invictus.model.time;
 
 import static java.time.LocalDate.parse;
 import static java.time.LocalTime.MIN;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.CLEAN;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.HYPHEN_WITH_SPACE;
+import static co.com.uma.mseei.invictus.util.Constants.CLEAN;
+import static co.com.uma.mseei.invictus.util.Constants.HYPHEN_WITH_SPACE;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

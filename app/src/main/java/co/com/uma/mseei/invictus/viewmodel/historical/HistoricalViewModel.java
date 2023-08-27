@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import static co.com.uma.mseei.invictus.util.UnitsAndConversions.DD_MMM_YYYY;
 import static co.com.uma.mseei.invictus.util.UnitsAndConversions.KG_UND;
 import static co.com.uma.mseei.invictus.util.UnitsAndConversions.LBS_UND;
-import static co.com.uma.mseei.invictus.util.UnitsAndConversions.TWO_DIGITS;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.floatToString;
 import static co.com.uma.mseei.invictus.util.UnitsAndConversions.kg2lbs;
 
 import android.app.Application;
@@ -18,8 +18,8 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 
 import co.com.uma.mseei.invictus.model.AppPreferences;
-import co.com.uma.mseei.invictus.model.database.WeightLimit;
 import co.com.uma.mseei.invictus.model.database.Weight;
+import co.com.uma.mseei.invictus.model.database.WeightLimit;
 import co.com.uma.mseei.invictus.model.time.All;
 import co.com.uma.mseei.invictus.model.time.Month;
 import co.com.uma.mseei.invictus.model.time.Time;
@@ -45,14 +45,14 @@ public class HistoricalViewModel extends AndroidViewModel {
 
     public HistoricalViewModel(@NonNull Application application) {
         super(application);
-        appPreferences = new AppPreferences(application);
-        weightRepository = new WeightRepository(application);
-
         index = new MutableLiveData<>();
         time = new MutableLiveData<>();
         period = new MutableLiveData<>();
         currentWeight = new MutableLiveData<>();
         currentWeightUnd = new MutableLiveData<>();
+
+        weightRepository = new WeightRepository(application);
+        appPreferences = new AppPreferences(application);
         this.isUnitSystemImperial = appPreferences.isUnitSystemImperial();
     }
 
@@ -123,7 +123,7 @@ public class HistoricalViewModel extends AndroidViewModel {
     public void setCurrentWeight() {
         Float weight = appPreferences.getWeight();
         if (isUnitSystemImperial) weight = kg2lbs(weight);
-        this.currentWeight.setValue(TWO_DIGITS.format(weight));
+        this.currentWeight.setValue(floatToString(weight));
     }
 
     public LiveData<String> getCurrentWeightUnd(){

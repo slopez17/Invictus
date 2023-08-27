@@ -1,7 +1,7 @@
 package co.com.uma.mseei.invictus.model.service;
 
-import static co.com.uma.mseei.invictus.util.GeneralConstants.EXT_TXT;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.UNDERSCORE;
+import static co.com.uma.mseei.invictus.util.Constants.EXT_TXT;
+import static co.com.uma.mseei.invictus.util.Constants.UNDERSCORE;
 
 import java.io.Serializable;
 
@@ -25,6 +25,8 @@ public class AccelerometerServiceParameters implements Serializable {
     private boolean isSaveOnSdOn;
     private String fileName;
     private boolean isDebugOn;
+    private long speedPeriod;
+    private long sportPeriod;
 
     public int getGender() {
         return gender;
@@ -105,5 +107,21 @@ public class AccelerometerServiceParameters implements Serializable {
 
     public void setDebug(boolean debugState) {
         isDebugOn = debugState;
+    }
+
+    public long getSpeedPeriod() {
+        return speedPeriod;
+    }
+
+    public void setSpeedPeriod(long speedPeriod) {
+        this.speedPeriod = speedPeriod;
+    }
+
+    public long getSportPeriod() {
+        return sportPeriod;
+    }
+
+    public void setSportPeriod(long sportPeriod) {
+        this.sportPeriod = sportPeriod;
     }
 }

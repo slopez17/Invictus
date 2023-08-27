@@ -4,7 +4,7 @@ import static android.graphics.Color.GRAY;
 import static android.graphics.Color.parseColor;
 import static java.time.LocalDate.parse;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
-import static co.com.uma.mseei.invictus.util.ResourceOperations.getColorById;
+import static co.com.uma.mseei.invictus.util.Resource.getColorById;
 import static lecho.lib.hellocharts.gesture.ContainerScrollType.HORIZONTAL;
 import static lecho.lib.hellocharts.model.ValueShape.CIRCLE;
 

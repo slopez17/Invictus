@@ -4,7 +4,7 @@ import static java.time.LocalDate.now;
 import static java.time.LocalTime.MAX;
 import static java.time.LocalTime.MIN;
 import static java.time.temporal.ChronoField.DAY_OF_MONTH;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.HYPHEN_WITH_SPACE;
+import static co.com.uma.mseei.invictus.util.Constants.HYPHEN_WITH_SPACE;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

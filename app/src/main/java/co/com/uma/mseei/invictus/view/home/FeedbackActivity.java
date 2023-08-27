@@ -6,8 +6,8 @@ import static co.com.uma.mseei.invictus.R.id.confirmButton;
 import static co.com.uma.mseei.invictus.R.string.error_saved;
 import static co.com.uma.mseei.invictus.R.string.successfully_saved;
 import static co.com.uma.mseei.invictus.databinding.ActivityFeedbackBinding.inflate;
-import static co.com.uma.mseei.invictus.util.DebugOperations.getMethodName;
-import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringById;
+import static co.com.uma.mseei.invictus.util.Debug.getMethodName;
+import static co.com.uma.mseei.invictus.util.Resource.getStringById;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 
 import android.os.Bundle;
@@ -22,11 +22,12 @@ import androidx.lifecycle.ViewModelProvider;
 import co.com.uma.mseei.invictus.databinding.ActivityFeedbackBinding;
 import co.com.uma.mseei.invictus.viewmodel.home.FeedbackViewModel;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class FeedbackActivity extends AppCompatActivity implements View.OnClickListener {
     private ActivityFeedbackBinding binding;
-
+    private CompositeDisposable compositeDisposable;
     private FeedbackViewModel feedbackViewModel;
 
     @Override
@@ -35,6 +36,8 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
         feedbackViewModel = new ViewModelProvider(this).get(FeedbackViewModel.class);
         binding = inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        compositeDisposable = new CompositeDisposable();
 
         Button confirmButton = binding.confirmButton;
         confirmButton.setOnClickListener(this);
@@ -53,18 +56,24 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
         String comments = commentsTextView.getText().toString();
 
         if(!comments.isEmpty()) {
-            CompositeDisposable disposable = new CompositeDisposable();
-            disposable.add(feedbackViewModel.saveFeedbackOnDatabase(comments)
+            Disposable disposable = feedbackViewModel.saveFeedbackOnDatabase(comments)
                     .subscribeOn(Schedulers.io())
                     .observeOn(mainThread())
                     .subscribe(() -> makeText(this, successfully_saved, LENGTH_SHORT).show(),
-                            throwable -> Log.e(getMethodName(), getStringById(this, error_saved), throwable)));
-
+                            throwable -> Log.e(getMethodName(), getStringById(this, error_saved), throwable));
+            compositeDisposable.add(disposable);
             //disposable.add(getFeedback(1));
         }
     }
 
-//    @NonNull
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
+    }
+
+
+    //    @NonNull
 //    private Disposable getFeedback(int id) {
 //        return feedbackViewModel.getFeedback(id)
 //                .subscribeOn(io())

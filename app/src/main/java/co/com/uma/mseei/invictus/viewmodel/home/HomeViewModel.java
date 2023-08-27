@@ -11,6 +11,10 @@ import static co.com.uma.mseei.invictus.R.string.no_implemented;
 import static co.com.uma.mseei.invictus.R.string.sportype_error;
 import static co.com.uma.mseei.invictus.R.string.start_traking;
 import static co.com.uma.mseei.invictus.model.SportType.values;
+import static co.com.uma.mseei.invictus.util.Constants.CLOSE_PARENTHESIS;
+import static co.com.uma.mseei.invictus.util.Constants.OPEN_PARENTHESIS;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.KM_UND;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.s2ms;
 import static co.com.uma.mseei.invictus.view.home.SportSelectionActivity.SELECTED_SPORT;
 import static co.com.uma.mseei.invictus.view.home.StopTrackingConfirmationActivity.STOP_TRACKING;
 import static co.com.uma.mseei.invictus.viewmodel.service.ListenAccelerometerService.ACCELEROMETER_SERVICE_PARAMETERS;
@@ -20,7 +24,6 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import android.util.Log;
 
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
@@ -39,22 +42,70 @@ import co.com.uma.mseei.invictus.viewmodel.service.ServiceChecker;
 
 public class HomeViewModel extends AndroidViewModel {
 
-    private final long REFRESH_PERIOD;
-    private IBinder binder;
-    private Timer timer;
     private final AppPreferences appPreferences;
     private final MutableLiveData<Boolean> serviceBound;
+    private final MutableLiveData<SportType> sportType;
+    private final MutableLiveData<String> falls;
+    private final MutableLiveData<String> steps;
+    private final MutableLiveData<String> calories;
+    private final MutableLiveData<String> distance;
+    private final MutableLiveData<String> distanceUnd;
+    private final MutableLiveData<String> speed;
+    private final MutableLiveData<String> elapsedTime;
+    private IBinder binder;
+    private Timer timer;
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
-        appPreferences = new AppPreferences(application);
         serviceBound = new MutableLiveData<>();
-        REFRESH_PERIOD = appPreferences.getRefreshPeriod();
+        sportType = new MutableLiveData<>();
+        falls = new MutableLiveData<>();
+        steps = new MutableLiveData<>();
+        calories = new MutableLiveData<>();
+        speed = new MutableLiveData<>();
+        elapsedTime = new MutableLiveData<>();
+        distance = new MutableLiveData<>();
+        distanceUnd = new MutableLiveData<>();
+        distanceUnd.setValue(format(" %s%s%s", OPEN_PARENTHESIS, KM_UND, CLOSE_PARENTHESIS));
+
+        appPreferences = new AppPreferences(application);
         assureServiceState(application);
     }
 
     public LiveData<Boolean> isServiceBound() {
         return serviceBound;
+    }
+
+    public LiveData<SportType> getSportType() {
+        return sportType;
+    }
+
+    public LiveData<String> getFalls() {
+        return falls;
+    }
+
+    public LiveData<String> getSteps() {
+        return steps;
+    }
+
+    public LiveData<String> getCalories() {
+        return calories;
+    }
+
+    public LiveData<String> getDistance() {
+        return distance;
+    }
+
+    public LiveData<String> getDistanceUnd() {
+        return distanceUnd;
+    }
+
+    public LiveData<String> getSpeed() {
+        return speed;
+    }
+
+    public LiveData<String> getElapsedTime() {
+        return elapsedTime;
     }
 
     public void startTrackingFor(ActivityResult result) {
@@ -80,8 +131,20 @@ public class HomeViewModel extends AndroidViewModel {
         return false;
     }
 
+    public void setRefreshDataTimer(boolean state) {
+        boolean serviceBound = TRUE.equals(this.serviceBound.getValue());
+        if(serviceBound) {
+            if (state) {
+                startRefreshDataTimer();
+            } else {
+                stopRefreshDataTimer();
+            }
+        }
+    }
+
     private void startService(SportType sportType) {
         if(sportType.isImplemented()) {
+            this.sportType.setValue(sportType);
             Application application = getApplication();
             Intent intent = new Intent(application, ListenAccelerometerService.class);
             AccelerometerServiceParameters parameters = new AccelerometerServiceParameters();
@@ -97,6 +160,8 @@ public class HomeViewModel extends AndroidViewModel {
             parameters.setSaveOnSd(appPreferences.isSaveOnSdOn());
             parameters.setFileName(appPreferences.getFileName(), appPreferences.isMultipleFilesOn());
             parameters.setDebug(appPreferences.isDebugOn());
+            parameters.setSpeedPeriod(appPreferences.getSpeedPeriod());
+            parameters.setSportPeriod(appPreferences.getSportPeriod());
 
             intent.putExtra(ACCELEROMETER_SERVICE_PARAMETERS, parameters);
             application.startForegroundService(intent);
@@ -163,17 +228,6 @@ public class HomeViewModel extends AndroidViewModel {
         appPreferences.setServiceBound(state);
     }
 
-    public void setRefreshDataTimer(boolean state) {
-        boolean serviceBound = TRUE.equals(this.serviceBound.getValue());
-        if(serviceBound) {
-            if (state) {
-                startRefreshDataTimer();
-            } else {
-                stopRefreshDataTimer();
-            }
-        }
-    }
-
     private void startRefreshDataTimer() {
         timer = new Timer();
         TimerTask timerTask = new TimerTask() {
@@ -182,15 +236,19 @@ public class HomeViewModel extends AndroidViewModel {
                 getListenAccelerometerServiceData();
             }
         };
-        timer.schedule(timerTask,0, REFRESH_PERIOD * 1000L);
+        timer.schedule(timerTask,0, s2ms(appPreferences.getRefreshPeriod()));
     }
 
     private void getListenAccelerometerServiceData() {
         ListenAccelerometerService.BinderAccess access = (ListenAccelerometerService.BinderAccess) binder;
-        ListenAccelerometerService listenAccelerometerService = access.getService();
-        String hey = listenAccelerometerService.getData();
-        Log.i("juapa", hey);
-
+        ListenAccelerometerService service = access.getService();
+        String[] data = service.getData();
+        falls.postValue(data[0]);
+        steps.postValue(data[1]);
+        calories.postValue(data[2]);
+        distance.postValue(data[3]);
+        speed.postValue(data[4]);
+        elapsedTime.postValue(data[5]);
     }
 
     private void stopRefreshDataTimer() {
@@ -199,9 +257,5 @@ public class HomeViewModel extends AndroidViewModel {
             timer = null;
         }
     }
-
-
-
-
 
 }

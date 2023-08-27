@@ -9,8 +9,8 @@ import static co.com.uma.mseei.invictus.R.id.saveButton;
 import static co.com.uma.mseei.invictus.R.id.weightEditText;
 import static co.com.uma.mseei.invictus.R.layout.item_spinner;
 import static co.com.uma.mseei.invictus.R.string.error_saved;
-import static co.com.uma.mseei.invictus.util.DebugOperations.getMethodName;
-import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringById;
+import static co.com.uma.mseei.invictus.util.Debug.getMethodName;
+import static co.com.uma.mseei.invictus.util.Resource.getStringById;
 import static co.com.uma.mseei.invictus.util.ViewOperations.changeEditor;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 
@@ -45,6 +45,7 @@ import java.time.LocalDate;
 import co.com.uma.mseei.invictus.databinding.FragmentProfileBinding;
 import co.com.uma.mseei.invictus.viewmodel.profile.ProfileViewModel;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class ProfileFragment
@@ -57,6 +58,7 @@ public class ProfileFragment
     private ProfileViewModel profileViewModel;
     private LocalDate birthdate;
     private TextView birthdateTextView;
+    private CompositeDisposable compositeDisposable;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -64,6 +66,8 @@ public class ProfileFragment
 
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        compositeDisposable = new CompositeDisposable();
 
         activity = requireActivity();
         initializeGenderSpinner();
@@ -85,6 +89,7 @@ public class ProfileFragment
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        compositeDisposable.dispose();
     }
 
     @Override
@@ -233,12 +238,11 @@ public class ProfileFragment
 
     private void saveProfileData() {
         profileViewModel.saveProfilePreferences();
-
-        CompositeDisposable disposable = new CompositeDisposable();
-        disposable.add(profileViewModel.saveWeightOnDatabase()
+        Disposable disposable = profileViewModel.saveWeightOnDatabase()
                 .subscribeOn(Schedulers.io())
                 .observeOn(mainThread())
                 .subscribe(() -> profileViewModel.showSavedFeedback(),
-                        throwable -> Log.e(getMethodName(), getStringById(activity, error_saved), throwable)));
+                        throwable -> Log.e(getMethodName(), getStringById(activity, error_saved), throwable));
+        compositeDisposable.add(disposable);
     }
 }

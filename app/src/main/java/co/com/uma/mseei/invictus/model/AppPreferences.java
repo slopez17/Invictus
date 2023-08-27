@@ -36,6 +36,8 @@ public class AppPreferences {
     private static final String PREF_SETTINGS_FILE_NAME = "fileName"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
     private static final String PREF_SETTINGS_MULTIPLE_FILES = "multipleFiles"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
     private static final String PREF_SETTINGS_REFRESH_PERIOD = "refreshPeriod"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
+    private static final String PREF_SETTINGS_SPEED_PERIOD = "speedPeriod"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
+    private static final String PREF_SETTINGS_SPORT_PERIOD = "sportPeriod"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
     private static final String PREF_SETTINGS_UNIT_SYSTEM = "unitSystem"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
     private static final String PREF_SETTINGS_DEBUG = "debug"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
     private static final boolean DEF_SETTINGS_AUTO_FINISH = false;
@@ -45,6 +47,8 @@ public class AppPreferences {
     private static final String DEF_SETTINGS_FILE_NAME = "Invictus";
     private static final boolean DEF_SETTINGS_MULTIPLE_FILES = false;
     private static final String DEF_SETTINGS_REFRESH_PERIOD = "5";
+    private static final String DEF_SETTINGS_SPEED_PERIOD = "5";
+    private static final String DEF_SETTINGS_SPORT_PERIOD = "5";
     private static final String DEF_SETTINGS_UNIT_SYSTEM = "false";
     private static final boolean DEF_SETTINGS_DEBUG = false;
 
@@ -136,6 +140,16 @@ public class AppPreferences {
     public int getRefreshPeriod() {
         String refreshPeriod = preferences.getString(PREF_SETTINGS_REFRESH_PERIOD, DEF_SETTINGS_REFRESH_PERIOD);
         return parseInt(refreshPeriod);
+    }
+
+    public int getSpeedPeriod() {
+        String speedPeriod = preferences.getString(PREF_SETTINGS_SPEED_PERIOD, DEF_SETTINGS_SPEED_PERIOD);
+        return parseInt(speedPeriod);
+    }
+
+    public int getSportPeriod() {
+        String sportPeriod = preferences.getString(PREF_SETTINGS_SPORT_PERIOD, DEF_SETTINGS_SPORT_PERIOD);
+        return parseInt(sportPeriod);
     }
 
     public boolean isUnitSystemImperial() {

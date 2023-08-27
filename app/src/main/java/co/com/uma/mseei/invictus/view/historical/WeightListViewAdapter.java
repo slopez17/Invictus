@@ -1,8 +1,8 @@
 package co.com.uma.mseei.invictus.view.historical;
 
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.floatToString;
 import static co.com.uma.mseei.invictus.util.UnitsAndConversions.KG_UND;
 import static co.com.uma.mseei.invictus.util.UnitsAndConversions.LBS_UND;
-import static co.com.uma.mseei.invictus.util.UnitsAndConversions.TWO_DIGITS;
 import static co.com.uma.mseei.invictus.util.UnitsAndConversions.kg2lbs;
 
 import android.app.Activity;
@@ -52,7 +52,7 @@ public class WeightListViewAdapter extends ArrayAdapter<Weight> {
             weightUnd = KG_UND;
         }
         dateTextView.setText(date);
-        weightTextView.setText(TWO_DIGITS.format(weight));
+        weightTextView.setText(floatToString(weight));
         weightUndTextView.setText(weightUnd);
 
         return convertView;

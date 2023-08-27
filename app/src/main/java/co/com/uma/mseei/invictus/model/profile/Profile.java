@@ -4,7 +4,7 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.time.LocalDate.now;
 import static co.com.uma.mseei.invictus.R.array.bmi_clasification_array;
-import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringFromArrayById;
+import static co.com.uma.mseei.invictus.util.Resource.getStringFromArrayById;
 
 import android.app.Application;
 
