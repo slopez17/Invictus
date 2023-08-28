@@ -19,7 +19,6 @@ import java.time.LocalDate;
 public class AppPreferences {
 
     public static final String APP_PREFERENCES_FILE = "data";
-
     private static final String PREF_PROFILE_GENDER = "gender";
     private static final String PREF_PROFILE_BIRTHDATE = "birthDate";
     private static final String PREF_PROFILE_WEIGHT = "weight";
@@ -29,6 +28,8 @@ public class AppPreferences {
     public static final float DEF_PROFILE_WEIGHT_KG = 56.7f; //If you need to modify this, you must change corresponding string value on res directory
     public static final float DEF_PROFILE_HEIGHT_M = 1.70f; //If you need to modify this, you must change corresponding string value on res directory
 
+    private static final String PREF_APP_PERMISSIONS = "permissions";
+    private static final boolean DEF_APP_PERMISSIONS= false;
     private static final String PREF_SETTINGS_AUTO_FINISH = "autoFinish"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
     private static final String PREF_SETTINGS_SAMPLES_LIMIT = "samplesLimit"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
     private static final String PREF_SETTINGS_SAMPLES_ON_MEMORY = "samplesOnMemory"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
@@ -46,7 +47,7 @@ public class AppPreferences {
     private static final boolean DEF_SETTINGS_SAVE_ON_SD = false;
     private static final String DEF_SETTINGS_FILE_NAME = "Invictus";
     private static final boolean DEF_SETTINGS_MULTIPLE_FILES = false;
-    private static final String DEF_SETTINGS_REFRESH_PERIOD = "5";
+    private static final String DEF_SETTINGS_REFRESH_PERIOD = "1";
     private static final String DEF_SETTINGS_SPEED_PERIOD = "5";
     private static final String DEF_SETTINGS_SPORT_PERIOD = "5";
     private static final String DEF_SETTINGS_UNIT_SYSTEM = "false";
@@ -108,6 +109,15 @@ public class AppPreferences {
 
     public void setProfileUpdateDate(LocalDate updateDate) {
         editor.putString(PREF_PROFILE_UPDATE_DATE, updateDate.toString());
+        editor.apply();
+    }
+
+    public boolean isPermissionGranted() {
+        return preferences.getBoolean(PREF_APP_PERMISSIONS, DEF_APP_PERMISSIONS);
+    }
+
+    public void setPermissionGranted(boolean isPermissionGranted) {
+        editor.putBoolean(PREF_APP_PERMISSIONS, isPermissionGranted);
         editor.apply();
     }
 

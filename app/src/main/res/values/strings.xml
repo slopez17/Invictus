@@ -28,6 +28,8 @@
     </string>
 
     <!-- Home -->
+    <string name="hi">Hi!</string>
+    <string name="ok">OK</string>
     <string name="falls">Falls</string>
     <string name="steps">Steps</string>
     <string name="calories">Calories</string>
@@ -40,7 +42,7 @@
     <string name="confirm_message">Are you sure you want to stop this tracking activity?</string>
     <string name="leave_comment">What\'s on your mind? how was your activity?</string>
     <string name="congrats">Well done!</string>
-    <string name="permissions">Allow Invictus to access your physical activity in app permissions.</string>
+    <string name="permission">Allow Invictus to access your physical activity in app permissions.</string>
 
     <!-- Historical -->
     <string name="select">Choose an option</string>

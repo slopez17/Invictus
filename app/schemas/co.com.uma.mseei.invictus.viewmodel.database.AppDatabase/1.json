@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "294eab2d0670f071a55ad83d46ed5695",
+    "identityHash": "d3e1b9cf1f14b4a5a13c1b1d60406fa0",
     "entities": [
       {
         "tableName": "weights",
@@ -85,7 +85,7 @@
       },
       {
         "tableName": "sports",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sport_id` INTEGER NOT NULL, `sport_type` TEXT NOT NULL, `start_date_time` TEXT NOT NULL, `end_date_time` TEXT NOT NULL, `elapsed_time` TEXT NOT NULL, `falls` INTEGER NOT NULL, `steps` INTEGER NOT NULL, `distance` REAL NOT NULL, `calories` REAL NOT NULL, `maxSpeed` REAL NOT NULL, `meanSpeed` REAL NOT NULL, PRIMARY KEY(`sport_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sport_id` INTEGER NOT NULL, `sport_type` TEXT NOT NULL, `start_date_time` TEXT NOT NULL, `end_date_time` TEXT NOT NULL, `elapsed_time` TEXT NOT NULL, `falls` INTEGER NOT NULL, `steps` INTEGER NOT NULL, `distance` REAL NOT NULL, `calories` REAL NOT NULL, PRIMARY KEY(`sport_id`))",
         "fields": [
           {
             "fieldPath": "sportId",
@@ -138,18 +138,6 @@
           {
             "fieldPath": "calories",
             "columnName": "calories",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "maxSpeed",
-            "columnName": "maxSpeed",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "meanSpeed",
-            "columnName": "meanSpeed",
             "affinity": "REAL",
             "notNull": true
           }
@@ -213,7 +201,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '294eab2d0670f071a55ad83d46ed5695')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd3e1b9cf1f14b4a5a13c1b1d60406fa0')"
     ]
   }
 }

@@ -30,6 +30,7 @@ import android.hardware.SensorManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -103,8 +104,16 @@ public class ListenAccelerometerService
     @Override
     public boolean stopService(Intent name) {
         showExecutionPoint(this, parameters.isDebugOn(), getMethodName());
-        compositeDisposable.dispose();
         return super.stopService(name);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        showExecutionPoint(this, parameters.isDebugOn(), getMethodName());
+        compositeDisposable.dispose();
+        sensorManager.unregisterListener(this);
+        stopForeground(true);
     }
 
     @Override
@@ -114,6 +123,7 @@ public class ListenAccelerometerService
                 case TYPE_ACCELEROMETER:
                     data.setTime();
                     data.setAcceleration(sensorEvent);
+                    saveAccelerationSamplesOnFile();
                     break;
                 case TYPE_STEP_COUNTER:
                     int steps = (int) sensorEvent.values[0];
@@ -260,5 +270,11 @@ public class ListenAccelerometerService
                 .subscribe(() -> showExecutionPoint(this, parameters.isDebugOn(), getMethodName()),
                         throwable -> Log.e(getMethodName(), getStringById(this, error_saved), throwable));
         compositeDisposable.add(disposable);
+    }
+
+    private void saveAccelerationSamplesOnFile() {
+        if(data.isAccelerationArrayListOverSamplesOnMemoryLimit()){
+
+        }
     }
 }

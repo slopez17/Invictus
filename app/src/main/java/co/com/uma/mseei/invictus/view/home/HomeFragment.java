@@ -1,23 +1,18 @@
 package co.com.uma.mseei.invictus.view.home;
 
-import static android.Manifest.permission.ACTIVITY_RECOGNITION;
-import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
-import static android.widget.Toast.LENGTH_LONG;
-import static android.widget.Toast.makeText;
-import static androidx.core.content.ContextCompat.checkSelfPermission;
 import static java.lang.Boolean.TRUE;
 import static co.com.uma.mseei.invictus.R.drawable.ic_arrow_black_24dp;
 import static co.com.uma.mseei.invictus.R.drawable.ic_stop_black_24dp;
 import static co.com.uma.mseei.invictus.R.id.trackingButton;
-import static co.com.uma.mseei.invictus.R.string.permissions;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,7 +21,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -36,9 +30,8 @@ import co.com.uma.mseei.invictus.databinding.FragmentHomeBinding;
 import co.com.uma.mseei.invictus.viewmodel.home.HomeViewModel;
 
 public class HomeFragment
-        extends Fragment implements View.OnClickListener {
+        extends Fragment implements OnClickListener {
 
-    private static final int PERMISSION_REQUEST_ACTIVITY_RECOGNITION = 1;
     private Activity activity;
     private FragmentHomeBinding binding;
     private HomeViewModel homeViewModel;
@@ -62,6 +55,7 @@ public class HomeFragment
         initializeSpeedViews();
         initializeElapsedTimeViews();
         initializeTrackingButton();
+
         return root;
     }
 
@@ -70,13 +64,7 @@ public class HomeFragment
         super.onCreate(savedInstanceState);
 
         getSportType = registerForActivityResult(new StartActivityForResult(),
-                result -> {
-                    if (checkPermission()) {
-                        homeViewModel.startTrackingFor(result);
-                    } else {
-                        makeText(activity, activity.getApplication().getString(permissions), LENGTH_LONG).show();
-                    }
-                });
+                result -> homeViewModel.startTrackingFor(result));
 
         getStopTrackingConfirmation = registerForActivityResult(new StartActivityForResult(),
                 result -> {
@@ -190,11 +178,4 @@ public class HomeFragment
         }
     }
 
-    private boolean checkPermission() {
-        if (checkSelfPermission(activity, ACTIVITY_RECOGNITION) != PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, new String[]{ACTIVITY_RECOGNITION},
-                    PERMISSION_REQUEST_ACTIVITY_RECOGNITION);
-        }
-        return checkSelfPermission(activity, ACTIVITY_RECOGNITION) == PERMISSION_GRANTED;
-    }
 }

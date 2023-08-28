@@ -44,8 +44,10 @@ public class AccelerometerServiceData {
     private final long startTime;
     private long endTime;
     private long elapsedTime;
-    private ZoneId zoneId;
-    private ArrayList<Acceleration> accelerationArrayList;
+    private final ZoneId zoneId;
+    private final ArrayList<Acceleration> accelerationArrayList;
+    private boolean isAccelerationArrayListOverSamplesOnMemoryLimit;
+
 
     public AccelerometerServiceData(AccelerometerServiceParameters parameters) {
         this.parameters = parameters;
@@ -139,6 +141,10 @@ public class AccelerometerServiceData {
                 m2km((steps - sectionStepsReference) * distanceUnit) / ms2h(sectionEndTime - sectionStartTime);
         this.sectionStartTime = endTime;
         this.sectionStepsReference = steps;
+    }
+
+    public boolean isAccelerationArrayListOverSamplesOnMemoryLimit() {
+        return accelerationArrayList.size() >= parameters.getSamplesOnMemory();
     }
 
     public void setAcceleration(SensorEvent sensorEvent) {

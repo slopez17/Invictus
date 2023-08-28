@@ -8,6 +8,7 @@ import static java.lang.Boolean.TRUE;
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
 import static co.com.uma.mseei.invictus.R.string.no_implemented;
+import static co.com.uma.mseei.invictus.R.string.permission;
 import static co.com.uma.mseei.invictus.R.string.sportype_error;
 import static co.com.uma.mseei.invictus.R.string.start_traking;
 import static co.com.uma.mseei.invictus.model.SportType.values;
@@ -109,14 +110,19 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
     public void startTrackingFor(ActivityResult result) {
-        if (result.getResultCode() == RESULT_OK) {
-            Intent data = result.getData();
-            int selectedSport = requireNonNull(data).getExtras().getInt(SELECTED_SPORT);
-            SportType sportType = values()[selectedSport];
-            startService(sportType);
-            showStartTrackingMessage(sportType);
+        if (appPreferences.isPermissionGranted()) {
+            if (result.getResultCode() == RESULT_OK) {
+                Intent data = result.getData();
+                int selectedSport = requireNonNull(data).getExtras().getInt(SELECTED_SPORT);
+                SportType sportType = values()[selectedSport];
+                startService(sportType);
+                showStartTrackingMessage(sportType);
+            } else {
+                showStartTrackingMessage();
+            }
         } else {
-            showStartTrackingMessage();
+            Application application = getApplication();
+            makeText(application, application.getString(permission), LENGTH_LONG).show();
         }
     }
 

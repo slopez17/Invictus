@@ -75,7 +75,7 @@
         android:title="@string/visualization_category"
         app:iconSpaceReserved="false">
         <EditTextPreference
-            android:defaultValue="5"
+            android:defaultValue="1"
             android:key="refreshPeriod"
             android:selectAllOnFocus="true"
             android:singleLine="true"
