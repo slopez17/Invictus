@@ -13,6 +13,7 @@ import static co.com.uma.mseei.invictus.util.Debug.getMethodName;
 import static co.com.uma.mseei.invictus.util.Resource.getStringById;
 import static co.com.uma.mseei.invictus.util.ViewOperations.changeEditor;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
+import static io.reactivex.schedulers.Schedulers.io;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -239,7 +240,7 @@ public class ProfileFragment
     private void saveProfileData() {
         profileViewModel.saveProfilePreferences();
         Disposable disposable = profileViewModel.saveWeightOnDatabase()
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(io())
                 .observeOn(mainThread())
                 .subscribe(() -> profileViewModel.showSavedFeedback(),
                         throwable -> Log.e(getMethodName(), getStringById(activity, error_saved), throwable));

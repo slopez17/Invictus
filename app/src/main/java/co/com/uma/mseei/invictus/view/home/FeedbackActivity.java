@@ -9,6 +9,7 @@ import static co.com.uma.mseei.invictus.databinding.ActivityFeedbackBinding.infl
 import static co.com.uma.mseei.invictus.util.Debug.getMethodName;
 import static co.com.uma.mseei.invictus.util.Resource.getStringById;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
+import static io.reactivex.schedulers.Schedulers.io;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -57,8 +58,8 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
 
         if(!comments.isEmpty()) {
             Disposable disposable = feedbackViewModel.saveFeedbackOnDatabase(comments)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(mainThread())
+                    .subscribeOn(io())
+                    .observeOn(io())
                     .subscribe(() -> makeText(this, successfully_saved, LENGTH_SHORT).show(),
                             throwable -> Log.e(getMethodName(), getStringById(this, error_saved), throwable));
             compositeDisposable.add(disposable);

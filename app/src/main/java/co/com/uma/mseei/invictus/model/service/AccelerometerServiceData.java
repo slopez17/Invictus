@@ -21,15 +21,16 @@ import co.com.uma.mseei.invictus.model.database.Sport;
 
 public class AccelerometerServiceData {
 
+    public final AccelerometerServiceParameters parameters;
+
     private static final float STEP_FEMALE_LONGITUDE_M = 0.67f;
     private static final float STEP_MALE_LONGITUDE_M = 0.762f;
     private static final float STEP_NOANSWER_LONGITUDE_M = 0.716f;
     private static final float MET_ROPE_SKIPPING = 8f;
-    public static final float MET_LIGTH_WALK = 2.5f;
-    public static final float SPEED_LIGTH_WALK = 0.06f; // 3.6 km/h = 0.06 km/min
-    public static final float SPEED_ROPE_SKIPPING = 120f; // 2 jumps/s = 120 jumps/min
+    private static final float MET_LIGTH_WALK = 2.5f;
+    private static final float SPEED_LIGTH_WALK = 0.06f; // 3.6 km/h = 0.06 km/min
+    private static final float SPEED_ROPE_SKIPPING = 120f; // 2 jumps/s = 120 jumps/min
 
-    private final AccelerometerServiceParameters parameters;
     private int falls;
     private int steps;
     private int stepsReference;
@@ -45,12 +46,13 @@ public class AccelerometerServiceData {
     private long endTime;
     private long elapsedTime;
     private final ZoneId zoneId;
+    private Acceleration acceleration;
     private final ArrayList<Acceleration> accelerationArrayList;
-    private boolean isAccelerationArrayListOverSamplesOnMemoryLimit;
 
 
     public AccelerometerServiceData(AccelerometerServiceParameters parameters) {
         this.parameters = parameters;
+        this.acceleration = new Acceleration();
         this.accelerationArrayList = new ArrayList<>();
 
         long now = currentTimeMillis();
@@ -143,12 +145,15 @@ public class AccelerometerServiceData {
         this.sectionStepsReference = steps;
     }
 
-    public boolean isAccelerationArrayListOverSamplesOnMemoryLimit() {
+    public boolean isAccelerationSamplesOverMemoryLimit() {
         return accelerationArrayList.size() >= parameters.getSamplesOnMemory();
     }
 
+    public Acceleration getAcceleration(){
+        return acceleration;
+    }
+
     public void setAcceleration(SensorEvent sensorEvent) {
-        Acceleration acceleration = new Acceleration();
         acceleration.setxAxis(sensorEvent.values[0]);
         acceleration.setYAxis(sensorEvent.values[1]);
         acceleration.setZAxis(sensorEvent.values[2]);
@@ -214,5 +219,4 @@ public class AccelerometerServiceData {
                 break;
         }
     }
-
 }

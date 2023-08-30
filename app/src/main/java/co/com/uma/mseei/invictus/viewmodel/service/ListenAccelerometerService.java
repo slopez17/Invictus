@@ -8,9 +8,11 @@ import static android.hardware.Sensor.TYPE_STEP_COUNTER;
 import static android.hardware.SensorManager.SENSOR_DELAY_GAME;
 import static co.com.uma.mseei.invictus.R.string.error_saved;
 import static co.com.uma.mseei.invictus.R.string.notification_title;
+import static co.com.uma.mseei.invictus.util.Constants.SEMICOLON;
 import static co.com.uma.mseei.invictus.util.Debug.getMethodName;
 import static co.com.uma.mseei.invictus.util.Debug.showExecutionPoint;
 import static co.com.uma.mseei.invictus.util.Resource.getStringById;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.YYYY_MM_DD__HH_MM_SS;
 import static co.com.uma.mseei.invictus.util.UnitsAndConversions.min2ms;
 import static co.com.uma.mseei.invictus.util.UnitsAndConversions.s2ms;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
@@ -30,17 +32,20 @@ import android.hardware.SensorManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import co.com.uma.mseei.invictus.MainActivity;
 import co.com.uma.mseei.invictus.model.database.Speed;
+import co.com.uma.mseei.invictus.model.service.Acceleration;
 import co.com.uma.mseei.invictus.model.service.AccelerometerServiceData;
 import co.com.uma.mseei.invictus.model.service.AccelerometerServiceParameters;
 import co.com.uma.mseei.invictus.viewmodel.database.SpeedRepository;
@@ -60,14 +65,12 @@ public class ListenAccelerometerService
     private SensorManager sensorManager;
     private CompositeDisposable compositeDisposable;
 
-    private AccelerometerServiceParameters parameters;
     private AccelerometerServiceData data;
     private SpeedRepository speedRepository;
     private SportRepository sportRepository;
     private Timer speedTimer;
     private Timer sportTimer;
-
-
+    private int cuenta = 0; //TODO
 
     @Override
     public void onCreate() {
@@ -79,8 +82,7 @@ public class ListenAccelerometerService
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        parameters = getAccelerometerServiceParameters(intent);
-        data = new AccelerometerServiceData(parameters);
+        data = new AccelerometerServiceData(getAccelerometerServiceParameters(intent));
         setTimers();
         createNotificationChannel();
         startForeground(NOTIFICATION_ID, createNotification());
@@ -90,27 +92,28 @@ public class ListenAccelerometerService
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        showExecutionPoint(this, parameters.isDebugOn(), getMethodName());
+        showExecutionPoint(this, data.parameters.isDebugOn(), getMethodName());
         return binder;
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
-        showExecutionPoint(this, parameters.isDebugOn(), getMethodName());
+        showExecutionPoint(this, data.parameters.isDebugOn(), getMethodName());
         stopTimers();
         return super.onUnbind(intent);
     }
 
     @Override
     public boolean stopService(Intent name) {
-        showExecutionPoint(this, parameters.isDebugOn(), getMethodName());
+        showExecutionPoint(this, data.parameters.isDebugOn(), getMethodName());
         return super.stopService(name);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        showExecutionPoint(this, parameters.isDebugOn(), getMethodName());
+        showExecutionPoint(this, data.parameters.isDebugOn(), getMethodName());
+        showExecutionPoint(this, data.parameters.isDebugOn(), "cuenta = " + cuenta);
         compositeDisposable.dispose();
         sensorManager.unregisterListener(this);
         stopForeground(true);
@@ -121,6 +124,7 @@ public class ListenAccelerometerService
         if(data != null) {
             switch (sensorEvent.sensor.getType()) {
                 case TYPE_ACCELEROMETER:
+                    cuenta++;
                     data.setTime();
                     data.setAcceleration(sensorEvent);
                     saveAccelerationSamplesOnFile();
@@ -165,8 +169,8 @@ public class ListenAccelerometerService
     @NonNull
     private Notification createNotification() {
         String contentTitle = getString(notification_title);
-        String contentText = getString(parameters.getSportType().getName());
-        int icon = parameters.getSportType().getIcon();
+        String contentText = getString(data.parameters.getSportType().getName());
+        int icon = data.parameters.getSportType().getIcon();
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = getActivity(this, 0, notificationIntent, FLAG_IMMUTABLE);
@@ -191,7 +195,7 @@ public class ListenAccelerometerService
             configureSensor(TYPE_ACCELEROMETER);
             configureSensor(TYPE_STEP_COUNTER);
         } else {
-            showExecutionPoint(this, parameters.isDebugOn(), getMethodName(), "Sensor manager wasn't found");
+            showExecutionPoint(this, data.parameters.isDebugOn(), getMethodName(), "Sensor manager wasn't found");
             this.stopSelf();
         }
     }
@@ -211,7 +215,7 @@ public class ListenAccelerometerService
                 saveSpeedOnDatabase();
             }
         };
-        speedTimer.schedule(speedTimerTask,0, s2ms(parameters.getSpeedPeriod()));
+        speedTimer.schedule(speedTimerTask,0, s2ms(data.parameters.getSpeedPeriod()));
 
         sportTimer = new Timer();
         TimerTask sportTimerTask = new TimerTask() {
@@ -220,7 +224,7 @@ public class ListenAccelerometerService
                 saveSportOnDatabase();
             }
         };
-        sportTimer.schedule(sportTimerTask,0, min2ms(parameters.getSportPeriod()));
+        sportTimer.schedule(sportTimerTask,0, min2ms(data.parameters.getSportPeriod()));
     }
 
     private void stopTimers() {
@@ -237,11 +241,11 @@ public class ListenAccelerometerService
 
     private void saveSpeedOnDatabase() {
         data.setSpeed();
-        Speed speed = new Speed(parameters.getSportId(), data.getElapsedTime(), data.getSpeed());
+        Speed speed = new Speed(data.parameters.getSportId(), data.getElapsedTime(), data.getSpeed());
         Disposable disposable = speedRepository.insertSpeed(speed)
                 .subscribeOn(io())
                 .observeOn(mainThread())
-                .subscribe(() -> showExecutionPoint(this, parameters.isDebugOn(), getMethodName()),
+                .subscribe(() -> showExecutionPoint(this, data.parameters.isDebugOn(), getMethodName()),
                         throwable -> Log.e(getMethodName(), getStringById(this, error_saved), throwable));
         compositeDisposable.add(disposable);
     }
@@ -259,7 +263,7 @@ public class ListenAccelerometerService
 //
 //        disposable = speedRepository.getAvgSpeed(parameters.getSportId())
 //                .subscribeOn(io())
-//                .observeOn(mainThread())
+//                .observeOn(io())
 //                .subscribe(avgSpeed::set,
 //                        throwable -> Log.e(getMethodName(), getStringById(this, error_saved), throwable));
 //        compositeDisposable.add(disposable);
@@ -267,14 +271,49 @@ public class ListenAccelerometerService
         Disposable disposable = sportRepository.insertSport(data.getSport())
                 .subscribeOn(io())
                 .observeOn(mainThread())
-                .subscribe(() -> showExecutionPoint(this, parameters.isDebugOn(), getMethodName()),
+                .subscribe(
+                        () -> showExecutionPoint(this, data.parameters.isDebugOn(), getMethodName()),
                         throwable -> Log.e(getMethodName(), getStringById(this, error_saved), throwable));
         compositeDisposable.add(disposable);
     }
 
     private void saveAccelerationSamplesOnFile() {
-        if(data.isAccelerationArrayListOverSamplesOnMemoryLimit()){
-
+        if (data.parameters.isSaveOnSdOn()) {
+            Thread thread = new Thread(() -> {
+                writeFile(data.getAcceleration());
+            });
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
     }
+
+    private void writeFile(Acceleration acceleration) {
+        File downloadsDirectory = new File(getExternalFilesDir(null), "Downloads");
+
+        if(downloadsDirectory.exists() || downloadsDirectory.mkdir()) {
+            File file = new File(downloadsDirectory, data.parameters.getFileName());
+
+            try {
+                FileWriter writer = new FileWriter(file, true);
+                String row =
+                        acceleration.getTimestamp() + SEMICOLON +
+                                acceleration.getDate(YYYY_MM_DD__HH_MM_SS) + SEMICOLON +
+                                acceleration.getXAxis() + SEMICOLON +
+                                acceleration.getyAxis() + SEMICOLON +
+                                acceleration.getzAxis() + SEMICOLON +
+                                acceleration.getMagnitude();
+                writer.append(row).append("\n");
+                writer.flush();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 }
