@@ -15,7 +15,6 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 import co.com.uma.mseei.invictus.model.database.Sport;
 
@@ -23,6 +22,7 @@ public class AccelerometerServiceData {
 
     public final AccelerometerServiceParameters parameters;
 
+    private static final int FALLS_ANTI_BOUNCE = 5000;
     private static final float STEP_FEMALE_LONGITUDE_M = 0.67f;
     private static final float STEP_MALE_LONGITUDE_M = 0.762f;
     private static final float STEP_NOANSWER_LONGITUDE_M = 0.716f;
@@ -32,6 +32,7 @@ public class AccelerometerServiceData {
     private static final float SPEED_ROPE_SKIPPING = 120f; // 2 jumps/s = 120 jumps/min
 
     private int falls;
+    private long lastFallTime;
     private int steps;
     private int stepsReference;
     private float calories;
@@ -46,16 +47,15 @@ public class AccelerometerServiceData {
     private long endTime;
     private long elapsedTime;
     private final ZoneId zoneId;
-    private Acceleration acceleration;
-    private final ArrayList<Acceleration> accelerationArrayList;
+    private final Acceleration acceleration;
 
 
     public AccelerometerServiceData(AccelerometerServiceParameters parameters) {
         this.parameters = parameters;
         this.acceleration = new Acceleration();
-        this.accelerationArrayList = new ArrayList<>();
 
         long now = currentTimeMillis();
+        this.lastFallTime = now - FALLS_ANTI_BOUNCE;
         this.startTime = now;
         this.endTime = now;
         this.sectionStartTime = now;
@@ -103,8 +103,13 @@ public class AccelerometerServiceData {
         return falls;
     }
 
-    public void setFalls(int falls) {
-        this.falls = falls;
+    public void setFalls() {
+        if(acceleration.getTimestamp() - lastFallTime > FALLS_ANTI_BOUNCE){
+            if(acceleration.getMagnitude() >= 0 && acceleration.getMagnitude() < 1){
+                this.falls++;
+                this.lastFallTime = acceleration.getTimestamp();
+            }
+        }
     }
 
     public int getSteps() {
@@ -145,10 +150,6 @@ public class AccelerometerServiceData {
         this.sectionStepsReference = steps;
     }
 
-    public boolean isAccelerationSamplesOverMemoryLimit() {
-        return accelerationArrayList.size() >= parameters.getSamplesOnMemory();
-    }
-
     public Acceleration getAcceleration(){
         return acceleration;
     }
@@ -158,7 +159,6 @@ public class AccelerometerServiceData {
         acceleration.setYAxis(sensorEvent.values[1]);
         acceleration.setZAxis(sensorEvent.values[2]);
         acceleration.setTimestamp(endTime);
-        accelerationArrayList.add(acceleration);
     }
 
     public String[] getScreenData() {

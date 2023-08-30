@@ -64,10 +64,6 @@ public class Acceleration {
         return magnitude;
     }
 
-    public void setMagnitude(float magnitude) {
-        this.magnitude = magnitude;
-    }
-
     public long getTimestamp() {
         return timestamp;
     }

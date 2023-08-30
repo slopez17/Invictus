@@ -70,7 +70,6 @@ public class ListenAccelerometerService
     private SportRepository sportRepository;
     private Timer speedTimer;
     private Timer sportTimer;
-    private int cuenta = 0; //TODO
 
     @Override
     public void onCreate() {
@@ -113,7 +112,6 @@ public class ListenAccelerometerService
     public void onDestroy() {
         super.onDestroy();
         showExecutionPoint(this, data.parameters.isDebugOn(), getMethodName());
-        showExecutionPoint(this, data.parameters.isDebugOn(), "cuenta = " + cuenta);
         compositeDisposable.dispose();
         sensorManager.unregisterListener(this);
         stopForeground(true);
@@ -124,10 +122,10 @@ public class ListenAccelerometerService
         if(data != null) {
             switch (sensorEvent.sensor.getType()) {
                 case TYPE_ACCELEROMETER:
-                    cuenta++;
                     data.setTime();
                     data.setAcceleration(sensorEvent);
                     saveAccelerationSamplesOnFile();
+                    data.setFalls();
                     break;
                 case TYPE_STEP_COUNTER:
                     int steps = (int) sensorEvent.values[0];
@@ -279,9 +277,7 @@ public class ListenAccelerometerService
 
     private void saveAccelerationSamplesOnFile() {
         if (data.parameters.isSaveOnSdOn()) {
-            Thread thread = new Thread(() -> {
-                writeFile(data.getAcceleration());
-            });
+            Thread thread = new Thread(() -> writeFile(data.getAcceleration()));
             thread.start();
             try {
                 thread.join();
