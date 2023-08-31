@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -24,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.com.uma.mseei.invictus.databinding.FragmentHistoricalWeightOptionBinding;
@@ -38,8 +40,8 @@ import lecho.lib.hellocharts.view.LineChartView;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class WeightPlaceholderFragment extends Fragment implements View.OnClickListener {
-    private static final String SECTION_NUMBER = "sectionNumber";
+public class WeightPlaceholderFragment extends Fragment implements OnClickListener {
+    private static final String SECTION_NUMBER = "section_number";
     private static final int ALL = 3;
     private int index;
     private Activity activity;
@@ -151,7 +153,7 @@ public class WeightPlaceholderFragment extends Fragment implements View.OnClickL
                                 weightLimits.setUnitSystem(activity);
                                 LineChart chartWeight = new WeightLineChart(activity, weightLineChartView);
                                 chartWeight.setColor(yellow);
-                                chartWeight.setDataList(weightList);
+                                chartWeight.setDataList(new ArrayList<>(weightList));
                                 chartWeight.setLimits(weightLimits);
                                 chartWeight.setChart();
                             }

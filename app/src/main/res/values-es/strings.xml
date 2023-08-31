@@ -66,6 +66,11 @@
     <string name="attention">Atención</string>
     <string name="no_record">Ups… No encontramos nada. Puedes iniciar el seguimiento en este momento!</string>
 
+    <!-- Historical - Option sport-->
+    <string name="total_sport">Total por periodo: </string>
+    <string name="id">#</string>
+    <string name="sport">Deporte</string>
+
     <!-- Profile -->
     <string name="basic_category">Tú</string>
     <string name="gender">Género</string>

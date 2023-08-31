@@ -65,6 +65,11 @@
     <string name="attention">Attention</string>
     <string name="no_record">Oops… There\'s nothing here. You can start tracking right now!</string>
 
+    <!-- Historical - Option sport-->
+    <string name="total_sport">Total per period: </string>
+    <string name="id">#</string>
+    <string name="sport">Sport</string>
+
     <!-- Profile -->
     <string name="basic_category">About you</string>
     <string name="gender">Gender</string>

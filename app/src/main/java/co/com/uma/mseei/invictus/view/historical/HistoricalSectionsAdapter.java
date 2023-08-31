@@ -35,12 +35,7 @@ public class HistoricalSectionsAdapter extends FragmentStateAdapter {
 
     private Fragment getPlaceholderFragmentFor(SportType selectedOption, int position) {
         if(selectedOption != null) {
-            switch (selectedOption) {
-                case WALK:
-                    return WalkPlaceholderFragment.newInstance(position);
-                case ROPE_SKIPPING:
-                    return RopeSkippingPlaceholderFragment.newInstance(position);
-            }
+            return SportPlaceholderFragment.newInstance(position, selectedOption);
         }
         return WeightPlaceholderFragment.newInstance(position + 1);
     }

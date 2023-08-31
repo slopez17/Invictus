@@ -16,6 +16,7 @@ import java.util.List;
 
 import co.com.uma.mseei.invictus.model.AppPreferences;
 import co.com.uma.mseei.invictus.model.database.Limit;
+import co.com.uma.mseei.invictus.model.database.Sport;
 import co.com.uma.mseei.invictus.model.database.Weight;
 import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter;
 import lecho.lib.hellocharts.formatter.SimpleLineChartValueFormatter;
@@ -39,7 +40,7 @@ public abstract class LineChart  {
     protected final boolean isUnitSystemImperial;
     private final LineChartView lineChartView;
     private LineChartData lineChartData;
-    protected List<Weight> dataList;
+    protected List<Object> dataList;
     protected Limit limits;
     private int color;
 
@@ -61,7 +62,7 @@ public abstract class LineChart  {
      * Sets up the data for its visual representation in the line chart.
      * @param dataList   List with data.
      */
-    public void setDataList(List<Weight> dataList) {
+    public void setDataList(List<Object> dataList) {
         this.dataList = dataList;
     }
 
@@ -186,5 +187,6 @@ public abstract class LineChart  {
         lineChartView.setMaximumViewport(viewport);
         lineChartView.setCurrentViewport(viewport);
     }
+
 
 }

@@ -1,5 +1,6 @@
 package co.com.uma.mseei.invictus.viewmodel.historical;
 
+import static android.icu.text.DateTimePatternGenerator.DAY;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static java.util.Objects.requireNonNull;
 import static co.com.uma.mseei.invictus.util.UnitsAndConversions.DD_MMM_YYYY;
@@ -18,12 +19,16 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 
 import co.com.uma.mseei.invictus.model.AppPreferences;
+import co.com.uma.mseei.invictus.model.database.Sport;
+import co.com.uma.mseei.invictus.model.database.SportLimit;
 import co.com.uma.mseei.invictus.model.database.Weight;
 import co.com.uma.mseei.invictus.model.database.WeightLimit;
 import co.com.uma.mseei.invictus.model.time.All;
+import co.com.uma.mseei.invictus.model.time.Day;
 import co.com.uma.mseei.invictus.model.time.Month;
 import co.com.uma.mseei.invictus.model.time.Time;
 import co.com.uma.mseei.invictus.model.time.Week;
+import co.com.uma.mseei.invictus.viewmodel.database.SportRepository;
 import co.com.uma.mseei.invictus.viewmodel.database.WeightRepository;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
@@ -35,9 +40,9 @@ public class HistoricalViewModel extends AndroidViewModel {
 
     private final AppPreferences appPreferences;
     private final WeightRepository weightRepository;
+    private final SportRepository sportRepository;
     private final Boolean  isUnitSystemImperial;
 
-    private final MutableLiveData<Integer> index;
     private final MutableLiveData<Time> time;
     private final MutableLiveData<String> period;
     private final MutableLiveData<String> currentWeight;
@@ -45,27 +50,22 @@ public class HistoricalViewModel extends AndroidViewModel {
 
     public HistoricalViewModel(@NonNull Application application) {
         super(application);
-        index = new MutableLiveData<>();
         time = new MutableLiveData<>();
         period = new MutableLiveData<>();
         currentWeight = new MutableLiveData<>();
         currentWeightUnd = new MutableLiveData<>();
 
         weightRepository = new WeightRepository(application);
+        sportRepository = new SportRepository(application);
         appPreferences = new AppPreferences(application);
         this.isUnitSystemImperial = appPreferences.isUnitSystemImperial();
     }
 
     public void initializeValues(int index) {
-        setIndex(index);
         setTime(index);
         setPeriod();
         setCurrentWeight();
         setCurrentWeightUnd();
-    }
-
-    public void setIndex(int index) {
-        this.index.setValue(index);
     }
 
     public MutableLiveData<Time> getTime(){
@@ -74,6 +74,9 @@ public class HistoricalViewModel extends AndroidViewModel {
 
     public void setTime(int index) {
         switch (index){
+            case DAY:
+                this.time.setValue(new Day());
+                break;
             case WEEK:
                 this.time.setValue(new Week());
                 break;
@@ -121,7 +124,7 @@ public class HistoricalViewModel extends AndroidViewModel {
     }
 
     public void setCurrentWeight() {
-        Float weight = appPreferences.getWeight();
+        float weight = appPreferences.getWeight();
         if (isUnitSystemImperial) weight = kg2lbs(weight);
         this.currentWeight.setValue(floatToString(weight));
     }
@@ -149,5 +152,31 @@ public class HistoricalViewModel extends AndroidViewModel {
         return weightRepository.getWeightLimits(period[0], period[1]);
     }
 
+    public Flowable<List<Sport>> getAllBySportType(String sportType) {
+        return sportRepository.getAllBySportType(sportType);
+    }
 
+    public Single<List<Sport>> findSportsBySportTypeAndPeriod(String sportType, String dateFrom, String dateTo) {
+        return sportRepository.findSportsBySportTypeAndPeriod(sportType, dateFrom, dateTo);
+    }
+
+    public Single<SportLimit> getSportLimits(){
+        Time time = requireNonNull(this.time.getValue());
+        String[] period = time.toStringArray(ISO_LOCAL_DATE);
+        return sportRepository.getSportLimits(period[0], period[1]);
+    }
+
+    public String[] getTotalSport(List<Sport> sportList) {
+        int falls = 0;
+        int stepsJumps = 0;
+        float calories = 0;
+
+        for (Sport sport : sportList){
+            falls = falls + sport.getFalls();
+            stepsJumps = stepsJumps + sport.getSteps();
+            calories = calories + sport.getCalories();
+        }
+
+        return new String[] {String.valueOf(falls), String.valueOf(stepsJumps), floatToString(calories)};
+    }
 }
