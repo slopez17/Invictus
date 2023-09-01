@@ -69,6 +69,12 @@
     <string name="total_sport">Total per period: </string>
     <string name="id">#</string>
     <string name="sport">Sport</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
+    <string name="max_speed">Maximum reached speed</string>
+    <string name="avg_speed">Average speed</string>
+    <string name="speed_chart">Speed Chart(km/h)</string>
+    <string name="comments">Comments</string>
 
     <!-- Profile -->
     <string name="basic_category">About you</string>
@@ -101,6 +107,7 @@
     <string name="update_date">Last update</string>
     <string name="successfully_saved">Data successfully saved</string>
     <string name="error_saved">Unable to save on Database</string>
+    <string name="error_read">Unable to read from Database</string>
 
     <!-- Service -->
     <string name="notification_title">Invictus is tracking your activity</string>
@@ -120,13 +127,6 @@
     </string>
     <string name="limit_of_samples_summary">
         Maximum number of samples to acquire. System takes a sample each 20ms.
-    </string>
-    <string name="samples_on_memory_title">
-        Samples on memory
-    </string>
-    <string name="samples_on_memory_summary">
-        Maximum number of samples in working memory. Falls, steps and distance
-         will be calculated, when this value is reached.
     </string>
     <string name="saving_category">
         Saving parameters

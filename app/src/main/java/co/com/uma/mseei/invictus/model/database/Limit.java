@@ -51,7 +51,9 @@ public abstract class Limit {
     public abstract float getMaxY();
 
     public void setMaxY(float maxY) {
-        this.maxY = maxY;
+        if(this.maxY<maxY) {
+            this.maxY = maxY;
+        }
     }
 
     /**

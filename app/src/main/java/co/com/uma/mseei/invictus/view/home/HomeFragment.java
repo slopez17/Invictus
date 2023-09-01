@@ -126,7 +126,9 @@ public class HomeFragment
 
     private void initializeCaloriesViews() {
         TextView caloriesTextView = binding.caloriesTextView;
+        TextView caloriesUndText = binding.caloriesUndText;
         homeViewModel.getCalories().observe(getViewLifecycleOwner(), caloriesTextView::setText);
+        homeViewModel.getCaloriesUnd().observe(getViewLifecycleOwner(), caloriesUndText::setText);
         setViewsVisibility(caloriesTextView);
     }
 
@@ -140,7 +142,9 @@ public class HomeFragment
 
     private void initializeSpeedViews() {
         TextView speedTextView = binding.speedTextView;
+        TextView speedUndText = binding.speedUndText;
         homeViewModel.getSpeed().observe(getViewLifecycleOwner(), speedTextView::setText);
+        homeViewModel.getSpeedUnd().observe(getViewLifecycleOwner(), speedUndText::setText);
         setViewsVisibility(speedTextView);
     }
 

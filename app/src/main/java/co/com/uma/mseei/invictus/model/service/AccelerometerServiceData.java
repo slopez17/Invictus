@@ -1,6 +1,7 @@
 package co.com.uma.mseei.invictus.model.service;
 
 import static java.lang.System.currentTimeMillis;
+import static java.time.LocalDateTime.ofInstant;
 import static java.time.ZoneId.systemDefault;
 import static co.com.uma.mseei.invictus.model.SportType.WALK;
 import static co.com.uma.mseei.invictus.util.UnitsAndConversions.YYYY_MM_DD__HH_MM_SS;
@@ -12,7 +13,6 @@ import static co.com.uma.mseei.invictus.util.UnitsAndConversions.timeToString;
 import android.hardware.SensorEvent;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
@@ -73,15 +73,13 @@ public class AccelerometerServiceData {
     }
 
     public String getStartTime(DateTimeFormatter formatter) {
-        Instant instant = Instant.ofEpochSecond(startTime);
-        LocalDateTime startDateTime = instant.atZone(zoneId).toLocalDateTime();
-        return startDateTime.format(formatter);
+        Instant instant = Instant.ofEpochMilli(startTime);
+        return ofInstant(instant, zoneId).format(formatter);
     }
 
     public String getEndTime(DateTimeFormatter formatter) {
-        Instant instant = Instant.ofEpochSecond(endTime);
-        LocalDateTime endDateTime = instant.atZone(zoneId).toLocalDateTime();
-        return endDateTime.format(formatter);
+        Instant instant = Instant.ofEpochMilli(endTime);
+        return ofInstant(instant, zoneId).format(formatter);
     }
 
     public void setTime() {

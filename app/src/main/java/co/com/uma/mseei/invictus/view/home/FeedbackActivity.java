@@ -59,7 +59,7 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
         if(!comments.isEmpty()) {
             Disposable disposable = feedbackViewModel.saveFeedbackOnDatabase(comments)
                     .subscribeOn(io())
-                    .observeOn(io())
+                    .observeOn(mainThread())
                     .subscribe(() -> makeText(this, successfully_saved, LENGTH_SHORT).show(),
                             throwable -> Log.e(getMethodName(), getStringById(this, error_saved), throwable));
             compositeDisposable.add(disposable);

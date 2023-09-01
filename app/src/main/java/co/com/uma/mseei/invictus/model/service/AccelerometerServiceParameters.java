@@ -21,7 +21,6 @@ public class AccelerometerServiceParameters implements Serializable {
     private SportType sportType;
     private boolean isAutofinishOn;
     private int samplesLimit;
-    private int samplesOnMemory;
     private boolean isSaveOnSdOn;
     private String fileName;
     private boolean isDebugOn;
@@ -74,14 +73,6 @@ public class AccelerometerServiceParameters implements Serializable {
 
     public void setSamplesLimit(int samplesLimit) {
         this.samplesLimit = samplesLimit;
-    }
-
-    public int getSamplesOnMemory() {
-        return samplesOnMemory;
-    }
-
-    public void setSamplesOnMemory(int samplesOnMemory) {
-        this.samplesOnMemory = samplesOnMemory;
     }
 
     public boolean isSaveOnSdOn() {

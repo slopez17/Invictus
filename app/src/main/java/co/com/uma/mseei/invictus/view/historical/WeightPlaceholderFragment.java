@@ -6,12 +6,17 @@ import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static co.com.uma.mseei.invictus.R.color.yellow;
 import static co.com.uma.mseei.invictus.R.id.nextPeriodButton;
 import static co.com.uma.mseei.invictus.R.id.previousPeriodButton;
+import static co.com.uma.mseei.invictus.R.string.error_read;
+import static co.com.uma.mseei.invictus.util.Debug.getMethodName;
+import static co.com.uma.mseei.invictus.util.Resource.getStringById;
+import static co.com.uma.mseei.invictus.viewmodel.historical.HistoricalViewModel.ALL;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,7 +47,6 @@ import lecho.lib.hellocharts.view.LineChartView;
  */
 public class WeightPlaceholderFragment extends Fragment implements OnClickListener {
     private static final String SECTION_NUMBER = "section_number";
-    private static final int ALL = 3;
     private int index;
     private Activity activity;
     private HistoricalViewModel weightPageViewModel;
@@ -103,7 +107,8 @@ public class WeightPlaceholderFragment extends Fragment implements OnClickListen
                         weightList -> {
                             setActualPeriod(weightList);
                             initializeWeightViews(weightList);
-                        }
+                        },
+                        throwable -> Log.e(getMethodName(), getStringById(activity, error_read), throwable)
                 );
     }
 
@@ -113,7 +118,8 @@ public class WeightPlaceholderFragment extends Fragment implements OnClickListen
                 .subscribeOn(io())
                 .observeOn(mainThread())
                 .subscribe(
-                        this::initializeWeightViews
+                        this::initializeWeightViews,
+                        throwable -> Log.e(getMethodName(), getStringById(activity, error_read), throwable)
                 );
     }
 
@@ -152,11 +158,13 @@ public class WeightPlaceholderFragment extends Fragment implements OnClickListen
                             weightLimits -> {
                                 weightLimits.setUnitSystem(activity);
                                 LineChart chartWeight = new WeightLineChart(activity, weightLineChartView);
+                                chartWeight.setIndex(index);
                                 chartWeight.setColor(yellow);
                                 chartWeight.setDataList(new ArrayList<>(weightList));
                                 chartWeight.setLimits(weightLimits);
                                 chartWeight.setChart();
-                            }
+                            },
+                            throwable -> Log.e(getMethodName(), getStringById(activity, error_read), throwable)
                     );
 
             compositeDisposable.add(disposable);

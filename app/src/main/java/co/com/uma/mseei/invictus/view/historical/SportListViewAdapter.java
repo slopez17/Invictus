@@ -18,21 +18,20 @@ import java.util.List;
 import co.com.uma.mseei.invictus.R;
 import co.com.uma.mseei.invictus.model.SportType;
 import co.com.uma.mseei.invictus.model.database.Sport;
-import co.com.uma.mseei.invictus.model.database.Weight;
 
-public class SportListViewAdapter extends ArrayAdapter<Weight> {
+public class SportListViewAdapter extends ArrayAdapter<Sport> {
 
     private final List<Sport> sportList;
 
     public SportListViewAdapter(Activity activity, List<Sport> sportList) {
-        super(activity.getApplicationContext(), R.layout.item_list_sport);
+        super(activity.getApplicationContext(), R.layout.item_list_sport, sportList);
         this.sportList = sportList;
     }
 
     @NonNull
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_weight, parent, false);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_sport, parent, false);
         }
 
         TextView idTextView = convertView.findViewById(R.id.idTextView);

@@ -1,5 +1,8 @@
 package co.com.uma.mseei.invictus.model.database;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -15,7 +18,7 @@ import androidx.room.PrimaryKey;
         indices = {
             @Index(value = "sport_id", unique = true)
         })
-public class Sport {
+public class Sport implements Parcelable {
 
     @PrimaryKey
     @ColumnInfo (name = "sport_id")
@@ -61,6 +64,30 @@ public class Sport {
         this.calories = calories;
     }
 
+    protected Sport(Parcel in) {
+        sportId = in.readInt();
+        sportType = in.readString();
+        startDateTime = in.readString();
+        endDateTime = in.readString();
+        elapsedTime = in.readString();
+        falls = in.readInt();
+        steps = in.readInt();
+        distance = in.readFloat();
+        calories = in.readFloat();
+    }
+
+    public static final Creator<Sport> CREATOR = new Creator<Sport>() {
+        @Override
+        public Sport createFromParcel(Parcel in) {
+            return new Sport(in);
+        }
+
+        @Override
+        public Sport[] newArray(int size) {
+            return new Sport[size];
+        }
+    };
+
     public int getSportId() {
         return sportId;
     }
@@ -101,4 +128,21 @@ public class Sport {
         return calories;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeInt(sportId);
+        parcel.writeString(sportType);
+        parcel.writeString(startDateTime);
+        parcel.writeString(endDateTime);
+        parcel.writeString(elapsedTime);
+        parcel.writeInt(falls);
+        parcel.writeInt(steps);
+        parcel.writeFloat(distance);
+        parcel.writeFloat(calories);
+    }
 }

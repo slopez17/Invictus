@@ -6,12 +6,19 @@ import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static co.com.uma.mseei.invictus.R.color.green;
 import static co.com.uma.mseei.invictus.R.id.nextPeriodButton;
 import static co.com.uma.mseei.invictus.R.id.previousPeriodButton;
+import static co.com.uma.mseei.invictus.R.string.error_read;
+import static co.com.uma.mseei.invictus.util.Debug.getMethodName;
+import static co.com.uma.mseei.invictus.util.Resource.getStringById;
+import static co.com.uma.mseei.invictus.viewmodel.historical.HistoricalViewModel.ALL;
+import static co.com.uma.mseei.invictus.viewmodel.historical.HistoricalViewModel.SPORT;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,7 +52,7 @@ public class SportPlaceholderFragment extends Fragment implements OnClickListene
 
     private static final String SECTION_NUMBER = "section_number";
     private static final String SPORT_TYPE = "sport_type";
-    private static final int ALL = 3;
+
     private int index;
     private SportType sportType;
     private Activity activity;
@@ -115,8 +122,9 @@ public class SportPlaceholderFragment extends Fragment implements OnClickListene
                 .subscribe(
                         sportList -> {
                             setActualPeriod(sportList);
-                            initializeWeightViews(sportList);
-                        }
+                            initializeSportViews(sportList);
+                        },
+                        throwable -> Log.e(getMethodName(), getStringById(activity, error_read), throwable)
                 );
     }
 
@@ -126,19 +134,20 @@ public class SportPlaceholderFragment extends Fragment implements OnClickListene
                 .subscribeOn(io())
                 .observeOn(mainThread())
                 .subscribe(
-                        this::initializeWeightViews
+                        this::initializeSportViews,
+                        throwable -> Log.e(getMethodName(), getStringById(activity, error_read), throwable)
                 );
     }
 
     private void setActualPeriod(List<Sport> sportList) {
         if (!sportList.isEmpty()) {
-            String dateFrom = sportList.get(sportList.size() - 1).getStartDateTime().substring(1,11);
-            String dateTo = sportList.get(0).getStartDateTime().substring(1,11);
+            String dateFrom = sportList.get(sportList.size() - 1).getStartDateTime().substring(0,10);
+            String dateTo = sportList.get(0).getStartDateTime().substring(0,10);
             sportPageViewModel.setActualPeriod(dateFrom, dateTo);
         }
     }
 
-    private void initializeWeightViews(List<Sport> sportList) {
+    private void initializeSportViews(List<Sport> sportList) {
         initializeSportListView(sportList);
         initializeSportLineChartView(sportList);
         initializeNoRecordSportTextView(sportList);
@@ -149,6 +158,13 @@ public class SportPlaceholderFragment extends Fragment implements OnClickListene
         ListView sportListView = binding.sportListView;
         SportListViewAdapter adapter = new SportListViewAdapter(activity, sportList);
         sportListView.setAdapter(adapter);
+        sportListView.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(activity, SpecificSportActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(SPORT, sportList.get(position));
+            intent.putExtras(bundle);
+            startActivity(intent);
+        });
     }
 
     private void initializeSportLineChartView(List<Sport> sportList) {
@@ -164,11 +180,13 @@ public class SportPlaceholderFragment extends Fragment implements OnClickListene
                     .subscribe(
                             sportLimits -> {
                                 LineChart chartSport = new SportLineChart(activity, sportLineChartView);
+                                chartSport.setIndex(index);
                                 chartSport.setColor(green);
                                 chartSport.setDataList(new ArrayList<>(sportList));
                                 chartSport.setLimits(sportLimits);
                                 chartSport.setChart();
-                            }
+                            },
+                            throwable -> Log.e(getMethodName(), getStringById(activity, error_read), throwable)
                     );
 
             compositeDisposable.add(disposable);

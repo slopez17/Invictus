@@ -1,5 +1,7 @@
 package co.com.uma.mseei.invictus.model.chart;
 
+import static java.lang.Float.parseFloat;
+
 import android.app.Activity;
 
 import java.util.ArrayList;
@@ -22,14 +24,29 @@ public class SportLineChart extends LineChart {
 
     protected List<PointValue> getPointValues() {
         List<PointValue> pointValues = new ArrayList<>();
+        float xPreviousValue = -1;
+        float yTotalValue = 0;
         float xValue;
         float yValue;
+
         for (Object data : dataList) {
             Sport sport = (Sport) data;
-            xValue = limits.getPeriodInDaysFromStartTo(sport.getStartDateTime().substring(1,11));
+            xValue = index == 0 ? parseFloat(sport.getStartDateTime().substring(11, 13)) :
+                    limits.getPeriodInDaysFromStartTo(sport.getStartDateTime().substring(0, 10));
             yValue = sport.getCalories();
-            pointValues.add(new PointValue(xValue, yValue));
+            if (xPreviousValue == xValue) {
+                yTotalValue = yTotalValue + yValue;
+                limits.setMaxY(yTotalValue);
+            } else if (xPreviousValue < 0) {
+                xPreviousValue = xValue;
+                yTotalValue = yValue;
+            } else {
+                pointValues.add(new PointValue(xPreviousValue, yTotalValue));
+                xPreviousValue = xValue;
+                yTotalValue = yValue;
+            }
         }
+        pointValues.add(new PointValue(xPreviousValue, yTotalValue));
 
         return pointValues;
     }

@@ -5,6 +5,7 @@ import static android.graphics.Color.parseColor;
 import static java.time.LocalDate.parse;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static co.com.uma.mseei.invictus.util.Resource.getColorById;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.TWO_DIGITS_HOUR;
 import static lecho.lib.hellocharts.gesture.ContainerScrollType.HORIZONTAL;
 import static lecho.lib.hellocharts.model.ValueShape.CIRCLE;
 
@@ -16,8 +17,6 @@ import java.util.List;
 
 import co.com.uma.mseei.invictus.model.AppPreferences;
 import co.com.uma.mseei.invictus.model.database.Limit;
-import co.com.uma.mseei.invictus.model.database.Sport;
-import co.com.uma.mseei.invictus.model.database.Weight;
 import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter;
 import lecho.lib.hellocharts.formatter.SimpleLineChartValueFormatter;
 import lecho.lib.hellocharts.gesture.ZoomType;
@@ -43,11 +42,16 @@ public abstract class LineChart  {
     protected List<Object> dataList;
     protected Limit limits;
     private int color;
+    protected int index;
 
     public LineChart(Activity activity, LineChartView lineChartView) {
         this.activity = activity;
         this.lineChartView = lineChartView;
         this.isUnitSystemImperial = new AppPreferences(activity.getApplication()).isUnitSystemImperial();
+    }
+
+    public void setIndex(int index) {
+        this.index=index;
     }
 
     /**
@@ -106,7 +110,7 @@ public abstract class LineChart  {
         line.setColor(color);
         line.setShape(CIRCLE);
         line.setHasLabelsOnlyForSelected(true);
-        line.setFormatter(new SimpleLineChartValueFormatter(1));
+        line.setFormatter(new SimpleLineChartValueFormatter(2));
 
         List<Line> lines = new ArrayList<>();
         lines.add(line);
@@ -142,11 +146,19 @@ public abstract class LineChart  {
      */
     private List<AxisValue> getAxisXValuesFrom() {
         List<AxisValue> axisXValues = new ArrayList<>();
-        long period = limits.getPeriodInDaysFromStartToEnd();
-        LocalDate date = parse(limits.getMinX(), ISO_LOCAL_DATE);
-        for (int i = 0; i <= period; i++) {
-            axisXValues.add(new AxisValue(i).setLabel(date.toString()));
-            date = date.plusDays(1);
+        long period;
+        if(index == 0) {
+            period = 24;
+            for (int i = 0; i <= period; i++) {
+                axisXValues.add(new AxisValue(i).setLabel(TWO_DIGITS_HOUR.format(i)));
+            }
+        } else {
+            period = limits.getPeriodInDaysFromStartToEnd();
+            LocalDate date = parse(limits.getMinX(), ISO_LOCAL_DATE);
+            for (int i = 0; i <= period; i++) {
+                axisXValues.add(new AxisValue(i).setLabel(date.toString()));
+                date = date.plusDays(1);
+            }
         }
         return axisXValues;
     }
@@ -179,7 +191,7 @@ public abstract class LineChart  {
         float left = 0f;
         float maxY = limits.getMaxY();
         float top =  maxY * 1.1f;
-        float right = limits.getPeriodInDaysFromStartToEnd() + 1f;
+        float right = index == 0 ? 24f : limits.getPeriodInDaysFromStartToEnd() + 1f;
         float minY =  limits.getMinY();
         float bottom =  minY * 0.9f;
         Viewport viewport = new Viewport(left, top, right, bottom);
@@ -187,6 +199,5 @@ public abstract class LineChart  {
         lineChartView.setMaximumViewport(viewport);
         lineChartView.setCurrentViewport(viewport);
     }
-
 
 }

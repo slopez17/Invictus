@@ -32,7 +32,6 @@ public class AppPreferences {
     private static final boolean DEF_APP_PERMISSIONS= false;
     private static final String PREF_SETTINGS_AUTO_FINISH = "autoFinish"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
     private static final String PREF_SETTINGS_SAMPLES_LIMIT = "samplesLimit"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
-    private static final String PREF_SETTINGS_SAMPLES_ON_MEMORY = "samplesOnMemory"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
     private static final String PREF_SETTINGS_SAVE_ON_SD = "saveOnSD"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
     private static final String PREF_SETTINGS_FILE_NAME = "fileName"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
     private static final String PREF_SETTINGS_MULTIPLE_FILES = "multipleFiles"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
@@ -43,7 +42,6 @@ public class AppPreferences {
     private static final String PREF_SETTINGS_DEBUG = "debug"; //If you need to modify this, you must change corresponding key/default value on fragment_settings
     private static final boolean DEF_SETTINGS_AUTO_FINISH = false;
     private static final String DEF_SETTINGS_SAMPLES_LIMIT = "2000";
-    private static final String DEF_SETTINGS_SAMPLES_ON_MEMORY = "200";
     private static final boolean DEF_SETTINGS_SAVE_ON_SD = false;
     private static final String DEF_SETTINGS_FILE_NAME = "Invictus";
     private static final boolean DEF_SETTINGS_MULTIPLE_FILES = false;
@@ -128,11 +126,6 @@ public class AppPreferences {
     public int getSamplesLimit() {
         String samplesLimit = preferences.getString(PREF_SETTINGS_SAMPLES_LIMIT, DEF_SETTINGS_SAMPLES_LIMIT);
         return parseInt(samplesLimit);
-    }
-
-    public int getSamplesOnMemory() {
-        String samplesOnMemory = preferences.getString(PREF_SETTINGS_SAMPLES_ON_MEMORY, DEF_SETTINGS_SAMPLES_ON_MEMORY);
-        return parseInt(samplesOnMemory);
     }
 
     public boolean isSaveOnSdOn() {

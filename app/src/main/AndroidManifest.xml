@@ -52,9 +52,12 @@
 
         <activity
             android:name=".view.historical.HistoricalActivity"
-            android:exported="false"
             android:label="@string/title_historical"
             android:theme="@style/Theme.Invictus.NoActionBar" />
+
+        <activity
+            android:name=".view.historical.SpecificSportActivity"
+            android:label="@string/title_historical" />
 
     </application>
 

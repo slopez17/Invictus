@@ -35,9 +35,11 @@ import io.reactivex.Single;
 
 public class HistoricalViewModel extends AndroidViewModel {
 
+    public static final int DAY = 0;
     public static final int WEEK = 1;
     public static final int MONTH = 2;
-
+    public static final int ALL = 3;
+    public static final String SPORT = "sport";
     private final AppPreferences appPreferences;
     private final WeightRepository weightRepository;
     private final SportRepository sportRepository;

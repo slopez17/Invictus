@@ -14,6 +14,8 @@ import static co.com.uma.mseei.invictus.R.string.start_traking;
 import static co.com.uma.mseei.invictus.model.SportType.values;
 import static co.com.uma.mseei.invictus.util.Constants.CLOSE_PARENTHESIS;
 import static co.com.uma.mseei.invictus.util.Constants.OPEN_PARENTHESIS;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.KCAL_UND;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.KM_H_UND;
 import static co.com.uma.mseei.invictus.util.UnitsAndConversions.KM_UND;
 import static co.com.uma.mseei.invictus.util.UnitsAndConversions.s2ms;
 import static co.com.uma.mseei.invictus.view.home.SportSelectionActivity.SELECTED_SPORT;
@@ -49,9 +51,11 @@ public class HomeViewModel extends AndroidViewModel {
     private final MutableLiveData<String> falls;
     private final MutableLiveData<String> steps;
     private final MutableLiveData<String> calories;
+    private final MutableLiveData<String> caloriesUnd;
     private final MutableLiveData<String> distance;
     private final MutableLiveData<String> distanceUnd;
     private final MutableLiveData<String> speed;
+    private final MutableLiveData<String> speedUnd;
     private final MutableLiveData<String> elapsedTime;
     private IBinder binder;
     private Timer timer;
@@ -63,7 +67,11 @@ public class HomeViewModel extends AndroidViewModel {
         falls = new MutableLiveData<>();
         steps = new MutableLiveData<>();
         calories = new MutableLiveData<>();
+        caloriesUnd = new MutableLiveData<>();
+        caloriesUnd.setValue(format(" %s%s%s", OPEN_PARENTHESIS, KCAL_UND, CLOSE_PARENTHESIS));
         speed = new MutableLiveData<>();
+        speedUnd = new MutableLiveData<>();
+        speedUnd.setValue(format(" %s%s%s", OPEN_PARENTHESIS, KM_H_UND, CLOSE_PARENTHESIS));
         elapsedTime = new MutableLiveData<>();
         distance = new MutableLiveData<>();
         distanceUnd = new MutableLiveData<>();
@@ -92,6 +100,9 @@ public class HomeViewModel extends AndroidViewModel {
     public LiveData<String> getCalories() {
         return calories;
     }
+    public LiveData<String> getCaloriesUnd() {
+        return caloriesUnd;
+    }
 
     public LiveData<String> getDistance() {
         return distance;
@@ -103,6 +114,10 @@ public class HomeViewModel extends AndroidViewModel {
 
     public LiveData<String> getSpeed() {
         return speed;
+    }
+
+    public LiveData<String> getSpeedUnd() {
+        return speedUnd;
     }
 
     public LiveData<String> getElapsedTime() {
@@ -162,7 +177,6 @@ public class HomeViewModel extends AndroidViewModel {
             parameters.setSportType(sportType);
             parameters.setAutofinish(appPreferences.isAutoFinishOn());
             parameters.setSamplesLimit(appPreferences.getSamplesLimit());
-            parameters.setSamplesOnMemory(appPreferences.getSamplesOnMemory());
             parameters.setSaveOnSd(appPreferences.isSaveOnSdOn());
             parameters.setFileName(appPreferences.getFileName(), appPreferences.isMultipleFilesOn());
             parameters.setDebug(appPreferences.isDebugOn());
