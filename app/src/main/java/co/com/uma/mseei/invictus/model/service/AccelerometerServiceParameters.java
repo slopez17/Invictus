@@ -1,24 +1,31 @@
 package co.com.uma.mseei.invictus.model.service;
 
+import static co.com.uma.mseei.invictus.util.Constants.EXT_TXT;
+import static co.com.uma.mseei.invictus.util.Constants.UNDERSCORE;
+
 import java.io.Serializable;
 
 import co.com.uma.mseei.invictus.model.SportType;
 
+/**
+ * AccelerometerServiceParameters is a model class which represents business logic to deliver
+ * configuration parameters used in ListenAccelerometerService.
+ * @author Sandra Marcela López Torres
+ * @version 0.1, 2023/07/02
+ */
 public class AccelerometerServiceParameters implements Serializable {
 
-    public static final String EXT_TXT = ".txt";
-    public static final String SYMBOL_UNDERSCORE = "_";
-
-    int gender;
-    float weight;
-    int sportId;
-    SportType sportType;
-    boolean isAutofinishOn;
-    int samplesLimit;
-    int samplesOnMemory;
-    boolean isSaveOnSdOn;
-    String fileName;
-    boolean isDebugOn;
+    private int gender;
+    private float weight;
+    private int sportId;
+    private SportType sportType;
+    private boolean isAutofinishOn;
+    private int samplesLimit;
+    private boolean isSaveOnSdOn;
+    private String fileName;
+    private boolean isDebugOn;
+    private long speedPeriod;
+    private long sportPeriod;
 
     public int getGender() {
         return gender;
@@ -68,14 +75,6 @@ public class AccelerometerServiceParameters implements Serializable {
         this.samplesLimit = samplesLimit;
     }
 
-    public int getSamplesOnMemory() {
-        return samplesOnMemory;
-    }
-
-    public void setSamplesOnMemory(int samplesOnMemory) {
-        this.samplesOnMemory = samplesOnMemory;
-    }
-
     public boolean isSaveOnSdOn() {
         return isSaveOnSdOn;
     }
@@ -89,7 +88,7 @@ public class AccelerometerServiceParameters implements Serializable {
     }
 
     public void setFileName(String fileName, boolean isMultipleFilesOn) {
-        this.fileName = isMultipleFilesOn ? fileName + SYMBOL_UNDERSCORE + sportId + EXT_TXT
+        this.fileName = isMultipleFilesOn ? fileName + UNDERSCORE + sportId + EXT_TXT
                 : fileName + EXT_TXT;
     }
 
@@ -99,5 +98,21 @@ public class AccelerometerServiceParameters implements Serializable {
 
     public void setDebug(boolean debugState) {
         isDebugOn = debugState;
+    }
+
+    public long getSpeedPeriod() {
+        return speedPeriod;
+    }
+
+    public void setSpeedPeriod(long speedPeriod) {
+        this.speedPeriod = speedPeriod;
+    }
+
+    public long getSportPeriod() {
+        return sportPeriod;
+    }
+
+    public void setSportPeriod(long sportPeriod) {
+        this.sportPeriod = sportPeriod;
     }
 }

@@ -9,13 +9,11 @@ import static co.com.uma.mseei.invictus.R.id.saveButton;
 import static co.com.uma.mseei.invictus.R.id.weightEditText;
 import static co.com.uma.mseei.invictus.R.layout.item_spinner;
 import static co.com.uma.mseei.invictus.R.string.error_saved;
-import static co.com.uma.mseei.invictus.util.DebugOperations.getMethodName;
-import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringById;
+import static co.com.uma.mseei.invictus.util.Debug.getMethodName;
+import static co.com.uma.mseei.invictus.util.Resource.getStringById;
 import static co.com.uma.mseei.invictus.util.ViewOperations.changeEditor;
-import static co.com.uma.mseei.invictus.util.ViewOperations.getFloatFrom;
-import static co.com.uma.mseei.invictus.util.ViewOperations.setHintTextView;
-import static co.com.uma.mseei.invictus.util.ViewOperations.setTextView;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
+import static io.reactivex.schedulers.Schedulers.io;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -48,6 +46,7 @@ import java.time.LocalDate;
 import co.com.uma.mseei.invictus.databinding.FragmentProfileBinding;
 import co.com.uma.mseei.invictus.viewmodel.profile.ProfileViewModel;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class ProfileFragment
@@ -58,11 +57,9 @@ public class ProfileFragment
     private Activity activity;
     private FragmentProfileBinding binding;
     private ProfileViewModel profileViewModel;
-
-    LocalDate birthdate;
-    TextView birthdateTextView;
-    TextView weightTextView;
-    TextView heightTextView;
+    private LocalDate birthdate;
+    private TextView birthdateTextView;
+    private CompositeDisposable compositeDisposable;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -70,6 +67,8 @@ public class ProfileFragment
 
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        compositeDisposable = new CompositeDisposable();
 
         activity = requireActivity();
         initializeGenderSpinner();
@@ -91,6 +90,7 @@ public class ProfileFragment
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        compositeDisposable.dispose();
     }
 
     @Override
@@ -127,8 +127,7 @@ public class ProfileFragment
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        profileViewModel.setBirthdate(year, month+1, dayOfMonth);
-        profileViewModel.setAge();
+        profileViewModel.setBirthdate(LocalDate.of(year, month+1, dayOfMonth));
         changeEditor(IME_ACTION_NEXT, birthdateTextView);
     }
 
@@ -142,22 +141,20 @@ public class ProfileFragment
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (!hasFocus) {
-            float value = getFloatFrom((TextView) v);
+            String value = ((TextView) v).getText().toString();
             int id = v.getId();
             changeUserBodyData(id, value);
         }
     }
 
     @SuppressLint("NonConstantResourceId")
-    private void changeUserBodyData(int id, float value) {
+    private void changeUserBodyData(int id, String value) {
         switch (id) {
             case weightEditText:
-                profileViewModel.setWeight(value);
-                profileViewModel.setBmiValues();
+                profileViewModel.updateWeight(value);
                 break;
             case heightEditText:
-                profileViewModel.setHeight(value);
-                profileViewModel.setBmiValues();
+                profileViewModel.updateHeight(value);
                 break;
         }
     }
@@ -165,9 +162,8 @@ public class ProfileFragment
     private void initializeGenderSpinner() {
         Spinner genderSpinner = binding.genderSpinner;
         String[] genderOptions = profileViewModel.getGenderOptions();
-        ArrayAdapter<String> arrayAdapter =
-                new ArrayAdapter<>(activity, item_spinner, genderOptions);
-        genderSpinner.setAdapter(arrayAdapter);
+        ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(activity, item_spinner, genderOptions);
+        genderSpinner.setAdapter(genderAdapter);
         genderSpinner.setOnItemSelectedListener(this);
         profileViewModel.getGender().observe(getViewLifecycleOwner(), genderSpinner::setSelection);
     }
@@ -185,23 +181,22 @@ public class ProfileFragment
         int year =  birthdate.getYear();
         int month = birthdate.getMonthValue()-1;
         int day = birthdate.getDayOfMonth();
-        DatePickerDialog datePickerDialog =
-                new DatePickerDialog(activity, this, year, month, day);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(activity, this, year, month, day);
         datePickerDialog.show();
         datePickerDialog.getDatePicker().setMaxDate(currentTimeMillis());
     }
 
     private void initializeAgeTextView() {
         TextView ageTextView = binding.ageTextView;
-        profileViewModel.getAge().observe(getViewLifecycleOwner(), x -> setTextView(ageTextView, x));
+        profileViewModel.getAge().observe(getViewLifecycleOwner(), ageTextView::setText);
     }
 
     private void initializeWeightEditText(){
-        weightTextView = binding.weightEditText;
+        TextView weightTextView = binding.weightEditText;
         weightTextView.setOnEditorActionListener(this);
         weightTextView.setOnFocusChangeListener(this);
-        profileViewModel.getWeightHint().observe(getViewLifecycleOwner(), x -> setHintTextView(weightTextView, x));
-        profileViewModel.getWeight().observe(getViewLifecycleOwner(), x -> setTextView(weightTextView, x));
+        profileViewModel.getWeightHint().observe(getViewLifecycleOwner(), weightTextView::setHint);
+        profileViewModel.getWeight().observe(getViewLifecycleOwner(), weightTextView::setText);
     }
 
     private void initializeWeightUndTextView(){
@@ -210,11 +205,11 @@ public class ProfileFragment
     }
 
     private void initializeHeightEditText(){
-        heightTextView = binding.heightEditText;
+        TextView heightTextView = binding.heightEditText;
         heightTextView.setOnEditorActionListener(this);
         heightTextView.setOnFocusChangeListener(this);
-        profileViewModel.getHeightHint().observe(getViewLifecycleOwner(), x -> setHintTextView(heightTextView, x));
-        profileViewModel.getHeight().observe(getViewLifecycleOwner(), x -> setTextView(heightTextView, x));
+        profileViewModel.getHeightHint().observe(getViewLifecycleOwner(), heightTextView::setHint);
+        profileViewModel.getHeight().observe(getViewLifecycleOwner(), heightTextView::setText);
     }
 
     private void initializeHeightUndTextView(){
@@ -224,7 +219,7 @@ public class ProfileFragment
 
     private  void  initializeBmiTextView(){
         TextView bmiTextView = binding.bmiTextView;
-        profileViewModel.getBmi().observe(getViewLifecycleOwner(), x -> setTextView(bmiTextView, x));
+        profileViewModel.getBmi().observe(getViewLifecycleOwner(), bmiTextView::setText);
     }
 
     private  void  initializeBmiClassificationTextView(){
@@ -244,12 +239,11 @@ public class ProfileFragment
 
     private void saveProfileData() {
         profileViewModel.saveProfilePreferences();
-
-        CompositeDisposable disposable = new CompositeDisposable();
-        disposable.add(profileViewModel.saveWeightOnDatabase()
-                .subscribeOn(Schedulers.io())
+        Disposable disposable = profileViewModel.saveWeightOnDatabase()
+                .subscribeOn(io())
                 .observeOn(mainThread())
                 .subscribe(() -> profileViewModel.showSavedFeedback(),
-                        throwable -> Log.e(getMethodName(), getStringById(activity, error_saved), throwable)));
+                        throwable -> Log.e(getMethodName(), getStringById(activity, error_saved), throwable));
+        compositeDisposable.add(disposable);
     }
 }

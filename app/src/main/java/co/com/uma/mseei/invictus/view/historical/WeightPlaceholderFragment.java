@@ -6,16 +6,20 @@ import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static co.com.uma.mseei.invictus.R.color.yellow;
 import static co.com.uma.mseei.invictus.R.id.nextPeriodButton;
 import static co.com.uma.mseei.invictus.R.id.previousPeriodButton;
-import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.ALL;
-import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.SECTION_NUMBER;
+import static co.com.uma.mseei.invictus.R.string.error_read;
+import static co.com.uma.mseei.invictus.util.Debug.getMethodName;
+import static co.com.uma.mseei.invictus.util.Resource.getStringById;
+import static co.com.uma.mseei.invictus.viewmodel.historical.HistoricalViewModel.ALL;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -26,10 +30,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.com.uma.mseei.invictus.databinding.FragmentHistoricalWeightOptionBinding;
-import co.com.uma.mseei.invictus.model.LineChart;
+import co.com.uma.mseei.invictus.model.chart.LineChart;
+import co.com.uma.mseei.invictus.model.chart.WeightLineChart;
 import co.com.uma.mseei.invictus.model.database.Weight;
 import co.com.uma.mseei.invictus.viewmodel.historical.HistoricalViewModel;
 import io.reactivex.disposables.CompositeDisposable;
@@ -39,8 +45,8 @@ import lecho.lib.hellocharts.view.LineChartView;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class WeightPlaceholderFragment extends Fragment implements View.OnClickListener {
-
+public class WeightPlaceholderFragment extends Fragment implements OnClickListener {
+    private static final String SECTION_NUMBER = "section_number";
     private int index;
     private Activity activity;
     private HistoricalViewModel weightPageViewModel;
@@ -85,7 +91,7 @@ public class WeightPlaceholderFragment extends Fragment implements View.OnClickL
             compositeDisposable.add(getAllWeigths());
         } else {
             weightPageViewModel.getTime().observe(getViewLifecycleOwner(), time -> {
-                String[] period = time.periodToStringArray(ISO_LOCAL_DATE);
+                String[] period = time.toStringArray(ISO_LOCAL_DATE);
                 compositeDisposable.add(findWeightsByPeriod(period));
             });
         }
@@ -101,7 +107,8 @@ public class WeightPlaceholderFragment extends Fragment implements View.OnClickL
                         weightList -> {
                             setActualPeriod(weightList);
                             initializeWeightViews(weightList);
-                        }
+                        },
+                        throwable -> Log.e(getMethodName(), getStringById(activity, error_read), throwable)
                 );
     }
 
@@ -111,7 +118,8 @@ public class WeightPlaceholderFragment extends Fragment implements View.OnClickL
                 .subscribeOn(io())
                 .observeOn(mainThread())
                 .subscribe(
-                        this::initializeWeightViews
+                        this::initializeWeightViews,
+                        throwable -> Log.e(getMethodName(), getStringById(activity, error_read), throwable)
                 );
     }
 
@@ -148,12 +156,15 @@ public class WeightPlaceholderFragment extends Fragment implements View.OnClickL
                     .observeOn(mainThread())
                     .subscribe(
                             weightLimits -> {
-                                LineChart chartWeight = new LineChart(activity, weightLineChartView);
+                                weightLimits.setUnitSystem(activity);
+                                LineChart chartWeight = new WeightLineChart(activity, weightLineChartView);
+                                chartWeight.setIndex(index);
                                 chartWeight.setColor(yellow);
-                                chartWeight.setDataList(weightList);
+                                chartWeight.setDataList(new ArrayList<>(weightList));
                                 chartWeight.setLimits(weightLimits);
                                 chartWeight.setChart();
-                            }
+                            },
+                            throwable -> Log.e(getMethodName(), getStringById(activity, error_read), throwable)
                     );
 
             compositeDisposable.add(disposable);

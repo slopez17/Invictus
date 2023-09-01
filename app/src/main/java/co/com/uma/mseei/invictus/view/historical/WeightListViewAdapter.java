@@ -1,8 +1,9 @@
 package co.com.uma.mseei.invictus.view.historical;
 
-import static co.com.uma.mseei.invictus.util.GeneralConstants.KG_UND;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.LBS_UND;
-import static co.com.uma.mseei.invictus.util.ViewOperations.setTextView;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.floatToString;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.KG_UND;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.LBS_UND;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.kg2lbs;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ public class WeightListViewAdapter extends ArrayAdapter<Weight> {
     public WeightListViewAdapter(Activity activity, List<Weight> weightList) {
         super(activity.getApplicationContext(), R.layout.item_list_weight, weightList);
         this.weightList = weightList;
-        this.appPreferences = new AppPreferences(activity);
+        this.appPreferences = new AppPreferences(activity.getApplication());
     }
 
     @NonNull
@@ -38,16 +39,21 @@ public class WeightListViewAdapter extends ArrayAdapter<Weight> {
         }
 
         TextView dateTextView = convertView.findViewById(R.id.dateTextView);
-        dateTextView.setText(weightList.get(position).getDate());
-
-        boolean isUnitSystemImperial = appPreferences.isUnitSystemImperial();
-
         TextView weightTextView = convertView.findViewById(R.id.weightTextView);
-        float weight = weightList.get(position).getValue(isUnitSystemImperial);
-        setTextView(weightTextView, weight);
-
         TextView weightUndTextView = convertView.findViewById(R.id.weightUndTextView);
-        weightUndTextView.setText(isUnitSystemImperial ? LBS_UND : KG_UND);
+
+        String date = weightList.get(position).getDate();
+        float weight = weightList.get(position).getWeight();
+        String weightUnd;
+        if(appPreferences.isUnitSystemImperial()) {
+            weight = kg2lbs(weight);
+            weightUnd = LBS_UND;
+        } else {
+            weightUnd = KG_UND;
+        }
+        dateTextView.setText(date);
+        weightTextView.setText(floatToString(weight));
+        weightUndTextView.setText(weightUnd);
 
         return convertView;
     }

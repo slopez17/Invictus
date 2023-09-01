@@ -20,7 +20,7 @@ public class FeedbackRepository {
         return feedbackDao.insertFeedback(feedback);
     }
 
-    public Single<Feedback> getFeedback(int id){
-        return feedbackDao.getFeedback(id);
+    public Single<Feedback> getFeedback(int sportId){
+        return feedbackDao.getFeedback(sportId);
     }
 }

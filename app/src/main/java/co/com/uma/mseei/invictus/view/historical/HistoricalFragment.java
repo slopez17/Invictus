@@ -2,15 +2,20 @@ package co.com.uma.mseei.invictus.view.historical;
 
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
+import static co.com.uma.mseei.invictus.R.id.bikeCardView;
+import static co.com.uma.mseei.invictus.R.id.climbCardView;
+import static co.com.uma.mseei.invictus.R.id.jogCardView;
 import static co.com.uma.mseei.invictus.R.id.ropeSkippingCardView;
+import static co.com.uma.mseei.invictus.R.id.runCardView;
 import static co.com.uma.mseei.invictus.R.id.walkCardView;
-import static co.com.uma.mseei.invictus.R.id.weightCardView;
 import static co.com.uma.mseei.invictus.R.string.no_implemented;
-import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.NO_IMPLEMENTED;
-import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.ROPE_SKIPPING;
-import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.WALK;
-import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.WEIGHT;
-import static co.com.uma.mseei.invictus.model.historical.HistoricalOptions.SELECTED_OPTION;
+import static co.com.uma.mseei.invictus.databinding.FragmentHistoricalBinding.inflate;
+import static co.com.uma.mseei.invictus.model.SportType.BIKE;
+import static co.com.uma.mseei.invictus.model.SportType.CLIMB;
+import static co.com.uma.mseei.invictus.model.SportType.JOG;
+import static co.com.uma.mseei.invictus.model.SportType.ROPE_SKIPPING;
+import static co.com.uma.mseei.invictus.model.SportType.RUN;
+import static co.com.uma.mseei.invictus.model.SportType.WALK;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -26,17 +31,16 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import co.com.uma.mseei.invictus.databinding.FragmentHistoricalBinding;
-import co.com.uma.mseei.invictus.view.historical.HistoricalActivity;
+import co.com.uma.mseei.invictus.model.SportType;
 
 public class HistoricalFragment extends Fragment implements OnClickListener {
 
+    public static final String SELECTED_OPTION = "selectedOption";
     private Activity activity;
-    private FragmentHistoricalBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        binding = FragmentHistoricalBinding.inflate(inflater, container, false);
+        FragmentHistoricalBinding binding = inflate(inflater, container, false);
         View root = binding.getRoot();
 
         activity = requireActivity();
@@ -52,33 +56,32 @@ public class HistoricalFragment extends Fragment implements OnClickListener {
         return root;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        int selectedOption;
-
+        SportType selectedOption = null;
         switch (v.getId()){
-            case weightCardView:
-                selectedOption = WEIGHT;
-                break;
             case walkCardView:
                 selectedOption = WALK;
+                break;
+            case jogCardView:
+                selectedOption = JOG;
                 break;
             case ropeSkippingCardView:
                 selectedOption = ROPE_SKIPPING;
                 break;
-            default:
-                selectedOption = NO_IMPLEMENTED;
+            case climbCardView:
+                selectedOption = CLIMB;
+                break;
+            case runCardView:
+                selectedOption = RUN;
+                break;
+            case bikeCardView:
+                selectedOption = BIKE;
                 break;
         }
 
-        if (selectedOption != NO_IMPLEMENTED){
+        if (selectedOption == null || selectedOption.isImplemented()){
             Intent intent = new Intent(activity, HistoricalActivity.class);
             intent.putExtra(SELECTED_OPTION, selectedOption);
             startActivity(intent);

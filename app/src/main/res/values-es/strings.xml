@@ -29,6 +29,8 @@
     </string>
 
     <!-- Home -->
+    <string name="hi">Hola!</string>
+    <string name="ok">Entendido</string>
     <string name="falls">Caídas</string>
     <string name="steps">Pasos</string>
     <string name="calories">Calorías</string>
@@ -41,6 +43,7 @@
     <string name="confirm_message">Seguro que deseas detener el seguimiento de la actividad?</string>
     <string name="leave_comment">¿En qué piensas? ¿cómo estuvo tu actividad?</string>
     <string name="congrats">Bien hecho!</string>
+    <string name="permission">Permite a Invictus acceder a tu actividad física en los permisos de la aplicación.</string>
 
     <!-- Historical -->
     <string name="select">Escoja una opción</string>
@@ -62,6 +65,17 @@
     <string name="current_weight">Peso actual: </string>
     <string name="attention">Atención</string>
     <string name="no_record">Ups… No encontramos nada. Puedes iniciar el seguimiento en este momento!</string>
+
+    <!-- Historical - Option sport-->
+    <string name="total_sport">Total por periodo: </string>
+    <string name="id">#</string>
+    <string name="sport">Deporte</string>
+    <string name="start">Inicio</string>
+    <string name="end">Fin</string>
+    <string name="max_speed">Velocidad máxima alcanzada</string>
+    <string name="avg_speed">Velocidad promedio</string>
+    <string name="speed_chart">Gráfico de Velocidad (km/h)</string>
+    <string name="comments">Comentarios</string>
 
     <!-- Profile -->
     <string name="basic_category">Tú</string>
@@ -94,6 +108,7 @@
     <string name="update_date">Última actualización</string>
     <string name="successfully_saved">Datos guardados éxitosamente</string>
     <string name="error_saved">No se pudo guardar en la base de datos</string>
+    <string name="error_read">No se pudo obtener de la base de datos</string>
 
     <!-- Service -->
     <string name="notification_title">Invictus está seguiendo tu actividad</string>
@@ -114,18 +129,26 @@
     <string name="limit_of_samples_summary">
         Número máximo de muestras a adquirir. El sistema toma una muestra cada 20ms.
     </string>
-    <string name="samples_on_memory_title">
-        Muestras en memoria
+    <string name="saving_category">
+        Parámetros de almacenamiento
     </string>
-    <string name="samples_on_memory_summary">
-        Número máximo de muestras en la memoria de trabajo. Caídas, pasos, distancia y demás datos,
-        se calcularán y almacenarán cuando se alcance este valor.
+    <string name="speed_title">
+        Periodo de actualización de la velocidad
+    </string>
+    <string name="speed_summary">
+        Tiempo en segundos para actualizar y guardar la velocidad de la actividad en seguimiento.
+    </string>
+    <string name="sport_title">
+        Periodo de actualización del deporte
+    </string>
+    <string name="sport_summary">
+        Tiempo en minutos para actualizar y guardar información deportiva de la actividad en seguimiento.
     </string>
     <string name="save_on_sd_title">
-        Guardar muestras
+        Guardar muestras acelerómetro
     </string>
     <string name="save_on_sd_summary">
-        Guarda las muestras adquiridas por el sensor en un archivo de texto en la carpeta Descargas.
+        Guarda las muestras adquiridas por el sensor acelerómetro en un archivo de texto en la carpeta Descargas.
         Cada muestra contiene aceleración triaxial (X, Y, Z) y fecha.
     </string>
     <string name="fileName_title">
@@ -139,20 +162,23 @@
     </string>
     <string name="multiple_files_summary">
         Crea un archivo nuevo por cada seguimiento. Al final del nombre del archivo se agrega un
-        consecutivo. Ejemplo: sporting1, sporting2,…,sporting100.
+        consecutivo. Ejemplo: Invictus1, Invictus2,…,Invictus100.
     </string>
 
     <string name="visualization_category">
         Parámetros de visualización
     </string>
     <string name="refresh_title">
-        Periodo de actualización
+        Periodo de actualización de pantalla
     </string>
     <string name="refresh_summary">
         Tiempo en segundos para renovar la información en pantalla.
     </string>
     <string name="unit_system_title">
         Unidades
+    </string>
+    <string name="unit_system_summary">
+        Sistema de unidades de medida
     </string>
     <string-array name="unit_system_entries">
         <item>Sistema Internacional</item>

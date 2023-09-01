@@ -6,7 +6,7 @@ import android.app.Application;
 
 import java.util.List;
 
-import co.com.uma.mseei.invictus.model.database.Limits;
+import co.com.uma.mseei.invictus.model.database.WeightLimit;
 import co.com.uma.mseei.invictus.model.database.Weight;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
@@ -30,7 +30,7 @@ public class WeightRepository {
         return weightDao.findWeightsByPeriod(dateFrom, dateTo);
     }
 
-    public Single<Limits> getWeightLimits(String dateFrom, String dateTo){
+    public Single<WeightLimit> getWeightLimits(String dateFrom, String dateTo){
         return weightDao.getWeightLimits(dateFrom, dateTo);
     }
 

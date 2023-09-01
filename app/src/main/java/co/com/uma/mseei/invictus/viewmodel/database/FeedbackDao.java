@@ -11,8 +11,9 @@ import io.reactivex.Single;
 
 @Dao
 public interface FeedbackDao {
-    @Query("SELECT * FROM feedbacks WHERE id=:id")
-    Single<Feedback> getFeedback(int id);
+
+    @Query("SELECT * FROM feedbacks WHERE sport_id=:sportId")
+    Single<Feedback> getFeedback(int sportId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insertFeedback(Feedback feedback);

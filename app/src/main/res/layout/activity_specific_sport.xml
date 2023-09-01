@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.historical.SpecificSportActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lightPurple"
+        android:gravity="center"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_general_margin"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/idText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/id"
+            android:textSize="@dimen/activity_text_level1_size" />
+
+        <TextView
+            android:id="@+id/idTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/activity_text_level1_size"  />
+
+        <TextView
+            android:id="@+id/sportTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="textEnd"
+            android:textSize="@dimen/activity_text_level1_size"  />
+
+        <ImageView
+            android:id="@+id/sportImageView"
+            android:layout_width="@dimen/activity_icon_level1_size"
+            android:layout_height="@dimen/activity_icon_level1_size"
+            app:tint="@android:color/tertiary_text_light"
+            android:contentDescription="@string/sport" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/startTimeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|start"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingStart"
+                    android:text="@string/start"
+                    android:textSize="@dimen/activity_text_level1_size" />
+
+                <TextView
+                    android:id="@+id/startTimeTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingEnd"
+                    android:textSize="@dimen/activity_text_level1_size" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/endTimeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|start"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingStart"
+                    android:text="@string/end"
+                    android:textSize="@dimen/activity_text_level1_size" />
+
+                <TextView
+                    android:id="@+id/endTimeTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingEnd"
+                    android:textSize="@dimen/activity_text_level1_size" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/elapsedTimeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|start"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingStart"
+                    android:text="@string/elapsed_time"
+                    android:textSize="@dimen/activity_text_level1_size" />
+
+                <TextView
+                    android:id="@+id/elapsedTimeTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingEnd"
+                    android:textSize="@dimen/activity_text_level1_size" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/fallsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|start"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingStart"
+                    android:text="@string/falls"
+                    android:textSize="@dimen/activity_text_level1_size" />
+
+                <TextView
+                    android:id="@+id/fallsTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingEnd"
+                    android:textSize="@dimen/activity_text_level1_size" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/stepsJumpsLabelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|start"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingStart"
+                    android:text="@string/steps"
+                    android:textSize="@dimen/activity_text_level1_size" />
+
+                <TextView
+                    android:id="@+id/stepsJumpsTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingEnd"
+                    android:textSize="@dimen/activity_text_level1_size" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/caloriesUndTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|start"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingStart"
+                    android:text="@string/calories"
+                    android:textSize="@dimen/activity_text_level1_size" />
+
+                <TextView
+                    android:id="@+id/caloriesTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingEnd"
+                    android:textSize="@dimen/activity_text_level1_size" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/distanceUndTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|start"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingStart"
+                    android:text="@string/distance"
+                    android:textSize="@dimen/activity_text_level1_size" />
+
+                <TextView
+                    android:id="@+id/distanceTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingEnd"
+                    android:textSize="@dimen/activity_text_level1_size" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/maxSpeedText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|start"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingStart"
+                    android:text="@string/max_speed"
+                    android:textSize="@dimen/activity_text_level1_size" />
+
+                <TextView
+                    android:id="@+id/maxSpeedTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingEnd"
+                    android:textSize="@dimen/activity_text_level1_size" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/avgSpeedText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|start"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingStart"
+                    android:text="@string/avg_speed"
+                    android:textSize="@dimen/activity_text_level1_size" />
+
+                <TextView
+                    android:id="@+id/avgSpeedTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:padding="?android:attr/listPreferredItemPaddingEnd"
+                    android:textSize="@dimen/activity_text_level1_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/lightPurple"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/SpeedText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+                    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+                    android:text="@string/speed_chart"
+                    android:textSize="@dimen/activity_text_level1_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <lecho.lib.hellocharts.view.LineChartView
+                    android:id="@+id/speedChart"
+                    android:layout_width="0dp"
+                    android:layout_height="300dp"
+                    android:layout_weight="1"
+                    android:paddingStart="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/lightPurple"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/commentText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+                    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+                    android:text="@string/comments"
+                    android:textSize="@dimen/activity_text_level1_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/commentTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+                    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+                    android:textSize="@dimen/activity_text_level1_size" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -6,22 +6,24 @@ import static java.time.LocalDate.now;
 import static java.util.Objects.requireNonNull;
 import static co.com.uma.mseei.invictus.R.array.gender_array;
 import static co.com.uma.mseei.invictus.R.string.successfully_saved;
-import static co.com.uma.mseei.invictus.model.AppPreferences.DEFAULT_HEIGHT_M;
-import static co.com.uma.mseei.invictus.model.AppPreferences.DEFAULT_WEIGHT_KG;
+import static co.com.uma.mseei.invictus.model.AppPreferences.DEF_PROFILE_HEIGHT_M;
+import static co.com.uma.mseei.invictus.model.AppPreferences.DEF_PROFILE_WEIGHT_KG;
 import static co.com.uma.mseei.invictus.model.profile.Profile.calculateAge;
 import static co.com.uma.mseei.invictus.model.profile.Profile.calculateBmi;
-import static co.com.uma.mseei.invictus.model.profile.Profile.calculateBmiClassification;
+import static co.com.uma.mseei.invictus.model.profile.Profile.defineBmiClassification;
 import static co.com.uma.mseei.invictus.model.profile.Profile.fixHeightToLimits;
 import static co.com.uma.mseei.invictus.model.profile.Profile.fixWeightToLimits;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.IN_UND;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.KG_UND;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.LBS_UND;
-import static co.com.uma.mseei.invictus.util.GeneralConstants.M_UND;
-import static co.com.uma.mseei.invictus.util.MathOperations.in2m;
-import static co.com.uma.mseei.invictus.util.MathOperations.kg2lbs;
-import static co.com.uma.mseei.invictus.util.MathOperations.lbs2kg;
-import static co.com.uma.mseei.invictus.util.MathOperations.m2in;
-import static co.com.uma.mseei.invictus.util.ResourceOperations.getStringArrayById;
+import static co.com.uma.mseei.invictus.util.Resource.getStringArrayById;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.IN_UND;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.KG_UND;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.LBS_UND;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.M_UND;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.floatToString;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.in2m;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.kg2lbs;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.lbs2kg;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.m2in;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.stringToFloat;
 
 import android.app.Application;
 
@@ -39,53 +41,56 @@ import io.reactivex.Completable;
 
 public class ProfileViewModel extends AndroidViewModel {
 
-    private final AppPreferences appPreferences;
     private final WeightRepository weightRepository;
+    private final AppPreferences appPreferences;
+    private Boolean isUnitSystemImperial;
     private final String[] genderOptions;
-    private Boolean  isUnitSystemImperial;
     private final MutableLiveData<Integer> gender;
     private final MutableLiveData<LocalDate> birthdate;
-    private final MutableLiveData<Integer> age;
-    private final MutableLiveData<Float> weight;
-    private final MutableLiveData<Float> weightHint;
-    private final MutableLiveData<Float> weightOnScreen;
+    private final MutableLiveData<String> age;
+    private float weight;
+    private final MutableLiveData<String> weightOnScreen;
+    private final MutableLiveData<String> weightHint;
     private final MutableLiveData<String> weightUnd;
-    private final MutableLiveData<Float> height;
-    private final MutableLiveData<Float> heightHint;
-    private final MutableLiveData<Float> heightOnScreen;
+    private float height;
+    private final MutableLiveData<String> heightOnScreen;
+    private final MutableLiveData<String> heightHint;
     private final MutableLiveData<String> heightUnd;
-    private final MutableLiveData<Float> bmi;
+    private final MutableLiveData<String> bmi;
     private final MutableLiveData<String> bmiClassification;
     private final MutableLiveData<String> updateDate;
 
     public ProfileViewModel(@NonNull Application application) {
         super(application);
-        appPreferences = new AppPreferences(application);
-        weightRepository = new WeightRepository(application);
-
-        genderOptions = getStringArrayById(application, gender_array);
         gender = new MutableLiveData<>();
         birthdate = new MutableLiveData<>();
         age = new MutableLiveData<>();
-        weight = new MutableLiveData<>();
-        weightUnd = new MutableLiveData<>();
-        weightHint = new MutableLiveData<>();
         weightOnScreen = new MutableLiveData<>();
-        height = new MutableLiveData<>();
-        heightUnd = new MutableLiveData<>();
-        heightHint = new MutableLiveData<>();
+        weightHint = new MutableLiveData<>();
+        weightUnd = new MutableLiveData<>();
         heightOnScreen = new MutableLiveData<>();
+        heightHint = new MutableLiveData<>();
+        heightUnd = new MutableLiveData<>();
         bmi = new MutableLiveData<>();
         bmiClassification = new MutableLiveData<>();
         updateDate = new MutableLiveData<>();
 
+        weightRepository = new WeightRepository(application);
+        appPreferences = new AppPreferences(application);
+        genderOptions = getStringArrayById(application, gender_array);
     }
 
     public void initializeValues(){
-        unitSystem();
-        userBasic();
-        userBody();
-        lastUpdate();
+        isUnitSystemImperial = appPreferences.isUnitSystemImperial();
+        setGender(appPreferences.getGender());
+        setBirthdate(appPreferences.getBirthDate());
+        setWeight(appPreferences.getWeight());
+        setHeight(appPreferences.getHeight());
+        setUpdateDate(appPreferences.getProfileUpdateDate());
+        setWeightHint();
+        setWeightUnd();
+        setHeightHint();
+        setHeightUnd();
     }
 
     public String[] getGenderOptions() {
@@ -96,45 +101,31 @@ public class ProfileViewModel extends AndroidViewModel {
         return gender;
     }
 
-    public void setGender(int position) {
-       gender.setValue(position);
+    public void setGender(int gender) {
+       this.gender.setValue(gender);
     }
 
     public LiveData<LocalDate> getBirthdate(){
         return birthdate;
     }
 
-    public void setBirthdate(int year, int month, int dayOfMonth) {
-        LocalDate date = LocalDate.of(year, month, dayOfMonth);
-        birthdate.setValue(date);
+    public void setBirthdate(LocalDate date) {
+        this.birthdate.setValue(date);
+        setAge(date);
     }
 
-    public LiveData<Integer> getAge(){
+    public LiveData<String> getAge(){
         return age;
     }
 
-    public void setAge() {
-        int age = calculateAge(birthdate.getValue());
-        this.age.setValue(age);
-    }
-
-    public LiveData<Float> getWeight(){
+    public LiveData<String> getWeight(){
         return weightOnScreen;
     }
 
-    public void setWeight(float weightOnScreen) {
-        float weight = isUnitSystemImperial ? lbs2kg(weightOnScreen) : weightOnScreen;
-        fixWeightToLimits(weight);
-        this.weight.setValue(weight);
-        setWeight();
-    }
-
-    public LiveData<Float> getWeightHint() {
-        return weightHint;
-    }
-
-    public void setWeightHint() {
-        this.weightHint.setValue(isUnitSystemImperial ? kg2lbs(DEFAULT_WEIGHT_KG) : DEFAULT_WEIGHT_KG);
+    public void updateWeight(String weightOnScreen) {
+        float weight = stringToFloat(weightOnScreen);
+        if(isUnitSystemImperial) weight = lbs2kg(weight);
+        setWeight(fixWeightToLimits(weight));
     }
 
     public LiveData<String> getWeightUnd(){
@@ -142,26 +133,26 @@ public class ProfileViewModel extends AndroidViewModel {
     }
 
     public void setWeightUnd() {
-        String und = isUnitSystemImperial ? LBS_UND : KG_UND;
-        this.weightUnd.setValue(und);
+        this.weightUnd.setValue(isUnitSystemImperial ? LBS_UND : KG_UND);
     }
 
-    public LiveData<Float> getHeight(){
+    public LiveData<String> getWeightHint() {
+        return weightHint;
+    }
+
+    public void setWeightHint() {
+        float weight = isUnitSystemImperial ? kg2lbs(DEF_PROFILE_WEIGHT_KG) : DEF_PROFILE_WEIGHT_KG;
+        this.weightHint.setValue(floatToString(weight));
+    }
+
+    public LiveData<String> getHeight(){
         return heightOnScreen;
     }
 
-    public void setHeight(float heightOnScreen) {
-        float height = isUnitSystemImperial ? in2m(heightOnScreen) : heightOnScreen;
-        this.height.setValue(fixHeightToLimits(height));
-        setHeight();
-    }
-
-    public LiveData<Float> getHeightHint() {
-        return heightHint;
-    }
-
-    public void setHeightHint() {
-        this.heightHint.setValue(isUnitSystemImperial ? m2in(DEFAULT_HEIGHT_M) : DEFAULT_HEIGHT_M);
+    public void updateHeight(String heightOnScreen) {
+        float height = stringToFloat(heightOnScreen);
+        if(isUnitSystemImperial) height = in2m(height);
+        setHeight(fixHeightToLimits(height));
     }
 
     public LiveData<String> getHeightUnd(){
@@ -169,11 +160,19 @@ public class ProfileViewModel extends AndroidViewModel {
     }
 
     public void setHeightUnd() {
-        String und = isUnitSystemImperial ? IN_UND : M_UND;
-        this.heightUnd.setValue(und);
+        this.heightUnd.setValue(isUnitSystemImperial ? IN_UND : M_UND);
     }
 
-    public LiveData<Float> getBmi(){
+    public LiveData<String> getHeightHint() {
+        return heightHint;
+    }
+
+    public void setHeightHint() {
+        float height = isUnitSystemImperial ? m2in(DEF_PROFILE_HEIGHT_M) : DEF_PROFILE_HEIGHT_M;
+        this.heightHint.setValue(floatToString(height));
+    }
+
+    public LiveData<String> getBmi(){
         return bmi;
     }
 
@@ -181,68 +180,63 @@ public class ProfileViewModel extends AndroidViewModel {
         return bmiClassification;
     }
 
-    public void setBmiValues(){
-        float bmi = calculateBmi(requireNonNull(weight.getValue()), requireNonNull(height.getValue()));
-        this.bmi.setValue(bmi);
-        String bmiClassification = calculateBmiClassification(getApplication(), bmi);
-        this.bmiClassification.setValue(bmiClassification);
-    }
-
     public LiveData<String> getUpdateDate() {
         return updateDate;
+    }
+
+    public void setUpdateDate(String date) {
+        this.updateDate.setValue(date);
     }
 
     public void saveProfilePreferences() {
         appPreferences.setGender(requireNonNull(gender.getValue()));
         appPreferences.setBirthDate(requireNonNull(birthdate.getValue()));
-        appPreferences.setWeight(requireNonNull(weight.getValue()));
-        appPreferences.setHeight(requireNonNull(height.getValue()));
+        appPreferences.setWeight(weight);
+        appPreferences.setHeight(height);
         appPreferences.setProfileUpdateDate(now());
     }
 
     public Completable saveWeightOnDatabase() {
-        Weight weight = new Weight(now().toString(), requireNonNull(this.weight.getValue()));
+        Weight weight = new Weight(now().toString(), this.weight);
         return weightRepository.insertWeights(weight);
     }
 
     public void showSavedFeedback() {
-        this.updateDate.setValue(now().toString());
+        setUpdateDate(now().toString());
         makeText(getApplication(), successfully_saved, LENGTH_SHORT).show();
     }
 
-    private void unitSystem() {
-        this.isUnitSystemImperial = appPreferences.isUnitSystemImperial();
+    private void setAge(LocalDate birthdate) {
+        int age = calculateAge(birthdate);
+        this.age.setValue(Integer.toString(age));
     }
 
-    private void userBasic() {
-        this.gender.setValue(appPreferences.getGender());
-        this.birthdate.setValue(appPreferences.getBirthDate());
-        setAge();
-    }
-
-    private void userBody() {
-        this.weight.setValue(fixWeightToLimits(appPreferences.getWeight()));
-        setWeight();
-        setWeightUnd();
-        setWeightHint();
-        this.height.setValue(fixHeightToLimits(appPreferences.getHeight()));
-        setHeight();
-        setHeightUnd();
-        setHeightHint();
+    private void setWeight(float weight) {
+        this.weight = weight;
+        setWeightOnScreen();
         setBmiValues();
     }
 
-    private void lastUpdate() {
-        this.updateDate.setValue(appPreferences.getProfileUpdateDate());
+    private void setWeightOnScreen() {
+        if(isUnitSystemImperial) weight = kg2lbs(weight);
+        this.weightOnScreen.setValue(floatToString(weight));
     }
 
-    private void setWeight() {
-        float weight = requireNonNull(this.weight.getValue());
-        this.weightOnScreen.setValue(isUnitSystemImperial ? kg2lbs(weight) : weight);
+    public void setHeight(float height) {
+        this.height = height;
+        setHeightOnScreen();
+        setBmiValues();
     }
 
-    private void setHeight() {
-        float height = requireNonNull(this.height.getValue());
-        this.heightOnScreen.setValue(isUnitSystemImperial ? m2in(height) : height);
+    private void setHeightOnScreen() {
+        if(isUnitSystemImperial) height = m2in(height);
+        this.heightOnScreen.setValue(floatToString(height));
+    }
+
+    private void setBmiValues(){
+        float bmi = calculateBmi(weight, height);
+        String bmiClassification = defineBmiClassification(getApplication(), bmi);
+        this.bmi.setValue(floatToString(bmi));
+        this.bmiClassification.setValue(bmiClassification);
     }
 }

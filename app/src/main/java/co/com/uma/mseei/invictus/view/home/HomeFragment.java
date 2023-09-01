@@ -12,7 +12,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -28,7 +30,7 @@ import co.com.uma.mseei.invictus.databinding.FragmentHomeBinding;
 import co.com.uma.mseei.invictus.viewmodel.home.HomeViewModel;
 
 public class HomeFragment
-        extends Fragment implements View.OnClickListener {
+        extends Fragment implements OnClickListener {
 
     private Activity activity;
     private FragmentHomeBinding binding;
@@ -45,6 +47,7 @@ public class HomeFragment
         View root = binding.getRoot();
 
         activity = requireActivity();
+        initializeSportTypeView();
         initializeFallsViews();
         initializeStepsViews();
         initializeCaloriesViews();
@@ -52,6 +55,7 @@ public class HomeFragment
         initializeSpeedViews();
         initializeElapsedTimeViews();
         initializeTrackingButton();
+
         return root;
     }
 
@@ -97,48 +101,71 @@ public class HomeFragment
         }
     }
 
+    private void initializeSportTypeView() {
+        TextView sportTypeTextView = binding.sportTypeTextView;
+        ImageView sportTypeImageView = binding.sportTypeImageView;
+        homeViewModel.getSportType().observe(getViewLifecycleOwner(), x -> {
+            sportTypeTextView.setText(x.getName());
+            sportTypeImageView.setImageResource(x.getIcon());
+        });
+        setViewsVisibility(sportTypeTextView);
+        setViewsVisibility(sportTypeImageView);
+    }
+
     private void initializeFallsViews() {
         TextView fallsTextView = binding.fallsTextView;
+        homeViewModel.getFalls().observe(getViewLifecycleOwner(), fallsTextView::setText);
         setViewsVisibility(fallsTextView);
     }
 
     private void initializeStepsViews() {
         TextView stepsJumpsTextView = binding.stepsJumpsTextView;
+        homeViewModel.getSteps().observe(getViewLifecycleOwner(), stepsJumpsTextView::setText);
         setViewsVisibility(stepsJumpsTextView);
     }
 
     private void initializeCaloriesViews() {
         TextView caloriesTextView = binding.caloriesTextView;
+        TextView caloriesUndText = binding.caloriesUndText;
+        homeViewModel.getCalories().observe(getViewLifecycleOwner(), caloriesTextView::setText);
+        homeViewModel.getCaloriesUnd().observe(getViewLifecycleOwner(), caloriesUndText::setText);
         setViewsVisibility(caloriesTextView);
     }
 
     private void initializeDistanceViews() {
         TextView distanceTextView = binding.distanceTextView;
+        TextView distanceUndText = binding.distanceUndText;
+        homeViewModel.getDistance().observe(getViewLifecycleOwner(), distanceTextView::setText);
+        homeViewModel.getDistanceUnd().observe(getViewLifecycleOwner(), distanceUndText::setText);
         setViewsVisibility(distanceTextView);
     }
 
     private void initializeSpeedViews() {
         TextView speedTextView = binding.speedTextView;
+        TextView speedUndText = binding.speedUndText;
+        homeViewModel.getSpeed().observe(getViewLifecycleOwner(), speedTextView::setText);
+        homeViewModel.getSpeedUnd().observe(getViewLifecycleOwner(), speedUndText::setText);
         setViewsVisibility(speedTextView);
     }
 
     private void initializeElapsedTimeViews() {
         TextView elapsedTimeTextView = binding.elapsedTimeTextView;
+        homeViewModel.getElapsedTime().observe(getViewLifecycleOwner(), elapsedTimeTextView::setText);
         setViewsVisibility(elapsedTimeTextView);
     }
 
-    private void setViewsVisibility(TextView textView) {
+    private void setViewsVisibility(View view) {
         homeViewModel.isServiceBound().observe(getViewLifecycleOwner(), state -> {
             int visibility = state ? VISIBLE : INVISIBLE;
-            textView.setVisibility(visibility);
+            view.setVisibility(visibility);
         });
     }
 
     private void initializeTrackingButton() {
         FloatingActionButton trackingButton = binding.trackingButton;
         trackingButton.setOnClickListener(this);
-        homeViewModel.isServiceBound().observe(getViewLifecycleOwner(), trackingState -> {
-            int id = trackingState ? ic_stop_black_24dp : ic_arrow_black_24dp;
+        homeViewModel.isServiceBound().observe(getViewLifecycleOwner(), state -> {
+            int id = state ? ic_stop_black_24dp : ic_arrow_black_24dp;
             trackingButton.setImageResource(id);
         });
     }
@@ -154,4 +181,5 @@ public class HomeFragment
             getSportType.launch(intent);
         }
     }
+
 }

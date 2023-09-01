@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0ab3ddfa6474cc6dd82a398640030a1e",
+    "identityHash": "d3e1b9cf1f14b4a5a13c1b1d60406fa0",
     "entities": [
       {
         "tableName": "weights",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`date` TEXT NOT NULL, `value` REAL NOT NULL, PRIMARY KEY(`date`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`date` TEXT NOT NULL, `weight` REAL NOT NULL, PRIMARY KEY(`date`))",
         "fields": [
           {
             "fieldPath": "date",
@@ -15,8 +15,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "value",
-            "columnName": "value",
+            "fieldPath": "weight",
+            "columnName": "weight",
             "affinity": "REAL",
             "notNull": true
           }
@@ -41,12 +41,133 @@
         "foreignKeys": []
       },
       {
-        "tableName": "feedbacks",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `comments` TEXT, PRIMARY KEY(`id`))",
+        "tableName": "speeds",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sport_id` INTEGER NOT NULL, `elapsed_time` TEXT NOT NULL, `speed` REAL NOT NULL, PRIMARY KEY(`sport_id`, `elapsed_time`))",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
+            "fieldPath": "sportId",
+            "columnName": "sport_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "elapsedTime",
+            "columnName": "elapsed_time",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "speed",
+            "columnName": "speed",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "sport_id",
+            "elapsed_time"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_speeds_sport_id",
+            "unique": false,
+            "columnNames": [
+              "sport_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_speeds_sport_id` ON `${TABLE_NAME}` (`sport_id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "sports",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sport_id` INTEGER NOT NULL, `sport_type` TEXT NOT NULL, `start_date_time` TEXT NOT NULL, `end_date_time` TEXT NOT NULL, `elapsed_time` TEXT NOT NULL, `falls` INTEGER NOT NULL, `steps` INTEGER NOT NULL, `distance` REAL NOT NULL, `calories` REAL NOT NULL, PRIMARY KEY(`sport_id`))",
+        "fields": [
+          {
+            "fieldPath": "sportId",
+            "columnName": "sport_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sportType",
+            "columnName": "sport_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startDateTime",
+            "columnName": "start_date_time",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "endDateTime",
+            "columnName": "end_date_time",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "elapsedTime",
+            "columnName": "elapsed_time",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "falls",
+            "columnName": "falls",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "steps",
+            "columnName": "steps",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "distance",
+            "columnName": "distance",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "calories",
+            "columnName": "calories",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "sport_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_sports_sport_id",
+            "unique": true,
+            "columnNames": [
+              "sport_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_sports_sport_id` ON `${TABLE_NAME}` (`sport_id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "feedbacks",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sport_id` INTEGER NOT NULL, `comments` TEXT, PRIMARY KEY(`sport_id`))",
+        "fields": [
+          {
+            "fieldPath": "sportId",
+            "columnName": "sport_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -60,18 +181,18 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "id"
+            "sport_id"
           ]
         },
         "indices": [
           {
-            "name": "index_feedbacks_id",
+            "name": "index_feedbacks_sport_id",
             "unique": true,
             "columnNames": [
-              "id"
+              "sport_id"
             ],
             "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_feedbacks_id` ON `${TABLE_NAME}` (`id`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_feedbacks_sport_id` ON `${TABLE_NAME}` (`sport_id`)"
           }
         ],
         "foreignKeys": []
@@ -80,7 +201,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0ab3ddfa6474cc6dd82a398640030a1e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd3e1b9cf1f14b4a5a13c1b1d60406fa0')"
     ]
   }
 }

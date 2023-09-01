@@ -1,4 +1,4 @@
-package co.com.uma.mseei.invictus.model.historical.time;
+package co.com.uma.mseei.invictus.model.time;
 
 import static java.time.LocalDate.now;
 import static java.time.LocalTime.MAX;
@@ -8,6 +8,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Day is a interface implementation class which represents time. It represents one day.
+ * @author Sandra Marcela López Torres
+ * @version 0.1, 2023/07/02
+ */
 public class Day implements Time {
 
     private LocalDateTime startDateTime;
@@ -16,17 +21,17 @@ public class Day implements Time {
 
     public Day() {
         now = now();
-        setActualPeriod();
+        setCurrent();
     }
 
     @Override
-    public void setActualPeriod(String... FromTo) {
+    public void setCurrent(String... FromTo) {
         startDateTime = LocalDateTime.of(now, MIN);
         endDateTime = LocalDateTime.of(now, MAX);
     }
 
     @Override
-    public void setNextPeriod() {
+    public void setNext() {
         if (now.isAfter(startDateTime.toLocalDate())) {
             startDateTime = startDateTime.plusDays(1);
             endDateTime = endDateTime.plusDays(1);
@@ -34,18 +39,18 @@ public class Day implements Time {
     }
 
     @Override
-    public void setPreviousPeriod() {
+    public void setPrevious() {
         startDateTime = startDateTime.minusDays(1);
         endDateTime = endDateTime.minusDays(1);
     }
 
     @Override
-    public String periodToString(DateTimeFormatter formatter) {
+    public String toString(DateTimeFormatter formatter) {
         return startDateTime.format(formatter);
     }
 
     @Override
-    public String[] periodToStringArray(DateTimeFormatter formatter) {
+    public String[] toStringArray(DateTimeFormatter formatter) {
         return new String[] {startDateTime.format(formatter), endDateTime.format(formatter)};
     }
 }

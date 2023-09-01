@@ -6,7 +6,7 @@
     <dimen name="activity_text_level0_size">32sp</dimen>
     <dimen name="activity_text_level1_size">16sp</dimen>
     <dimen name="activity_text_level2_size">14sp</dimen>
-    <dimen name="activity_icon_level0_size">28dp</dimen>
+    <dimen name="activity_text_level3_size">12sp</dimen>
     <dimen name="activity_icon_level1_size">24dp</dimen>
     <dimen name="activity_layout_height">48dp</dimen>
     <dimen name="activity_min_height">48dp</dimen>
