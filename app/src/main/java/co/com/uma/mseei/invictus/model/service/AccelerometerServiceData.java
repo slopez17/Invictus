@@ -8,7 +8,7 @@ import static co.com.uma.mseei.invictus.util.UnitsAndConversions.YYYY_MM_DD__HH_
 import static co.com.uma.mseei.invictus.util.UnitsAndConversions.floatToString;
 import static co.com.uma.mseei.invictus.util.UnitsAndConversions.m2km;
 import static co.com.uma.mseei.invictus.util.UnitsAndConversions.ms2h;
-import static co.com.uma.mseei.invictus.util.UnitsAndConversions.timeToString;
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.elapsedTimeToString;
 
 import android.hardware.SensorEvent;
 
@@ -90,7 +90,7 @@ public class AccelerometerServiceData {
     }
 
     public String getElapsedTime() {
-        return timeToString(elapsedTime);
+        return elapsedTimeToString(elapsedTime);
     }
 
     private void setElapsedTime() {
@@ -166,7 +166,7 @@ public class AccelerometerServiceData {
                 floatToString(calories),
                 floatToString(distance),
                 floatToString(speed),
-                timeToString(elapsedTime)
+                elapsedTimeToString(elapsedTime)
         };
     }
 

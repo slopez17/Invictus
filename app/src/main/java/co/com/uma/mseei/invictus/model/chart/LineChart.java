@@ -2,16 +2,12 @@ package co.com.uma.mseei.invictus.model.chart;
 
 import static android.graphics.Color.GRAY;
 import static android.graphics.Color.parseColor;
-import static java.time.LocalDate.parse;
-import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static co.com.uma.mseei.invictus.util.Resource.getColorById;
-import static co.com.uma.mseei.invictus.util.UnitsAndConversions.TWO_DIGITS_HOUR;
 import static lecho.lib.hellocharts.gesture.ContainerScrollType.HORIZONTAL;
 import static lecho.lib.hellocharts.model.ValueShape.CIRCLE;
 
 import android.app.Activity;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -144,24 +140,7 @@ public abstract class LineChart  {
     /**
      * @return list with X axis labels.
      */
-    private List<AxisValue> getAxisXValuesFrom() {
-        List<AxisValue> axisXValues = new ArrayList<>();
-        long period;
-        if(index == 0) {
-            period = 24;
-            for (int i = 0; i <= period; i++) {
-                axisXValues.add(new AxisValue(i).setLabel(TWO_DIGITS_HOUR.format(i)));
-            }
-        } else {
-            period = limits.getPeriodInDaysFromStartToEnd();
-            LocalDate date = parse(limits.getMinX(), ISO_LOCAL_DATE);
-            for (int i = 0; i <= period; i++) {
-                axisXValues.add(new AxisValue(i).setLabel(date.toString()));
-                date = date.plusDays(1);
-            }
-        }
-        return axisXValues;
-    }
+    protected abstract List<AxisValue> getAxisXValuesFrom();
 
     /**
      * Adjusts Y axis attributes: <br>
@@ -191,7 +170,7 @@ public abstract class LineChart  {
         float left = 0f;
         float maxY = limits.getMaxY();
         float top =  maxY * 1.1f;
-        float right = index == 0 ? 24f : limits.getPeriodInDaysFromStartToEnd() + 1f;
+        float right = getRight();
         float minY =  limits.getMinY();
         float bottom =  minY * 0.9f;
         Viewport viewport = new Viewport(left, top, right, bottom);
@@ -199,5 +178,7 @@ public abstract class LineChart  {
         lineChartView.setMaximumViewport(viewport);
         lineChartView.setCurrentViewport(viewport);
     }
+
+    protected abstract float getRight();
 
 }

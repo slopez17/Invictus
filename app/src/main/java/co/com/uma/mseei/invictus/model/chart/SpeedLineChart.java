@@ -1,13 +1,12 @@
 package co.com.uma.mseei.invictus.model.chart;
 
-import static co.com.uma.mseei.invictus.util.UnitsAndConversions.kg2lbs;
-
 import android.app.Activity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import co.com.uma.mseei.invictus.model.database.Weight;
+import co.com.uma.mseei.invictus.model.database.Speed;
+import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.view.LineChartView;
 
@@ -25,16 +24,26 @@ public class SpeedLineChart extends LineChart {
 
     protected List<PointValue> getPointValues() {
         List<PointValue> pointValues = new ArrayList<>();
-        float xValue;
-        float yValue;
-        for (Object data : dataList) {
-            Weight weight = (Weight) data;
-            xValue = limits.getPeriodInDaysFromStartTo(weight.getDate());
-            yValue = weight.getWeight();
-            if(isUnitSystemImperial) yValue = kg2lbs(yValue);
-            pointValues.add(new PointValue(xValue, yValue));
+        for (int i = 0; i < dataList.size(); i++) {
+            Speed speed = (Speed) dataList.get(i);
+            pointValues.add(new PointValue(i, speed.getSpeed()));
         }
         return pointValues;
     }
 
+    /**
+     * @return list with X axis labels.
+     */
+    protected List<AxisValue> getAxisXValuesFrom() {
+        List<AxisValue> axisXValues = new ArrayList<>();
+        for (int i = 0; i < dataList.size(); i++) {
+            Speed speed = (Speed) dataList.get(i);
+            axisXValues.add(new AxisValue(i).setLabel(speed.getElapsedTime()));
+        }
+        return axisXValues;
+    }
+
+    protected float getRight() {
+        return dataList.size();
+    }
 }

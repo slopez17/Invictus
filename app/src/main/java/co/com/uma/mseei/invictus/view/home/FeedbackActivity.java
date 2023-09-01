@@ -24,7 +24,6 @@ import co.com.uma.mseei.invictus.databinding.ActivityFeedbackBinding;
 import co.com.uma.mseei.invictus.viewmodel.home.FeedbackViewModel;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class FeedbackActivity extends AppCompatActivity implements View.OnClickListener {
     private ActivityFeedbackBinding binding;
@@ -63,7 +62,6 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
                     .subscribe(() -> makeText(this, successfully_saved, LENGTH_SHORT).show(),
                             throwable -> Log.e(getMethodName(), getStringById(this, error_saved), throwable));
             compositeDisposable.add(disposable);
-            //disposable.add(getFeedback(1));
         }
     }
 
@@ -73,16 +71,4 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
         compositeDisposable.dispose();
     }
 
-
-    //    @NonNull
-//    private Disposable getFeedback(int id) {
-//        return feedbackViewModel.getFeedback(id)
-//                .subscribeOn(io())
-//                .observeOn(mainThread())
-//                .subscribe(
-//                        feedback -> {
-//                            makeText(this, feedback.getComments(), LENGTH_SHORT).show();
-//                        }
-//                );
-//    }
 }

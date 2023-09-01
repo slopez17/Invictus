@@ -6,17 +6,22 @@ package co.com.uma.mseei.invictus.model.database;
  * @author Sandra Marcela López Torres
  * @version 0.1, 2023/07/02
  */
-public class SportLimit extends Limit{
+public class SpeedLimit extends Limit{
 
-    public SportLimit(String minX, String maxX, float minY, float maxY) {
+    public SpeedLimit(String minX, String maxX, float minY, float maxY) {
         super(minX, maxX, minY, maxY);
     }
+
     @Override
     public float getMinY() {
         return minY;
     }
+
     @Override
     public float getMaxY() {
         return maxY;
     }
+
+
+
 }

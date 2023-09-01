@@ -249,23 +249,6 @@ public class ListenAccelerometerService
     }
 
     private void saveSportOnDatabase() {
-//        AtomicReference<Float> maxSpeed = new AtomicReference<>((float) 0);
-//        AtomicReference<Float> avgSpeed = new AtomicReference<>((float) 0);
-//
-//        Disposable disposable = speedRepository.getMaxSpeed(parameters.getSportId())
-//                .subscribeOn(io())
-//                .observeOn(mainThread())
-//                .subscribe(maxSpeed::set,
-//                        throwable -> Log.e(getMethodName(), getStringById(this, error_saved), throwable));
-//        compositeDisposable.add(disposable);
-//
-//        disposable = speedRepository.getAvgSpeed(parameters.getSportId())
-//                .subscribeOn(io())
-//                .observeOn(io())
-//                .subscribe(avgSpeed::set,
-//                        throwable -> Log.e(getMethodName(), getStringById(this, error_saved), throwable));
-//        compositeDisposable.add(disposable);
-
         Disposable disposable = sportRepository.insertSport(data.getSport())
                 .subscribeOn(io())
                 .observeOn(mainThread())

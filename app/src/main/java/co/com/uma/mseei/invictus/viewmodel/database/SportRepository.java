@@ -16,16 +16,10 @@ import io.reactivex.Single;
 
 public class SportRepository {
     private final SportDao sportDao;
-    private final Flowable<List<Sport>> allSports;
 
     public SportRepository(Application application) {
         AppDatabase db = getDatabase(application);
         sportDao = db.sportDao();
-        allSports = sportDao.getAllSports();
-    }
-
-    public Flowable<List<Sport>> getAllSports(){
-        return allSports;
     }
 
     public Flowable<List<Sport>> getAllBySportType(String sportType){

@@ -73,7 +73,7 @@
     <string name="end">End</string>
     <string name="max_speed">Maximum reached speed</string>
     <string name="avg_speed">Average speed</string>
-    <string name="speed_chart">Speed Chart(km/h)</string>
+    <string name="speed_chart">Speed Chart (km/h)</string>
     <string name="comments">Comments</string>
 
     <!-- Profile -->

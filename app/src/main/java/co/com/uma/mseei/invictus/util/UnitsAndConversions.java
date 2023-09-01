@@ -67,7 +67,7 @@ public class UnitsAndConversions {
         return TWO_DECIMAL_DIGITS.format(value);
     }
 
-    public static String timeToString(long time) {
+    public static String elapsedTimeToString(long time) {
         int hour = (int) (time / _1H_MS);
         int minute = (int) (time - hour * _1H_MS) / _1MIN_MS;
         int second = (int) (time - hour * _1H_MS - minute * _1MIN_MS) / _1S_MS;

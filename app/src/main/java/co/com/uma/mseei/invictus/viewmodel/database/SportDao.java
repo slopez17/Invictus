@@ -18,9 +18,6 @@ import io.reactivex.Single;
 @Dao
 public interface SportDao {
 
-    @Query("SELECT * FROM sports ORDER BY start_date_time DESC")
-    Flowable<List<Sport>> getAllSports();
-
     @Query("SELECT * FROM sports WHERE sport_type = :sportType ORDER BY start_date_time DESC")
     Flowable<List<Sport>> getAllBySportType(String sportType);
 

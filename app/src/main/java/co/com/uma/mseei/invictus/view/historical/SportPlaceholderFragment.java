@@ -100,6 +100,7 @@ public class SportPlaceholderFragment extends Fragment implements OnClickListene
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        compositeDisposable.dispose();
     }
 
     private void getSportData() {

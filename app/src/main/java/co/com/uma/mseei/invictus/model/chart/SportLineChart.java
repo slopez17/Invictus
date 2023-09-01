@@ -1,13 +1,19 @@
 package co.com.uma.mseei.invictus.model.chart;
 
 import static java.lang.Float.parseFloat;
+import static java.time.LocalDate.parse;
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
+
+import static co.com.uma.mseei.invictus.util.UnitsAndConversions.TWO_DIGITS_HOUR;
 
 import android.app.Activity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import co.com.uma.mseei.invictus.model.database.Sport;
+import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.view.LineChartView;
 
@@ -51,4 +57,29 @@ public class SportLineChart extends LineChart {
         return pointValues;
     }
 
+    /**
+     * @return list with X axis labels.
+     */
+    protected List<AxisValue> getAxisXValuesFrom() {
+        List<AxisValue> axisXValues = new ArrayList<>();
+        long period;
+        if(index == 0) {
+            period = 24;
+            for (int i = 0; i <= period; i++) {
+                axisXValues.add(new AxisValue(i).setLabel(TWO_DIGITS_HOUR.format(i)));
+            }
+        } else {
+            period = limits.getPeriodInDaysFromStartToEnd();
+            LocalDate date = parse(limits.getMinX(), ISO_LOCAL_DATE);
+            for (int i = 0; i <= period; i++) {
+                axisXValues.add(new AxisValue(i).setLabel(date.toString()));
+                date = date.plusDays(1);
+            }
+        }
+        return axisXValues;
+    }
+
+    protected float getRight() {
+        return index == 0 ? 24f : limits.getPeriodInDaysFromStartToEnd() + 1f;
+    }
 }

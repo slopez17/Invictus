@@ -4,6 +4,8 @@ import static co.com.uma.mseei.invictus.viewmodel.database.AppDatabase.getDataba
 
 import android.app.Application;
 
+import java.util.List;
+
 import co.com.uma.mseei.invictus.model.database.Speed;
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -14,6 +16,10 @@ public class SpeedRepository {
     public SpeedRepository(Application application) {
         AppDatabase db = getDatabase(application);
         speedDao = db.speedDao();
+    }
+
+    public Single<List<Speed>> getSpeedsById(int id) {
+        return speedDao.getSpeedsById(id);
     }
 
     public Single<Float> getMaxSpeed(int sportId){
@@ -27,4 +33,5 @@ public class SpeedRepository {
     public Completable insertSpeed(Speed speed){
         return speedDao.insertSpeed(speed);
     }
+
 }

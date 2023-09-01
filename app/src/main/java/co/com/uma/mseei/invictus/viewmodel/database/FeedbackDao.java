@@ -11,6 +11,7 @@ import io.reactivex.Single;
 
 @Dao
 public interface FeedbackDao {
+
     @Query("SELECT * FROM feedbacks WHERE sport_id=:sportId")
     Single<Feedback> getFeedback(int sportId);
 
